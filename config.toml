@@ -8,6 +8,7 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
 
 [Author]
   name = "Matthew Avery"
+  bio =  "I'm a person with a weird-looking dog."
   avatar = "img/logo.png"
 
 [Params]
@@ -16,7 +17,7 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
   opengraph = true
   twitter_cards = false
   readmore = false # Show "Read more" button in list if true
-  authorbox = true
+  authorbox = false
   post_navigation = true
   postSections = ["post"]
 
@@ -43,7 +44,15 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
 
 
   [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/post/about/"
+    weight = 20
+    
+    
+
+  [[menu.main]]
     identifier = "cv"
     name = "CV"
     url = "https://matthewravery.github.io/markdown-cv"
-    weight = 20
+    weight = 30
