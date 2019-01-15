@@ -1,7 +1,9 @@
 ---
-title: "Philosophy Analysis Statement"
+title: "Analysis Philosophy"
 author: "Matthew Avery"
 date: "2019-01-03"
+menu: main
+
 ---
 
 From what I understand, teaching professors (maybe all professors?) write a "Philosophy of Teaching Statement". The goal of this documen is to describe the individual's approach to teaching and why they use that approach. It basically says, "Here's what I do, and here's why I do it," and maybe you get into a little bit of how they got there. In my view, it's akin to a teaching world-view. It's an opportunity for a professor to organize (and interrogate a little) their entire approach to their chosen profession. 
