@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Metrics on Casual Inference</title>
+    <link>/categories/metrics/</link>
+    <description>Recent content in Metrics on Casual Inference</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 13 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/metrics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Choosing the right metric for sports</title>
+      <link>/post/prospective-vs-retrospective-metrics/</link>
+      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/prospective-vs-retrospective-metrics/</guid>
+      <description>I think its great that sports statistics are a big thing in popular media. It makes fans and media better informed about their team and players, and it provides an entry point for people to get interestd in statistics.
+That said, there seems to be a perpetual innumeracy in the way folks talk about a lot of these metrics. One thing I see come up repeatedly is the distinction between metrics that look at a player’s past performance and say, “How important was that player to the team’s success?</description>
+    </item>
+    
+  </channel>
+</rss>

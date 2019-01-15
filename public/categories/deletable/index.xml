@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Deletable on Casual Inference</title>
+    <link>/categories/deletable/</link>
+    <description>Recent content in Deletable on Casual Inference</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 27 Nov 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/deletable/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Experimenting with things</title>
+      <link>/post/experimenting-with-things/</link>
+      <pubDate>Tue, 27 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/experimenting-with-things/</guid>
+      <description>The way this website is set up, the blog feature seems prominant. I’m not sure if that’s what I want to emphasize with it, but I guess we’ll see how it goes. For now, I’m happy that it’s working as well as it is. I might experiment with different themes going forward.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,64 @@
+---
+title: Projected records and rankings aren't equivalent
+author: Matthew Avery
+date: '2018-12-03'
+slug: projected-records-and-rankings
+categories:
+  - life is distributional
+  - picking at nits
+  - common analysis errors
+  - failure to communicate
+tags: []
+---
+
+Nate Duncan's "Dunc'd On" is probably my favorite NBA podcast. He and frequent co-host Danny Leroux are analytical and comprehensive, covering the whole league. About every other week, they'll go through ever team in a conference (East or West) and talk about how each team is doing, where they're projected to finish, etc. They call these episodes "15 in 60", although they don't always get to all 15 teams in the conference, and I don't think they've ever done one of these in 60 minutes. I was listening to today's <a href = http://nateduncannba.com/podcast-episodes/15-60-yes-15-eastern-conference/>"15 in 60"</a>, and around the 22:50 mark, Danny introduces the Charlotte Hornets, saying
+
+> FiveThirtyEight projects [Charlotte] to win 40 games, which would be the 7th seed in the East.
+
+This is part of the standard introduction they do for every team, and it always bugs me, because they're making a simple but common error in interpreting <a href = https://projects.fivethirtyeight.com/2019-nba-predictions/>FiveThirtyEight's</a> projections. 
+
+
+<img src="/post/2018-12-03-projected-records-and-rankings/538nba.png" alt="Screenshot of fivethirtyeight.com's 2019 NBA projections as of 3 December 2018" width="800px" height="335px"/>
+
+Looking at the actual projections page, Danny's statement seems like a reasonable interpretation of the display. We can see that Charlotte's win total is indeed 40, and this is the 7th highest win total projected for each team. However, Danny's goes an extra step and assumes that this means that fivethirtyeight is projecting that either
+
+1. 40 wins will be enough to win the 7th seed in the East or
+2. The Hornets will have the 7th most wins in the East
+
+The issue here is that the projections FiveThirtyEight produce are not representative of a simulated "season". Instead, they're reporting summary statistics *for individual teams*, which means they don't always make sense when interpreted across teams. One simple way this shows up is in the win totals. If you some up the number of wins FiveThirtyEight is "projecting" across the league, you might end up with a different number of wins than there are games in an NBA season! 
+
+```{r, echo = F, message = F, warning = F}
+library(tidyverse)
+
+tb <- read_csv("data/fivethirtyeight-nba-proj-20181203.csv") %>% 
+  mutate(Team = map_chr(Team, str_remove, "([0-9]|[0-9][0-9])+-+([0-9][0-9]|[0-9])$")) %>% 
+  select(Team, Conference, `Proj. Record`)
+```
+
+Below, we can see the December 3 projections that Danny was referencing. 
+
+```{r echo = F}
+knitr::kable(tb)
+wintotal <- tb %>%
+  separate(`Proj. Record`, c("wins", "loses"), sep = "-") %>%
+  mutate(wins = as.numeric(wins)) %>%
+  select(wins) %>%
+  sum
+
+```
+
+
+If these projections represented a real season, the total number of wins projected would be equal to 30 teams times 82 games divided by 2 (because each game produces one winner and one loser) for a total of `r 30 * 82 / 2` wins. However, when we total up the number of projected wins we get `r wintotal`. 
+
+The reason for this discrepancy is that approach FiveThirtyEight uses. Simply put, they simulate thousands of different seasons (based on their <a href = https://projects.fivethirtyeight.com/carmelo/>CARMELO</a> projections of individual player performance) and summarize the results of those thousands of simulations in the results page linked above. (Note that each of those simulated seasons will have the correct number of wins.)
+
+And this is the crux of the matter. These simulations runs give FiveThirtyEight a distribution of potential outcomes for each team. Sometimes, the team will have lots of wins while other times, they'll have relatively few. The value that gets reported as the Projected Record is the median of that distribution. Since the median win total for each team comes from different simulated seasons, the totals won't necessarily add up at the end of the day. 
+
+By contrast, the probabilities reported here *do* have to add up. When you total up the "Chance of Winning the Title" for each team (and you can't do this precisely because there are a lot of "<1%"'s) you get to within rounding error of 100%. The reason here is that making the playoffs, making the finals, etc. are ranked values within the distribution and require considering the performance of all teams simultaneously. If the Warriors win the title in one simulation, the Raptors cannot.
+
+Which brings us back around to Danny's statement. If we had available the full results from FiveThirtyEight's simulation that built their projections dashboard, we could look at each run and determine how many wins were needed to win the 7th seed. Similarly, we could look at how many times the Hornets finished 7th in the East. But making these calculations requires looking at each simulated season individually rather than using the aggregated win totals. For example, the Hornets could have a high-variance team with some probability of achieving a top seed and some probability of falling out of the playoffs entirely. It may be that they only end up in the 7th seed rarely when compared to a team like the Pistons who have a lower ceiling but higher floor. And it may be that the 7th seeded team actually has an average win total higher than 40 because at least one of the teams immediately below the Hornets in the projected win total rankings has a good year in most of the simulated seasons. The point is that the statistics displayed on FiveThirtyEight's page are inadequate to judge. 
+
+Now, having said all that, it's worth asking, "So what?" While not strictly accurate, Danny's basically right; its true that FiveThirtyEight thinks Charlotte is the 7th best team in the East based on median win total, and for folks listening to the podcast, the practical difference between the two is minimal. And maybe Danny does understand the distinction but in the interest of brevity and using natural language, he uses a convenient short-hand. This is all fair. But understanding these subtle distinctions is important for an analyst. When working with models like CARMELO, you need to understand what question you can reasonably ask of the model and the right way to ask them. 
+
+It also helps you avoid confusion when weird results come up, like a team with a lower projected record having a higher probability of making the playoffs, which occurred in the November 19 results. The Lakers have a fractionally lower projected win total than the Trail Blazers in this set of projections, but the Blazers were slightly less likely to make the playoffs!
+

@@ -11,20 +11,83 @@
     
     
     <item>
-      <title>Development</title>
-      <link>/categories/development/</link>
-      <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
+      <title>Common Analysis Errors</title>
+      <link>/categories/common-analysis-errors/</link>
+      <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/categories/development/</guid>
+      <guid>/categories/common-analysis-errors/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Golang</title>
-      <link>/categories/golang/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>Deletable</title>
+      <link>/categories/deletable/</link>
+      <pubDate>Tue, 27 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/categories/golang/</guid>
+      <guid>/categories/deletable/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Failure to Communicate</title>
+      <link>/categories/failure-to-communicate/</link>
+      <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/failure-to-communicate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hot Takes</title>
+      <link>/categories/hot-takes/</link>
+      <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/hot-takes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Life Is Distributional</title>
+      <link>/categories/life-is-distributional/</link>
+      <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/life-is-distributional/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Metrics</title>
+      <link>/categories/metrics/</link>
+      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/metrics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Misc</title>
+      <link>/categories/misc/</link>
+      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Picking at Nits</title>
+      <link>/categories/picking-at-nits/</link>
+      <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/picking-at-nits/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sports</title>
+      <link>/categories/sports/</link>
+      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/sports/</guid>
       <description></description>
     </item>
     

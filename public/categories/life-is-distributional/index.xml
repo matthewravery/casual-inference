@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Life Is Distributional on Casual Inference</title>
+    <link>/categories/life-is-distributional/</link>
+    <description>Recent content in Life Is Distributional on Casual Inference</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 03 Dec 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/life-is-distributional/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Projected records and rankings aren&#39;t equivalent</title>
+      <link>/post/projected-records-and-rankings/</link>
+      <pubDate>Mon, 03 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/projected-records-and-rankings/</guid>
+      <description>Nate Duncan’s “Dunc’d On” is probably my favorite NBA podcast. He and frequent co-host Danny Leroux are analytical and comprehensive, covering the whole league. About every other week, they’ll go through ever team in a conference (East or West) and talk about how each team is doing, where they’re projected to finish, etc. They call these episodes “15 in 60”, although they don’t always get to all 15 teams in the conference, and I don’t think they’ve ever done one of these in 60 minutes.</description>
+    </item>
+    
+  </channel>
+</rss>

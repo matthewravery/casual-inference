@@ -1,0 +1,56 @@
+---
+title: Choosing the right metric for sports
+author: Matthew Avery
+date: '2019-01-13'
+slug: prospective-vs-retrospective-metrics
+categories:
+  - sports
+  - metrics
+  - Misc
+tags: []
+---
+
+I think its great that sports statistics are a big thing in popular media. It makes fans and media better informed about their team and players, and it provides an entry point for people to get interestd in statistics. 
+
+That said, there seems to be a perpetual innumeracy in the way folks talk about a lot of these metrics. One thing I see come up repeatedly is the distinction between metrics that look at a player's past performance and say, "How important was that player to the team's success?" and metrics that look a player's past performance and say, "How well will this player do in the future?"* These are different questions, and when you're not crystal clear about the question you're asking, you risk using the wrong metric. If the creator of a metric did a good job, they had a specific version of one of the two above questions in mind when they built their metric, and it behooves media and fans alike to understand the distinctions. 
+
+*A single metric can be used to address multiple questions, but it probably won't be optimized for both. Analysts attempting to derive "all-in-one"-style metrics sometimes ignore this. 
+
+Here, I'll try to unpack different approaches for designing metrics, identify what questions they excel at answering, and point to errors that you can make if you use the wrong metric for your question.
+
+## Prospective Metrics
+These metrics are used when trying to use a player's past performance to predict how they (or their team) will do in the future. You want to use these metrics to answer questions like, "How much is Player X worth in Free Agency?" or "How many games will Player X's team win next year?"
+
+Evaluating the quality of a prospective metric is relatively straight-forward (provided you have a reliable way to translate individual performances into team outcomes). Going back as far as there is data available (or as far back as you believe your metric is valid), compare the performance in year $n$ against performance predicted for year $n-1$. Or if you've got a metric that can do mid-season updates, you can take an approach like the <a href = "http://www.sloansportsconference.com/wp-content/uploads/2015/09/joeSillSloanSportsPaperWithLogo.pdf">Sill (2010) Adjusted Plus/Minus paper</a> and use cross-validation. But the main point is that evauating how good a metric does at predicting the future is as simple as testing it out on existing data. 
+
+## Retrospective Metrics
+Broadly speaking, these are metrics that attempt to answer the question, "How good was Player X over [a specific timeframe]?" These questions come up when evaluating end-of-season awards (e.g., MVP) or determining who gets into the Hall of Fame. 
+
+These metrics are harder than prospective metrics beacuse there's no obvious criteria for "goodness". One approach used by, e.g.,  <a href="http://www.billjamesonline.com/stats/win_shares_sample/">Bill James's Win Shares</a> is to say, "The team was N games, so we'll divide the shares of those wins up amongst the players". Alternatively, you can start more granularly, identifying actions and outcomes that correspond to winning (e.g., scoring points in basketball), assigning values to each of those actions based on how well-correlated they are with winning, and summing up accordingly for a player. This is what <a href = "https://www.basketball-reference.com/about/per.html">John Hollinger's Player Efficiency Rating (PER)</a> does. This approach kicks the can back one step and creates the very challening problem of mapping a host of distinct events (baskets scored, gettign rebounds, not fouling, etc.) onto a <a href = "/analysis-statement/">single dimension</a> and assuming additivity. There are <a href = http://wagesofwins.com/how-to-calculate-wins-produced/> other</a> <a href = https://www.baseball-reference.com/about/war_explained.shtml>ways</a> of approaching this problem, but it typically comes down to doing some sort of regression to estimate coefficients for the "value" of certain actions or events and then adding it up for each player. Maybe you normalize for league average at some point in there. 
+
+But the key take-away is that your final metric is only as good as the underlying weights, which are often not visible to end-users. 
+
+## Accounting for context
+Another key attribute to bear in mind when when deciding what metric to use is if and how you want to accout for context. In some cases, this is purely a philosophical question, but in others, there are clearly right and wrong answers depending on your research question.
+
+When detrmining whether a player should get into the Hall of Fame or not, reasonable people will disagree with whether you should evaluate that player independent of their circumstances or entirely within their circumstances. A common way to think about this is whether you think <a href = "https://youtu.be/qdQj1utCWdU?t=26">rings</a> are a critical part of evaluating a player's Hall of Fame credentials or whether your team's quality matters for evaluating MVP candidates. Some people believe an 18-win NBA player on a basement-dwelling team is as "valuable" as an 18-win player on a championship-level team, while people wouldn't even consider the former for an award like MVP. 
+
+Context includes things like teammates, coaching, league environment, an in cases like MLB and Soccer where the playing fields vary from team to team, home stadium. It can also include outcomes that are often modeled as random. In baseball, this could mean accounting for wheter a hitter got more or fewer hits than we would expect given the type of batted balls they generated at the plate. In basketball, this could mean whether the opposing team made more or fewer of thier shots from the field than we might expect. In both of the examples given, some people would argue that what we're looking at is observed perforamnce, so we shouldn't attempt to eliminate the context in those cases. Whether we'd want to or not likely depends on whether we're doing a prospective or retrospective analysis, but YMMV. In other cases, such as when a player's opponent's make a higher or lower percent of their free throws than we'd expect them to on average, accounting for context seems like a clear improvement. 
+
+Methods that account for context do it by either making fixed adjustments (e.g., <a href = "https://library.fangraphs.com/principles/park-factors/">park factors</a>) or by taking the <a href = "https://en.wikipedia.org/wiki/Expected_value">expected value</a> of different actions. An example of the latter approach is <a href = "https://www.baseballprospectus.com/news/article/45338/introducing-deserved-runs-created-plus-drc/">Baseball Prospectus's DRC+</a>. DRC+ takes the expected value (in terms of generating runs) of batter actions rather than the observed outcome from each action. It accounts for things like park factors and other contextual factors. 
+
+An alternative approach to accounting for context (this time in the basketball world) comes from Jacob Goldstein's <a href = "https://fansided.com/2018/01/08/nylon-calculus-calculating-luck-adjusted-ratings/">PIPM</a>. PIPM uses what Goldstein calls <a href="https://fansided.com/2018/01/08/nylon-calculus-calculating-luck-adjusted-ratings/">"luck-adjusted on-off data"</a>, which normalizes for things like teammate and opponent free throw and three point rates.*
+
+*I have qualms about the way this is actually implemented as described in the linked article, but the idea behind it is sound. 
+
+## So what metric should I use?
+I'll wrap this up by putting out some example questions and describing the attributes of the metric you'd want. It's left as an exercise to the reader to look for metrics that actually do each of these things in the sport they're interested in!
+
+#### Who is this year's MVP?
+Here, you're looking to compare player performance over a fixed time period. You'll want a retrospective metric, but whether that metric normalizes for context depends on your own preferences. My view is that questions like this should be answered based on what actually happened rather than what we might have expected to happen. We should be careful before normalizing out anything the player might've had influence on. 
+
+#### Is Player A or Player B better for my team to target in free agency?
+This is a compartive question looking at future performance. You're trying to generalize from different contexts onto a new context. Since most metrics can't predict how a player will do **in a specific context** (i.e. your team), the best you can do is likely to normalize out the different contexts in which those players played before. 
+
+#### Is Player A one of the best 100 players to ever play the game?
+This is a question focusing on past performance over different eras. That probably requires era adjustment because the way the game is played now is different from 10, 20, or 40 years ago.
