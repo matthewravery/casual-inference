@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Mainroad</title>
+    <title>Casual Inference</title>
     <link>/</link>
-    <description>Recent content on Mainroad</description>
+    <description>Recent content on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Apr 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 14 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Mon, 14 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>When I was in school, I was applied Statistician, but now folks would probably call me a &amp;ldquo;Data Scientist.&amp;rdquo; I&amp;rsquo;m empirical in my approach and generally skeptical of emminence-based decision-making. I&amp;rsquo;m a fan of Nate Silver, Douglas Adams, and Boris Diaw.
+I work in Defense, so the content of this blog will about things that are mostly or entirely unrelated to my day job. I&amp;rsquo;m hoping that forcing myself to write things down will help me interogate my own thought processes and biases.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/post/about/</link>
+      <pubDate>Mon, 14 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/about/</guid>
+      <description>When I was in school, I was applied Statistician, but now folks would probably call me a &amp;ldquo;Data Scientist.&amp;rdquo; I&amp;rsquo;m empirical in my approach and generally skeptical of emminence-based decision-making. I&amp;rsquo;m a fan of Nate Silver, Douglas Adams, and Boris Diaw.
+I work in Defense, so the content of this blog will about things that are mostly or entirely unrelated to my day job. I&amp;rsquo;m hoping that forcing myself to write things down will help me interogate my own thought processes and biases.</description>
+    </item>
+    
+    <item>
+      <title>Philosophy Analysis Statement</title>
+      <link>/analysis-statement/</link>
+      <pubDate>Thu, 03 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/analysis-statement/</guid>
+      <description>From what I understand, teaching professors (maybe all professors?) write a &amp;ldquo;Philosophy of Teaching Statement&amp;rdquo;. The goal of this documen is to describe the individual&amp;rsquo;s approach to teaching and why they use that approach. It basically says, &amp;ldquo;Here&amp;rsquo;s what I do, and here&amp;rsquo;s why I do it,&amp;rdquo; and maybe you get into a little bit of how they got there. In my view, it&amp;rsquo;s akin to a teaching world-view. It&amp;rsquo;s an opportunity for a professor to organize (and interrogate a little) their entire approach to their chosen profession.</description>
+    </item>
+    
+    <item>
+      <title>Philosophy Analysis Statement</title>
+      <link>/post/analysis-statement/</link>
+      <pubDate>Thu, 03 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/analysis-statement/</guid>
+      <description>From what I understand, teaching professors (maybe all professors?) write a &amp;ldquo;Philosophy of Teaching Statement&amp;rdquo;. The goal of this documen is to describe the individual&amp;rsquo;s approach to teaching and why they use that approach. It basically says, &amp;ldquo;Here&amp;rsquo;s what I do, and here&amp;rsquo;s why I do it,&amp;rdquo; and maybe you get into a little bit of how they got there. In my view, it&amp;rsquo;s akin to a teaching world-view. It&amp;rsquo;s an opportunity for a professor to organize (and interrogate a little) their entire approach to their chosen profession.</description>
+    </item>
     
     <item>
       <title>Basic HTML Elements</title>
@@ -21,17 +59,6 @@
     </item>
     
     <item>
-      <title>Hello R Markdown</title>
-      <link>/post/2015-07-23-r-rmarkdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/post/2015-07-23-r-rmarkdown/</guid>
-      <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
-    </item>
-    
-    <item>
       <title>Creating a New Theme</title>
       <link>/post/creating-a-new-theme/</link>
       <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
@@ -39,19 +66,6 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       <guid>/post/creating-a-new-theme/</guid>
       <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
 We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
-    </item>
-    
-    <item>
-      <title>About Hugo</title>
-      <link>/about/</link>
-      <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>Hugo is a static site engine written in Go.
-It makes use of a variety of open source projects including:
- Cobra Viper J Walter Weatherman Cast  Learn more and contribute on GitHub.
-Setup Some fun facts about Hugo:
- Built in Go Loosely inspired by Jekyll Primarily developed by spf13 on the train while commuting to and from Manhattan. Coded in Vim using spf13-vim  Have questions or suggestions?</description>
     </item>
     
     <item>
