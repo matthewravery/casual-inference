@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>What is random, really?</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.51" />
+	<meta property="og:title" content="What is random, really?" />
+<meta property="og:description" content="I wanted to talk a little bit more about how different metrics account for variation in player performance, and some various flavors of NBA plus/minus statistics provide nice examples. This is building a bit off of some concepts I discussed in Choosing the right metric for sports.
+Plus/Minus MetricsOne approach for estimating individual player contribution to overall outcome is to look at the net points scored while an individual player was on the court." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/what-is-random-really/" /><meta property="article:published_time" content="2019-01-19T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-19T00:00:00&#43;00:00"/>
+
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Casual Inference" rel="home">
+				<div class="logo__title">Casual Inference</div>
+				<div class="logo__tagline">Robust and relaxed</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/about/">About</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://matthewravery.github.io/markdown-cv">CV</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/analysis-statement/">Analysis Philosophy</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">What is random, really?</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-01-19T00:00:00">January 19, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/basketball" rel="category">basketball</a>, <a class="meta__link" href="/categories/metrics" rel="category">metrics</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+
+<p>I wanted to talk a little bit more about how different metrics account for variation in player performance, and some various flavors of NBA plus/minus statistics provide nice examples. This is building a bit off of some concepts I discussed in <a href = "/post/prospective-vs-retrospective-metrics/">Choosing the right metric for sports</a>.</p>
+<div id="plusminus-metrics" class="section level2">
+<h2>Plus/Minus Metrics</h2>
+<p>One approach for estimating individual player contribution to overall outcome is to look at the net points scored while an individual player was on the court. If the team scored more than they gave up, the player will have a positive plus/minus. This metric is simple and intuitive and is used in a variety of sports, including Basketball and Hockey, though this post will focus on basketball. Typically, you’ll want to adjust for playing time to get plus/minus “rate” statistics, making it easier to compare players with more and less total playing time.</p>
+<p>There are obvious flaws with this approach. To name a few, starters tend to play with and against different players than bench players. If your teammates are better and your opponents less skilled, you can expect to have a higher plus/minus than if this wasn’t true. Similarly, whether or not the ball goes in the hoop on a given possession is, to a degree, a random event. Free throws are an obvious example here, where unless you’re the player shooting the free throw, you have no contribution to the outcome of the shot. Yet that outcome still gets attributed to players via simple plus/minus calculations.</p>
+<p>If you had enough minutes with enough different teammates and opponents, plus-minus would be a fine way to estimate player performance. But you typically only see players with a limited set of teammates and for only a short time period for each set of opponents. As a result, plus/minus estimates are terribly noisy.</p>
+</div>
+<div id="advanced-approaches-to-plusminus" class="section level2">
+<h2>“Advanced” approaches to plus/minus</h2>
+<p>These flaws aren’t fatal, and plus/minus is still a useful measure, but folks have tried to improve it by making adjustments to reduce the noise in the data due to the issues described above. These are often referred to as “advanced metrics”. I don’t like the term “advanced” because it’s inherently relative and sounds vaguely pejorative towards other metrics. But it’s the vernacular, so I use it here in scare quotes as a compromise.</p>
+<p>The examples below aren’t comprehensive (there are a TON of plus/minus statistics out there) and were chosen to highlight different approaches to accounting for noise in unadjusted plus/minus data.</p>
+<div id="adjusted-plus-minus-apm" class="section level3">
+<h3><a href = "https://www.nbastuffer.com/analytics101/adjusted-plus-minus/">Adjusted Plus-Minus (APM)</a></h3>
+<p>APM attempts to account for an individual player’s contribution given the other players on the court. It does this using a simple linear regression, which is explained well <a href = "https://squared2020.com/2017/09/18/deep-dive-on-regularized-adjusted-plus-minus-i-introductory-example/">here</a>. So they’re attempting to account for the noise in an individual player’s plus/minus by looking at the other players that were on the court.</p>
+</div>
+<div id="regularized-adjusted-plus-minus-rapm" class="section level3">
+<h3>Regularized Adjusted Plus Minus (RAPM)</h3>
+<p>This is the same thing as APM, except they use <a href = "https://en.wikipedia.org/wiki/Regularized_least_squares#Ridge_regression_(or_Tikhonov_regularization)">ridge regression</a> instead of SLR. The goal is the same, they just produce their estimates slightly differently.</p>
+</div>
+<div id="player-impact-plus-minus-pipm" class="section level3">
+<h3><a href = "https://fansided.com/2018/01/11/nylon-calculus-introducing-player-impact-plus-minus/">Player Impact Plus-Minus (PIPM)</a></h3>
+<p>PIPM does a lot of things to estimate player performance, but I’m going to focus on the <a href = "https://fansided.com/2018/01/08/nylon-calculus-calculating-luck-adjusted-ratings/">“luck-adjusted” offense and defensive ratings</a>.</p>
+<p>The approach here is to reduce the noise in these data by eliminating factors that can be most directly traced to randomness (or “luck”). Free throws are perhaps the only thing that happens on the basketball court where there is no interactions between players. Therefore, it makes little sense to attribute to one player any portion of credit or blame for another player making or missing a free throw. Therefore, PIPM’s ratings substitute the expected value for each free throw taken by other players for the absolute outcome. The article linked above isn’t crystal clear that they do this way, but the best approach would be to estimate the expected number of free throws made given the number taken, weighted appropriately by who was taking the free throws. Players have influence over <em>who</em> takes free throws (and therefore whether the shooter is good or bad at free throws generally) but not whether that shooter makes any particular free throw.</p>
+<p>Similarly, PIPM identifies three point shooting as a source of noise and attempts to normalize for teammate and opponent three-point rate. I’m more dubious on this because players certainly have influence on which opponents they allow to shoot three-pointers and how well-contested those shots are. But there are arguments that <a href = "https://fansided.com/2017/02/02/nylon-calculus-week-14-in-review-fighting-back-team-3pt-defense/">opponent 3-point percentage is mostly noise</a> and that it makes sense to extract it from player ratings. My opinion is that this is one of those cases where we just aren’t good enough at measuring the factors driving the outcome of interest yet, but YMMV.</p>
+</div>
+</div>
+<div id="noise-vs.-randomness" class="section level2">
+<h2>Noise vs. Randomness</h2>
+<p>Above, we saw a couple of different approaches for reducing the noise in plus-minus ratings for players. Unadjusted measures are noisy due to both sampling issues (who is on the court with a player, how much time is available with a given set of match-ups, etc.) and pure (or at least assumed) randomness from shot-making. Different metrics attempt to reduce this noise through different approaches in order to get clearer estimates of individual player contributions to team success.</p>
+<p>One aspect of this that these metrics don’t address is the difference between noise and randomness. APM and RAPM estimate individual player contributions linearly and don’t allow for interaction effects. In this model, match-up effects are part of the random error terms in the regression model. I would argue that a better model would be able to account for things like certain players performing better or worse with certain teammates on the court or against certain opponents. In practice, these effects make plus/minus data noisy, and APM and RPM model them as random.</p>
+<p>PIPM offers another clear example. PIPM treats outcomes that we can clearly see are random (teammate and opponent free throws) and outcomes which are clearly not random (opponent three pointers) in the same way. In statistics, its often practical and useful to model non-random processes as if they were random, and this is what PIPM does. But its important to recognize the difference so that when we improve our understanding of noisy processes, we can explore and understand the noisy things that we previously had treated as random. A more comprehensive model of three point rates would include things like the shooter-adjusted three point percentage for each shot, given things like type of possession (half-court, transition, offensive rebound, SLOB, etc.), shot location, closest defender distance, closest defender size, etc. A model that accounted for all of these things could take what PIPM currently treats as “randomness” and move it into the category of “noise” that we can account for through clever modeling.</p>
+<div id="communicating-about-noise" class="section level3">
+<h3>Communicating about noise</h3>
+<p>One reason I think its important to keep this distinction in mind is that it influences how we talk about these metrics and adjustments they make. If we don’t distinguish in our own mind between what is actually random and what is noise that it useful for us to model as random, we won’t make that distinction when we talk about it. This becomes an especially big deal when communicating results to subject matter experts that know the difference. If you try to tell a basketball player that, when they’re on the court, they have no influence over the opposing team’s 3 point make rate, they’ll either think you don’t understand the game or that you think they don’t need to close out on shooters. Neither of these are useful outcomes. So while it can be a useful short-hand to conflate “noisy” and “random”, I think its a bad habit that analysts should strive to avoid.</p>
+</div>
+</div>
+
+		</div>
+		
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/about/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">About</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/what-is-random-really/">What is random, really?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/about/">About</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/prospective-vs-retrospective-metrics/">Choosing the right metric for sports</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/analysis-statement/">Analysis Philosophy</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/projected-records-and-rankings/">Projected records and rankings aren&#39;t equivalent</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/basketball">Basketball</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/common-analysis-errors">Common analysis errors</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/deletable">Deletable</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/failure-to-communicate">Failure to communicate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/hot-takes">Hot takes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/life-is-distributional">Life is distributional</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/metrics">Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/misc">Misc</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/picking-at-nits">Picking at nits</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/sports">Sports</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 Casual Inference.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

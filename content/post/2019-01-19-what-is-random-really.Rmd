@@ -1,0 +1,50 @@
+---
+title: What is random, really?
+author: Matthew Avery
+date: '2019-01-19'
+slug: what-is-random-really
+categories:
+  - basketball
+  - metrics
+tags: []
+description: ''
+thumbnail: ''
+---
+I wanted to talk a little bit more about how different metrics account for variation in player performance, and some various flavors of NBA plus/minus statistics provide nice examples. This is building a bit off of some concepts I discussed in <a href = "/post/prospective-vs-retrospective-metrics/">Choosing the right metric for sports</a>. 
+
+## Plus/Minus Metrics
+One approach for estimating individual player contribution to overall outcome is to look at the net points scored while an individual player was on the court. If the team scored more than they gave up, the player will have a positive plus/minus. This metric is simple and intuitive and is used in a variety of sports, including Basketball and Hockey, though this post will focus on basketball. Typically, you'll want to adjust for playing time to get plus/minus "rate" statistics, making it easier to compare players with more and less total playing time. 
+
+There are obvious flaws with this approach. To name a few, starters tend to play with and against different players than bench players. If your teammates are better and your opponents less skilled, you can expect to have a higher plus/minus than if this wasn't true. Similarly, whether or not the ball goes in the hoop on a given possession is, to a degree, a random event. Free throws are an obvious example here, where unless you're the player shooting the free throw, you have no contribution to the outcome of the shot. Yet that outcome still gets attributed to players via simple plus/minus calculations. 
+
+If you had enough minutes with enough different teammates and opponents, plus-minus would be a fine way to estimate player performance. But you typically only see players with a limited set of teammates and for only a short time period for each set of opponents. As a result, plus/minus estimates are terribly noisy. 
+
+## "Advanced" approaches to plus/minus 
+These flaws aren't fatal, and plus/minus is still a useful measure, but folks have tried to improve it by making adjustments to reduce the noise in the data due to the issues described above. These are often referred to as "advanced metrics". I don't like the term "advanced" because it's inherently relative and sounds vaguely pejorative towards other metrics. But it's the vernacular, so I use it here in scare quotes as a compromise. 
+
+The examples below aren't comprehensive (there are a TON of plus/minus statistics out there) and were chosen to highlight different approaches to accounting for noise in unadjusted plus/minus data.
+
+### <a href = "https://www.nbastuffer.com/analytics101/adjusted-plus-minus/">Adjusted Plus-Minus (APM)</a>
+APM attempts to account for an individual player's contribution given the other players on the court. It does this using a simple linear regression, which is explained well <a href = "https://squared2020.com/2017/09/18/deep-dive-on-regularized-adjusted-plus-minus-i-introductory-example/">here</a>. So they're attempting to account for the noise in an individual player's plus/minus by looking at the other players that were on the court. 
+
+### Regularized Adjusted Plus Minus (RAPM)
+
+This is the same thing as APM, except they use <a href = "https://en.wikipedia.org/wiki/Regularized_least_squares#Ridge_regression_(or_Tikhonov_regularization)">ridge regression</a> instead of SLR. The goal is the same, they just produce their estimates slightly differently.
+
+### <a href = "https://fansided.com/2018/01/11/nylon-calculus-introducing-player-impact-plus-minus/">Player Impact Plus-Minus (PIPM)</a>
+PIPM does a lot of things to estimate player performance, but I'm going to focus on the <a href = "https://fansided.com/2018/01/08/nylon-calculus-calculating-luck-adjusted-ratings/">"luck-adjusted" offense and defensive ratings</a>.
+
+The approach here is to reduce the noise in these data by eliminating factors that can be most directly traced to randomness (or "luck"). Free throws are perhaps the only thing that happens on the basketball court where there is no interactions between players. Therefore, it makes little sense to attribute to one player any portion of credit or blame for another player making or missing a free throw. Therefore, PIPM's ratings substitute the expected value for each free throw taken by other players for the absolute outcome. The article linked above isn't crystal clear that they do this way, but the best approach would be to estimate the expected number of free throws made given the number taken, weighted appropriately by who was taking the free throws. Players have influence over *who* takes free throws (and therefore whether the shooter is good or bad at free throws generally) but not whether that shooter makes any particular free throw. 
+
+Similarly, PIPM identifies three point shooting as a source of noise and attempts to normalize for teammate and opponent three-point rate. I'm more dubious on this because players certainly have influence on which opponents they allow to shoot three-pointers and how well-contested those shots are. But there are arguments that <a href = "https://fansided.com/2017/02/02/nylon-calculus-week-14-in-review-fighting-back-team-3pt-defense/">opponent 3-point percentage is mostly noise</a> and that it makes sense to extract it from player ratings. My opinion is that this is one of those cases where we just aren't good enough at measuring the factors driving the outcome of interest yet, but YMMV.
+
+## Noise vs. Randomness
+
+Above, we saw a couple of different approaches for reducing the noise in plus-minus ratings for players. Unadjusted measures are noisy due to both sampling issues (who is on the court with a player, how much time is available with a given set of match-ups, etc.) and pure (or at least assumed) randomness from shot-making. Different metrics attempt to reduce this noise through different approaches in order to get clearer estimates of individual player contributions to team success. 
+
+One aspect of this that these metrics don't address is the difference between noise and randomness. APM and RAPM estimate individual player contributions linearly and don't allow for interaction effects. In this model, match-up effects are part of the random error terms in the regression model. I would argue that a better model would be able to account for things like certain players performing better or worse with certain teammates on the court or against certain opponents. In practice, these effects make plus/minus data noisy, and APM and RPM model them as random. 
+
+PIPM offers another clear example. PIPM treats outcomes that we can clearly see are random (teammate and opponent free throws) and outcomes which are clearly not random (opponent three pointers) in the same way. In statistics, its often practical and useful to model non-random processes as if they were random, and this is what PIPM does. But its important to recognize the difference so that when we improve our understanding of noisy processes, we can explore and understand the noisy things that we previously had treated as random. A more comprehensive model of three point rates would include things like the shooter-adjusted three point percentage for each shot, given things like type of possession (half-court, transition, offensive rebound, SLOB, etc.), shot location, closest defender distance, closest defender size, etc. A model that accounted for all of these things could take what PIPM currently treats as "randomness" and move it into the category of "noise" that we can account for through clever modeling. 
+
+### Communicating about noise
+One reason I think its important to keep this distinction in mind is that it influences how we talk about these metrics and adjustments they make. If we don't distinguish in our own mind between what is actually random and what is noise that it useful for us to model as random, we won't make that distinction when we talk about it. This becomes an especially big deal when communicating results to subject matter experts that know the difference. If you try to tell a basketball player that, when they're on the court, they have no influence over the opposing team's 3 point make rate, they'll either think you don't understand the game or that you think they don't need to close out on shooters. Neither of these are useful outcomes. So while it can be a useful short-hand to conflate "noisy" and "random", I think its a bad habit that analysts should strive to avoid. 
