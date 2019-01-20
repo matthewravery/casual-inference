@@ -56,3 +56,11 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     name = "CV"
     url = "https://matthewravery.github.io/markdown-cv"
     weight = 30
+
+
+
+  [[menu.main]]
+    identifier = "citools"
+    name = "ciTools"
+    url = "https://github.com/jthaman/ciTools"
+    weight = 30
