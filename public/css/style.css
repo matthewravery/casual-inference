@@ -531,7 +531,7 @@ button:not(:-moz-focusring):focus > .menu__btn-title {
 	transition: visibility .15s ease, transform .15s ease, -webkit-transform .15s ease;
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 900px) {
 	.menu {
 		border-bottom: 5px solid #00aeff;
 	}
@@ -1174,7 +1174,7 @@ textarea {
 	}
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1200px) {
 	.wrapper {
 		display: block;
 	}
@@ -1199,7 +1199,7 @@ textarea {
 	}
 }
 
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 800px) {
 	input[type=text],
 	input[type=email],
 	input[type=tel],
