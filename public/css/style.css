@@ -1144,7 +1144,7 @@ textarea {
 	}
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1200px) {
 	.container--outer {
 		width: 100%;
 		margin: 0 auto;
@@ -1174,7 +1174,7 @@ textarea {
 	}
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
 	.wrapper {
 		display: block;
 	}
@@ -1199,7 +1199,7 @@ textarea {
 	}
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
 	input[type=text],
 	input[type=email],
 	input[type=tel],
