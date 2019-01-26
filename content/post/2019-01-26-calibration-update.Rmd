@@ -133,7 +133,7 @@ bind_rows(scottbrier14, scottbrier15, scottbrier16, scottbrier17, scottbrier18) 
 ```
 
 
-YMMV, but my reading of this is that 2018 was an odd year for Scott. He chose a set of events that had substantially more variation in the past, and while he did well at discriminating, he was also more miscalibrated than he's been in the past. 2015 was probably his best year historically. This lead to a much higher Brier score than he usually sees. Prior to that, his aggregate Brier score had been stable despite quite a bit of variation in the components. 
+YMMV, but my reading of this is that 2018 was an odd year for Scott. He chose a set of events that had substantially more variation in the past, and while he did well at discriminating, he was also more miscalibrated than he's been in the past. This lead to a much higher Brier score than he usually sees. Prior to that, his aggregate Brier score had been stable despite quite a bit of variation in the components. 
 
 ## Caveats
 
