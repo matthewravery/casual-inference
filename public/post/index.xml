@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Calibration update, now with Brier Scores!</title>
+      <link>/post/calibration-update/</link>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/calibration-update/</guid>
+      <description>After reading my my previous post on calibration, my clever wife (who’s been doing calibration-related activities in the context of modeling and simulation) brought to my attention the concept of Brier Scores. (Alternatively, here.) This approach was originally proposed to evaluate weather forecasts (“Verification of weather forecasts has been a controversial subject for more than half a century,” so at least we’ve moved on controversial climate forecasts in this half-century.</description>
+    </item>
+    
+    <item>
       <title>Is Scott well-calibrated?</title>
       <link>/post/is-scott-well-calibrated/</link>
       <pubDate>Wed, 23 Jan 2019 00:00:00 +0000</pubDate>
