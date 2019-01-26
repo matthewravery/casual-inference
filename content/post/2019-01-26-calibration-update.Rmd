@@ -73,9 +73,16 @@ library(ggplot2)
 
 After reading my <a href = "/post/is-scott-well-calibrated/">my previous post on calibration</a>, my clever wife (who's been doing calibration-related activities in the context of modeling and simulation) brought to my attention the concept of <a href = "https://en.wikipedia.org/wiki/Brier_score">Brier Scores</a>. (Alternatively, <a href = "ftp://ftp.library.noaa.gov/docs.lib/htdocs/rescue/mwr/078/mwr-078-01-0001.pdf">here</a>.) This approach was originally proposed to evaluate weather forecasts ("Verification of weather forecasts has been a controversial subject for more than half a century," so at least we've moved on controversial climate forecasts in this half-century.) 
 
-The math itself is pretty easy for binary predictions (it's just a squared error loss function, using the probabilities as the "expected value" of an event). Unlike the previous approaches I went through, Brier scores don't give you a nice hypothesis test. Instead, they give you a relative performance score, allowing you to compare different forecasters on the same set of outcomes. Depending on how loose you want to be with your assumptions, Scott could use this to compare his year-to-year performance and see if he's getting better, worse, or staying about the same in terms of his prediction skills over time.*
 
-And the R packages `scoring` has a simple implementation (there really is an R package for just about everything), so we can use that provided we get the data formatted properly. Brier scores are based on individual event observations, so we have to gather the data a bit differently than before. The function I wrote to do this is included at the end of the post for those interested. 
+## Brier scores
+
+The math itself is pretty easy for binary predictions (it's just a squared error loss function, using the probabilities as the "expected value" of an event). Unlike the previous approaches I went through, Brier scores don't give you a nice hypothesis test. Instead, they give you a relative performance score, allowing you to compare different forecasters on the same set of outcomes. Depending on how loose you want to be with your assumptions, Scott could use this to compare his year-to-year performance and see if he's getting better, worse, or staying about the same in terms of his prediction skills over time. There are ways to decompose Brier scores that could help differentiate these questions (<a href = "https://journals.ametsoc.org/doi/pdf/10.1175/1520-0450(1973)012%3C0595%3AANVPOT%3E2.0.CO%3B2">see here</a>; it's sorta like the bias/variance decomposition for RSME). 
+
+And the R packages `scoring` has a simple implementation (there really is an R package for just about everything), so we can use that provided we get the data formatted properly.
+
+## Scott's predictions
+
+Brier scores are based on individual event observations, so we have to gather the data a bit differently than before. The function I wrote to do this is included at the end of the post for those interested. 
 
 ```{r}
 url <- 'https://slatestarcodex.com/2019/01/22/2018-predictions-calibration-results/'
@@ -126,12 +133,15 @@ bind_rows(scottbrier14, scottbrier15, scottbrier16, scottbrier17, scottbrier18) 
 ```
 
 
-YMMV, but my reading of this is that Scott's been pretty consistent, with 2015 being his best year. Despite the apparent dip in performance this year, Scott was actually quite good at assigning high probability to events that occurred despite the relatively high noise this year. His miscalibration also ticked up in 2018 but not enough to matter much. The higher Brier score for this year reflects Scott's choice of a noisy set of Events more than anything.
+YMMV, but my reading of this is that 2018 was an odd year for Scott. He chose a set of events that had substantially more variation in the past, and while he did well at discriminating, he was also more miscalibrated than he's been in the past. 2015 was probably his best year historically. This lead to a much higher Brier score than he usually sees. Prior to that, his aggregate Brier score had been stable despite quite a bit of variation in the components. 
 
-*The biggest issue here is data generation. Scott consciously chooses which events to put in his annual posts. He generally chooses things he feels that he'll be well-calibrated at predicting. If his Brier score changes over time, it's hard to identify whether that's because he's getting better at predicting events, better at knowing which events he can predict well, or if events are just becoming easier to predict in aggregate. There are ways to decompose Brier scores that could help differentiate these questions (<a href = "https://journals.ametsoc.org/doi/pdf/10.1175/1520-0450(1973)012%3C0595%3AANVPOT%3E2.0.CO%3B2">see here</a>; it's sorta like the bias/variance decomposition for RSME). 
+## Caveats
 
+This brings us to the issue of data generation. While there are plenty of concerns with this exercise (correlation between events being a big one), Scott is also consciously choosing which events to make forecasts on. In the canonical examples for which Brier scores were developed (weather forecasting), the forecaster doesn't get to pick and choose. So it becomes hard conceptually to interpret the Uncertainty score. Scott chooses the playing field for this game, so he gets to determine if he wants to make predictions on high-uncertainty events or low uncertainty events. Or at least he gets to do this based on his estimated probabilities. This means that his forecast accuracy effects the aggregate uncertainty in the events, insofar as Scott chooses which events to predict based on his forecasts and a desire to have a certain number of events in each bin. 
 
-### Data scraping function
+I'll have to think about this more to decide how it should impact our interpretations of Scott's scores. I think it would help for Scott to provide details about his process for choosing which events to make forecasts about. I'm reasonably certain its changed the longer he's done this project, so understanding that could help us understand why 2018 was such an odd-looking year. 
+
+## Data scraping function
 
 This is the function I used to scrape the results from Scott's webpage. It's kinda kludgy in a few places because Scott wasn't 100% consistent in how he coded things. (e.g., He used colors rather than strike-through in 2014, and he didn't always include line breaks between predictions.) But as far as I can tell, it works properly. 
 ```{r, eval = F}
