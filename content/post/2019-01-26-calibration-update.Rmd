@@ -160,4 +160,4 @@ get_scotts_results <- function(url){
 }
 ```
 
-And as long as we're here, if you want to read more about Brier scores and the `scoring` package I used, <a href = "http://journal.sjdm.org/17/17614c/jdm17614c.html"<a>here</a> is a relevant article.
+And as long as we're here, if you want to read more about Brier scores and the `scoring` package I used, <a href = "http://journal.sjdm.org/17/17614c/jdm17614c.html">here</a> is a relevant article.
