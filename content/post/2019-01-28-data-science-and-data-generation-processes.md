@@ -21,9 +21,7 @@ I don't think this is unreasonable. Fisherian statistics is about deriving estim
 ## The Data Generation Process
 Back when I was taking DOE courses in grad school, this was a straightforward concept. In fact, we took the time to write down mathematical models for what it looked like! We'd say something like:
 
-
-
-$$y_{i} = \beta X_i + \epsilon_i$$,
+$$y_{i} = \beta X_i + \epsilon_i$$
 
 where the errors are iid Gaussian, etc., etc. If we knew we wanted to answer a specific questions (e.g., "Will Fertilizer A produce higher yields than Fertilizer B?"), we'd make sure we generated data with these two fertilizers, and we'd account for confounders. We'd note that our inference would only apply for the types of soils and environments where we did the testing, etc. These caveats and limitations are foregrounded because we often made conscious decisions to trade them away for a leaner test as part of the DOE process. 
 
