@@ -21,10 +21,8 @@ thumbnail: ''
 </div>
 <div id="the-data-generation-process" class="section level2">
 <h2>The Data Generation Process</h2>
-<p>Back when I was taking DOE courses in grad school, this was a straightforward concept. In fact, we took the time to write down mathematical models for what it looked like! We’d say something like</p>
-<p><span class="math display">\[
-y_{i} = \beta X_i + \epsilon_i,
-\]</span></p>
+<p>Back when I was taking DOE courses in grad school, this was a straightforward concept. In fact, we took the time to write down mathematical models for what it looked like! We’d say something like: <span class="math inline">\(i\)</span></p>
+<p>$$y_{i} = X_i + _i$$,</p>
 <p>where the errors are iid Gaussian, etc., etc. If we knew we wanted to answer a specific questions (e.g., “Will Fertilizer A produce higher yields than Fertilizer B?”), we’d make sure we generated data with these two fertilizers, and we’d account for confounders. We’d note that our inference would only apply for the types of soils and environments where we did the testing, etc. These caveats and limitations are foregrounded because we often made conscious decisions to trade them away for a leaner test as part of the DOE process.</p>
 <p>Things don’t tend to work that way in the world of data science. Instead of thinking about which data points you’d like to get, you build a data set by scraping, cleaning, and joining data from various sources. Often times, the questions you asked are informed by the information available to you. To a statistician, this looks like an <a href = "https://en.wikipedia.org/wiki/Observational_study">observational study</a>, which have a host of limitations. Fortunately for the data scientist, in many cases you don’t have a sample but instead what amounts to a census.</p>
 <p>The breadth of available data is often a saving grace. Issues like sampling bias and out-of-scope inference go away when you can look at the whole distribution. But I fear this makes analyst complacent and unaware of pitfalls that are readily apparent when data points are consciously and carefully selected. And if it turns out that the data generation process changes, you’re less likely to notice if you didn’t go through the trouble to model it in the first place.</p>

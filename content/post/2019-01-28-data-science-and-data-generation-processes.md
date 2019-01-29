@@ -19,11 +19,11 @@ The difference between "data science" and "statistics" is <a href = "https://mix
 I don't think this is unreasonable. Fisherian statistics is about deriving estimators and finding causal explanations. The field evolved in a time before computers, where data was typically difficult and costly to acquire. As a result, people spent a whole lot of time thinking about exactly which data points they should collect and exactly how much information they can extract. "Data Science", on the other hand, came of age in a computerized, connected world where "big data" was already a passe phrase. The question isn't so much, "How much data can I afford to collect?" as it is, "How can I process and learn from all this data that's been dropped on my head?"
 
 ## The Data Generation Process
-Back when I was taking DOE courses in grad school, this was a straightforward concept. In fact, we took the time to write down mathematical models for what it looked like! We'd say something like
+Back when I was taking DOE courses in grad school, this was a straightforward concept. In fact, we took the time to write down mathematical models for what it looked like! We'd say something like:
 
-$$
-y_{i} = \beta X_i + \epsilon_i,
-$$
+
+
+$$y_{i} = \beta X_i + \epsilon_i$$,
 
 where the errors are iid Gaussian, etc., etc. If we knew we wanted to answer a specific questions (e.g., "Will Fertilizer A produce higher yields than Fertilizer B?"), we'd make sure we generated data with these two fertilizers, and we'd account for confounders. We'd note that our inference would only apply for the types of soils and environments where we did the testing, etc. These caveats and limitations are foregrounded because we often made conscious decisions to trade them away for a leaner test as part of the DOE process. 
 
