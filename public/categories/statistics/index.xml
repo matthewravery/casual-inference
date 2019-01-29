@@ -6,10 +6,19 @@
     <description>Recent content in Statistics on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 28 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/statistics/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Data Science and Data Generation Processes</title>
+      <link>/post/data-generation-processes/</link>
+      <pubDate>Mon, 28 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/data-generation-processes/</guid>
+      <description>I was talking about a curriculum for a new Data Science degree program, and the topic of experimental design came up. Design of Experiments (DOE) is classical subject area for statisticians, and the context of an applied statistics masters degree makes perfect sense, but in the context of data science, it seemed pretty out of place. I say that not because DOE isn’t important but because I think its something “data science” doesn’t often consider.</description>
+    </item>
     
     <item>
       <title>Calibration update, now with Brier Scores!</title>
