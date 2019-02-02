@@ -1,0 +1,56 @@
+---
+title: The Arrogance of "Noise"
+author: Matthew Avery
+date: '2019-02-02'
+slug: the-arrogance-of-noise
+categories:
+  - statistics
+  - metrics
+  - failure to communicate
+tags: []
+description: ''
+thumbnail: ''
+---
+
+
+
+<p>This is a post about communication.</p>
+<p>One of the through-lines of my academic and professional career is conflict between entrenched subject matter experts (SME) and hot-shot quantitative analysts. As a young undergraduate, I followed Baseball Prospectus Fangraphs through the SABRmetric revolution. I watched Nate Silver bring data-driven prognostication to the world of political journalism which had previously (and arguably still is) dominated by punditry. In my current job, I work with experienced analysts who have often been working on the same systems for years. In all of these cases, you have an existing set of methods and individuals experienced with those methods being confronted by a new set of analysts who want to use “advanced statistics” and think they have a better way to do things.</p>
+<p>There’s probably a post worth doing just talking about these histories and how fields absorb new ideas and approaches (analytical paradigms?), but here I want to focus on a particular verbal tick many data scientists fall victim to; the above cases provide instructive examples.</p>
+<div id="defense-independent-pitching" class="section level2">
+<h2>Defense-Independent Pitching</h2>
+<p>Traditional measures of baseball pitcher performance like <a href = "http://m.mlb.com/glossary/standard-stats/win">Wins</a> and <a href = "https://en.wikipedia.org/wiki/Earned_run_average">ERA</a> are pretty <a href="/post/prospective-vs-retrospective-metrics/">poor metrics</a>. Shortcomings of ERA include the key issue that earned runs are not exclusively attributable to pitcher performance. The defenders in the field also have a role to play in whether batted balls are hits and whether runners are able to score. Thus, the create of so-called “Defense-Independent Pitching Statistics” or <a href = "http://www.futilityinfielder.com/dips.html">DIPS.</a> The first thought was to create a pitcher performance metric based exclusively on things that had nothing to do with anyone but the pitcher. This means focusing on strikeouts, walks and home runs. Everything that ends up in play? Well, that’s beyond the pitcher’s control. For example, <a href = "https://legacy.baseballprospectus.com/glossary/index.php?search=FIP">FIP</a>.</p>
+<p>When this stuff came out, <a href = "https://www.baseballprospectus.com/news/article/878/pitching-and-defense-how-much-control-do-hurlers-have/">it was controversial</a>. The arm-chair analysts were saying that pitchers had no control over what happened to batted balls, which baseball scouts, who had decades of experience watching baseball and evaluating talent, thought was absurd. “How can you not attribute to a pitcher the responsibility for surrendering a stinging line drive that hits the gap and goes for a double?” the scouts would ask. “It’s just luck!”, replied the analysts, safe in their knowledge that their metrics were far more stable year-over-year than ERA.</p>
+<p>After years of looking at things (and producing richer data, including the ability to track the velocity and angle of every batted ball), the current consensus is a bit different. Pitchers have <em>some</em> control over things like many fly balls they give up. So as metrics evolved (e.g., <a href = "https://library.fangraphs.com/pitching/xfip/">xFIP</a>), they began to adjust for things like fly ball rate.</p>
+<p>So variation in ball in play outcome for pitchers isn’t entirely luck, and it turns out all those grizzled scouts were right?</p>
+<p>Well, sorta….</p>
+</div>
+<div id="the-myth-of-the-hot-hand" class="section level2">
+<h2>The Myth of the Hot Hand</h2>
+<p>The controversy over whether the “hot hand” exists for basketball players pre-dates the SABR struggles in MLB, but it took a bit longer to resolve. The history here is <a href = "https://deadspin.com/the-myth-of-the-myth-of-the-hot-hand-1588112937">well</a>-<a href = "https://slate.com/technology/2015/10/hot-hands-in-basketball-are-real-new-analysis-shows.html">covered</a>, so I won’t go into much detail. Suffice it to say that <a href = "https://www.sciencedirect.com/science/article/pii/0010028585900106">Tversky and friends</a> showed in 1985 that they couldn’t find evidence that players were streaky, based on some limited data and specific hypothesis tests. (Nintendo famously ignored these conclusions when designing <a href = "https://en.wikipedia.org/wiki/NBA_Jam_(1993_video_game)">NBA Jam</a>.) This result was used as an example of how humans recognize fake patterns in random noise and as an anecdote for nerds to use when trying to relate to more athletic types. (It typically didn’t work.)</p>
+<p>Athletes consistently differed, stating sincere belief that they were, indeed, more likely to make a shot when they were “hot”. And subsequently, the athletes were validated when better data gathering allowed researchers in 2014 to publish a new study, finding “a small, positive and significant Hot Hand effect.” (<a href = "http://www.sloansportsconference.com/wp-content/uploads/2014/02/2014_SSAC_The-Hot-Hand-A-New-Approach.pdf">Bocskocsky, et al, 2014</a>)</p>
+<p>So once again, the arm-chair analysts were shown to be fools for claiming that players never got “hot” and people’s belief in the phenomena was because humans tend to fabricate patterns in noise even when none are there.</p>
+</div>
+<div id="just-becuase-you-cant-explain-it-doesnt-make-it-inexplicable" class="section level2">
+<h2>Just Becuase You can’t Explain it Doesn’t Make it Inexplicable</h2>
+<p>Summarizing the above vignettes, one might say:</p>
+<blockquote>
+<p>In both of the examples above, the innovators went in to smash the dogma of the entrenched regime. They found a point upon which they thought the conventional wisdom was wrong, did some analysis to back it up, and declared victory. Over time, as better data and analytic techniques became available, it was shown that those initial conclusions were incorrect.</p>
+</blockquote>
+<p>The real issue is two-fold. First, there’s the obvious conflation of a lack of conclusive evidence in favor of a hypothesis with evidence in favor of the opposite conclusion. (Neither of the original studies were Bayesian.) But the more interesting point to me is how easily folks slip into saying “It’s just noise” as a short-hand for “I can’t find evidence in the data for the specific hypothesis I tested”. Even worse when this is used to ridicule SMEs for holding onto sacred cows that aren’t easy to verify based on extant data. This is what happened repeatedly throughout the SABRmetrics revolution, first on internet forums, then on radio and television shows, and eventually on the <a href = "https://www.imdb.com/title/tt1210166/">big screen</a>.</p>
+<p>And I don’t make this point because I believe the metrics folks were wrong on the substance of the two matters above! Rather, I think they were basically correct, and the modern research which “refutes” them only does so in a limited way. Pitchers have limited control over the types of batted balls they give up, and variability from one season to the next for a single pitcher is greater than the variance between pitchers over the long run. Similarly, a 1 to 2 percentage point “hot hand” is pretty minuscule when compared with comments by players who get in grooves where they feel like they, “can’t miss”. By stating the conclusions too broadly, (“There is no hot hand!”, “Pitcher performance on balls in play is just luck!”) people end up looking silly in retrospect despite being mostly right!</p>
+<p>The answer is for analysts and data scientists to be more circumspect in their . Don’t attribute to “noise” or “luck” what probably isn’t. In basketball, shot selection and defense are obvious factors that influence the likelihood of a shot going in, so attribute the high levels of variation to these or other unmeasured factors instead of saying a player was just “lucky”. Similarly, note that while pitchers may have some control over where they put a pitch, the batter gets a much bigger vote in the outcome.</p>
+<p>The particularly frustrating thing is, often time original researchers will do this (see the Voros McCracken article on DIPS above, for example) but the folks that use their metrics don’t fully understand the caveat or choose to ignore them. It’s critical for data scientists to be able to communicate about their tools, and that means not stepping on your own feet by claiming that something is inexplicable when the SME sitting at the other end of the table has perfectly reasonable explanations at the ready.</p>
+</div>
+<div id="when-in-doubt" class="section level2">
+<h2>When in doubt…</h2>
+<p>Briefly, I want to quote <a href ="https://statmodeling.stat.columbia.edu/2012/03/16/hot-hand-debate-is-warming-up/">Andrew Gelman</a> whose talked a lot about the “hot hand” on his blog. While written to the specific example of the “hot hand”, I think the conclusions are pretty portable:</p>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>The effects are certainly not zero. We are not machines, and anything that can affect our expectations (for example, our success in previous tries) should affect our performance.</li>
+<li>The effects I’ve seen are small, on the order of 2 percentage points (for example, the probability of a success in some sports task might be 45% if you’re “hot” and 43% otherwise).</li>
+<li>There’s a huge amount of variation, not just between but also among players. Sometimes if you succeed you will stay relaxed and focused, other times you can succeed and get overconfidence.</li>
+<li>Whatever the latest results on particular sports, I can’t see anyone overturning the basic finding of Gilovich, Vallone, and Tversky that players and spectators alike will perceive the hot hand even when it does not exist and dramatically overestimate the magnitude and consistency of any hot-hand phenomenon that does exist.</li>
+</ol>
+</blockquote>
+</div>

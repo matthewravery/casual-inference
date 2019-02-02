@@ -6,10 +6,20 @@
     <description>Recent content in Statistics on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 02 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/statistics/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The Arrogance of &#34;Noise&#34;</title>
+      <link>/post/the-arrogance-of-noise/</link>
+      <pubDate>Sat, 02 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/the-arrogance-of-noise/</guid>
+      <description>This is a post about communication.
+One of the through-lines of my academic and professional career is conflict between entrenched subject matter experts (SME) and hot-shot quantitative analysts. As a young undergraduate, I followed Baseball Prospectus Fangraphs through the SABRmetric revolution. I watched Nate Silver bring data-driven prognostication to the world of political journalism which had previously (and arguably still is) dominated by punditry. In my current job, I work with experienced analysts who have often been working on the same systems for years.</description>
+    </item>
     
     <item>
       <title>Data Science and Data Generation Processes</title>

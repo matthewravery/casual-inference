@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/post/the-arrogance-of-noise/</loc>
+    <lastmod>2019-02-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/data-generation-processes/</loc>
     <lastmod>2019-01-28T00:00:00+00:00</lastmod>
   </url>
@@ -60,7 +65,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -84,7 +89,7 @@
   
   <url>
     <loc>/categories/failure-to-communicate/</loc>
-    <lastmod>2018-12-03T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -102,7 +107,7 @@
   
   <url>
     <loc>/categories/metrics/</loc>
-    <lastmod>2019-01-19T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -126,7 +131,7 @@
   
   <url>
     <loc>/categories/statistics/</loc>
-    <lastmod>2019-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
