@@ -6,7 +6,7 @@
     <description>Recent content in Categories on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Basketball</title>
       <link>/categories/basketball/</link>
-      <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 16 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/basketball/</guid>
       <description></description>
@@ -68,7 +68,7 @@
     <item>
       <title>Metrics</title>
       <link>/categories/metrics/</link>
-      <pubDate>Sat, 02 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 16 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/metrics/</guid>
       <description></description>
@@ -93,6 +93,15 @@
     </item>
     
     <item>
+      <title>R</title>
+      <link>/categories/r/</link>
+      <pubDate>Sat, 16 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Sports</title>
       <link>/categories/sports/</link>
       <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
@@ -104,7 +113,7 @@
     <item>
       <title>Statistics</title>
       <link>/categories/statistics/</link>
-      <pubDate>Sat, 02 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 16 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/statistics/</guid>
       <description></description>

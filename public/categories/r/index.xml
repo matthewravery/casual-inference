@@ -6,20 +6,19 @@
     <description>Recent content in R on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 16 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Hello R Markdown</title>
-      <link>/post/2015-07-23-r-rmarkdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <title>DIY Metrics</title>
+      <link>/post/diy-metrics/</link>
+      <pubDate>Sat, 16 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/2015-07-23-r-rmarkdown/</guid>
-      <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+      <guid>/post/diy-metrics/</guid>
+      <description>In order to better understand some “advanced metrics”, I figured it’d be useful to build them from scratch. (This is also just a fun exercise in data manipulation, cleaning, etc.)
+For starters, let’s do something easy, namely raw plus/minus. For the code below, I’m using the free example play-by-play data set from NBAstuffer. They seem reputable, though I do have concerns about how widely-used their formatting is; one of the challenges with building a workflow is ensuring that the structure of your incoming data won’t change.</description>
     </item>
     
   </channel>

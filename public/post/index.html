@@ -72,6 +72,29 @@
 	</div><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/post/diy-metrics/" rel="bookmark">
+			DIY Metrics
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-02-16T00:00:00">February 16, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/basketball" rel="category">basketball</a>, <a class="meta__link" href="/categories/metrics" rel="category">metrics</a>, <a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/r" rel="category">R</a></span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		In order to better understand some “advanced metrics”, I figured it’d be useful to build them from scratch. (This is also just a fun exercise in data manipulation, cleaning, etc.)
+For starters, let’s do something easy, namely raw plus/minus. For the code below, I’m using the free example play-by-play data set from NBAstuffer. They seem reputable, though I do have concerns about how widely-used their formatting is; one of the challenges with building a workflow is ensuring that the structure of your incoming data won’t change.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/post/the-arrogance-of-noise/" rel="bookmark">
 			The Arrogance of &#34;Noise&#34;
 			</a>
@@ -262,32 +285,13 @@ That said, there seems to be a perpetual innumeracy in the way folks talk about 
 	<div class="content list__excerpt post__content clearfix">
 		Nate Duncan’s “Dunc’d On” is probably my favorite NBA podcast. He and frequent co-host Danny Leroux are analytical and comprehensive, covering the whole league. About every other week, they’ll go through ever team in a conference (East or West) and talk about how each team is doing, where they’re projected to finish, etc. They call these episodes “15 in 60”, although they don’t always get to all 15 teams in the conference, and I don’t think they’ve ever done one of these in 60 minutes.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/post/weird-al-is-basically-shakespeare/" rel="bookmark">
-			Weird Al is basically Shakespeare
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2018-11-30T00:00:00">November 30, 2018</time>
-</div>
-
-<div class="meta__item-categories meta__item">
-	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/hot-takes" rel="category">Hot takes</a>, <a class="meta__link" href="/categories/misc" rel="category">Misc</a></span>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Not the bit about plays, the bit about sonnets.
-Writing song parodies is like writing sonnetsSonnets are an interesting because of how restrictive they are. According to American poet Aaron Kramer
-First, you are handcuffed by having to write fourteen lines. Then, you are shackled by having to write with a set meter. They put you into a sack called rhyme. But think what a magic act it is if you can set your meaning free!
-	</div>
 </article>
 </main>
+
+<div class="pagination">
+	<span class="pagination__item pagination__item--current">1/2</span>
+	<a class="pagination__item pagination__item--next btn" href="/post/page/2/">»</a>
+</div>
 
 
 			</div>
@@ -327,11 +331,11 @@ Writing song parodies is like writing sonnetsSonnets are an interesting because
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics/">DIY Metrics</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/the-arrogance-of-noise/">The Arrogance of &#34;Noise&#34;</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/data-generation-processes/">Data Science and Data Generation Processes</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/calibration-update/">Calibration update, now with Brier Scores!</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/is-scott-well-calibrated/">Is Scott well-calibrated?</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/what-is-random-really/">What is random, really?</a></li>
 		</ul>
 	</div>
 </div>
@@ -348,6 +352,7 @@ Writing song parodies is like writing sonnetsSonnets are an interesting because
 			<li class="widget__item"><a class="widget__link" href="/categories/metrics">Metrics</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/misc">Misc</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/picking-at-nits">Picking at nits</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r">R</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/sports">Sports</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/statistics">Statistics</a></li>
 		</ul>

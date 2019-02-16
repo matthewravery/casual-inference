@@ -9,10 +9,10 @@
 	<meta name="description" content="">
 	<meta name="generator" content="Hugo 0.51" />
 	<meta property="og:title" content="R" />
-<meta property="og:description" content="John Doe&#39;s Personal blog about everything" />
+<meta property="og:description" content="A personal blog about applied statistics and data science. And other things." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/categories/r/" />
-<meta property="og:updated_time" content="2015-07-23T21:13:14-05:00"/>
+<meta property="og:updated_time" content="2019-02-16T00:00:00&#43;00:00"/>
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -30,7 +30,7 @@
 		<div class="logo">
 			<a class="logo__link" href="/" title="Casual Inference" rel="home">
 				<div class="logo__title">Casual Inference</div>
-				<div class="logo__tagline">Just another site</div>
+				<div class="logo__tagline">Robust and relaxed</div>
 			</a>
 		</div>
 		
@@ -40,13 +40,19 @@
 	</button>
 	<ul class="menu__list">
 		<li class="menu__item">
-			<a class="menu__link" href="/post/migrate-from-jekyll/">Jekyll migration</a>
+			<a class="menu__link" href="/">Home</a>
 		</li>
 		<li class="menu__item">
-			<a class="menu__link" href="/post/goisforlovers/">(Hu)go Template Primer</a>
+			<a class="menu__link" href="/post/about/">About</a>
 		</li>
 		<li class="menu__item">
-			<a class="menu__link" href="/post/hugoisforlovers/">Getting Started with Hugo</a>
+			<a class="menu__link" href="https://matthewravery.github.io/markdown-cv">CV</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://github.com/jthaman/ciTools">ciTools</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/analysis-statement/">Analysis Philosophy</a>
 		</li>
 	</ul>
 </nav>
@@ -62,26 +68,25 @@
 	</header><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
-			<a href="/post/2015-07-23-r-rmarkdown/" rel="bookmark">
-			Hello R Markdown
+			<a href="/post/diy-metrics/" rel="bookmark">
+			DIY Metrics
 			</a>
 		</h3>
 		<div class="list__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2015-07-23T21:13:14">July 23, 2015</time>
+	<time class="meta__text" datetime="2019-02-16T00:00:00">February 16, 2019</time>
 </div>
 
 <div class="meta__item-categories meta__item">
 	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/r" rel="category">R</a></span>
+	<span class="meta__text"><a class="meta__link" href="/categories/basketball" rel="category">basketball</a>, <a class="meta__link" href="/categories/metrics" rel="category">metrics</a>, <a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/r" rel="category">R</a></span>
 </div>
 </div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.
+		In order to better understand some “advanced metrics”, I figured it’d be useful to build them from scratch. (This is also just a fun exercise in data manipulation, cleaning, etc.)
+For starters, let’s do something easy, namely raw plus/minus. For the code below, I’m using the free example play-by-play data set from NBAstuffer. They seem reputable, though I do have concerns about how widely-used their formatting is; one of the challenges with building a workflow is ensuring that the structure of your incoming data won’t change.
 	</div>
 </article>
 </main>
@@ -89,7 +94,29 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
 
 			</div>
 			
-<aside class="sidebar"><div class="widget-search widget">
+
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <aside class="sidebar"><div class="widget-search widget">
 	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
 		<label>
 			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
@@ -102,11 +129,11 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/basic-elements/">Basic HTML Elements</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/2015-07-23-r-rmarkdown/">Hello R Markdown</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/creating-a-new-theme/">Creating a New Theme</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/goisforlovers/">(Hu)go Template Primer</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/hugoisforlovers/">Getting Started with Hugo</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics/">DIY Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/the-arrogance-of-noise/">The Arrogance of &#34;Noise&#34;</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/data-generation-processes/">Data Science and Data Generation Processes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/calibration-update/">Calibration update, now with Brier Scores!</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/is-scott-well-calibrated/">Is Scott well-calibrated?</a></li>
 		</ul>
 	</div>
 </div>
@@ -114,27 +141,19 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
 	<h4 class="widget__title">Categories</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/categories/development">Development</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/golang">Golang</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/basketball">Basketball</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/common-analysis-errors">Common analysis errors</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/data-generation">Data generation</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/failure-to-communicate">Failure to communicate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/hot-takes">Hot takes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/life-is-distributional">Life is distributional</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/metrics">Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/misc">Misc</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/picking-at-nits">Picking at nits</a></li>
 			<li class="widget__item"><a class="widget__link" href="/categories/r">R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/sports">Sports</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/statistics">Statistics</a></li>
 		</ul>
-	</div>
-</div>
-<div class="widget-taglist widget">
-	<h4 class="widget__title">Tags</h4>
-	<div class="widget__content">
-		<a class="widget-taglist__link widget__link btn" href="/tags/basic-elements" title="Basic elements">Basic elements</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/css" title="Css">Css</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/development" title="Development">Development</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/go" title="Go">Go</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/golang" title="Golang">Golang</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/html" title="Html">Html</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/hugo" title="Hugo">Hugo</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/plot" title="Plot">Plot</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/r-markdown" title="R markdown">R markdown</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/regression" title="Regression">Regression</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/templates" title="Templates">Templates</a>
-		<a class="widget-taglist__link widget__link btn" href="/tags/themes" title="Themes">Themes</a>
 	</div>
 </div>
 </aside>
