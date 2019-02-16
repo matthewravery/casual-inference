@@ -1,0 +1,146 @@
+---
+title: DIY Metrics
+author: Matthew Avery
+date: '2019-02-16'
+slug: diy-metrics
+categories:
+  - basketball
+  - metrics
+  - statistics
+  - R
+tags: []
+description: ''
+thumbnail: ''
+---
+```{r, include = F, message = F}
+library(tidyverse)
+```
+
+
+In order to better understand some "advanced metrics", I figured it'd be useful to build them from scratch. (This is also just a fun exercise in data manipulation, cleaning, etc.)
+
+For starters, let's do something easy, namely raw plus/minus. For the code below, I'm using the free example play-by-play data set from <a href = "https://www.nbastuffer.com/analytics101/playbyplay-data/">NBAstuffer</a>. They seem reputable, though I do have concerns about how widely-used their formatting is; one of the challenges with building a workflow is ensuring that the structure of your incoming data won't change. In this case, the concern would be if I wanted to use a different data source whether things would look similar enough to use my existing code with minimal alterations. Oh, well; let's dive in!
+
+The first thing we want to do is visualize the thing we want to build at the end of the day. In my mind, it'll look something like this:
+
+```{r}
+tibble("Player" = c("Player A", "Player B", "Player C"),
+       "Team" = c("Team 1", "Team 2", "Team 3"),
+       "Plus/Minus" = c(1, -1, 25))
+```
+
+This means that eventually, I'll have to make a list of all the players along with their associated teams, and then add on each player's plus/minus score. 
+
+Let's get started by looking at the data set itself:
+
+```{r, message = F, warning = F, quiet = T}
+library(tidyverse)
+# Read in our example data set, which contains play-by-play data from four games in 2017
+suppressMessages(tb <- read_csv("data/sample-combined-pbp-stats.csv"))
+
+tb %>% names()
+
+```
+
+A little exploring shows us that the columns named "a1", "a2", etc. and "h1", "h2", etc. have the names of the "away" and "home" players in them. There's also the number of points that were scored on a particular event, `points`, and the player who scored them, `player`. Unfortunately, there's no column telling us explicitly which team scored points. Additionally, there's a lot of other information in this data set that we don't need for this exercise, including shot position, non-scoring events, etc. So we'll do some cleaning to reformat this data and get it to where we need it for our purposes. 
+
+A simple first step is to generate a list of players and the teams on which they play. This is both a first step towards building the example table we highlighted above and also useful for matching up players scoring with particular teams scoring:
+
+```{r}
+teamsandplayers <- tb %>% 
+  filter(elapsed > 0) %>% #eliminates weird cases like opening jump ball
+  select(player, team) %>% 
+  filter(!is.na(player)) %>% 
+  distinct() 
+teamsandplayers
+```
+
+With this done, lets think through our approach for getting an individual player's plus-minus. First off, we don't need any events that don't involve the score changing. So we can filter out a lot of unrelated things. Next, we need to make sure we're only looking at events where our player was on the court; that's the whole premise for this stat. Finally, we need to be able to identify whether each scoring event was a "plus" or a "minus" from the player of interest's perspective. This done, we can simply add up the "plus" and "minus" events to get a particular player's plus/minus!
+
+Here was my approach for doing these things in R:
+```{r, include = F}
+player_in_game <- function(playername, ...){
+  playername %in%  c(...)
+  
+}
+
+score_changed <- function(points){
+  
+  !is.na(points) && points > 0
+}
+
+get_net_points <- function(points, histeam, team){
+  if(histeam == team)
+    return(points) else
+      return(points * -1)
+}
+```
+
+
+```{r}
+get_plus_minus <- function(playername, playbyplay, playersteamsmatched){
+
+  whatteam <- filter(playersteamsmatched, player == playername)$team
+  playbyplay %>% 
+    mutate(ishein = pmap_lgl(list(playername, a1, a2, a3, a4, a5, h1, h2, h3, h4, h5), player_in_game),
+           pointchange = map_lgl(points, score_changed),
+           histeam = whatteam) %>% 
+    filter(ishein, pointchange) %>% 
+    mutate(netpoints = pmap_dbl(list(points, histeam, team), get_net_points)) %>% 
+    summarise(`plus-minus` = sum(netpoints))
+  
+}
+
+get_plus_minus("LeBron James", tb, teamsandplayers)
+get_plus_minus("Kyrie Irving", tb, teamsandplayers)
+get_plus_minus("Kevin Love", tb, teamsandplayers)
+```
+
+This function takes a player name and the play-by-play data set we're using and spits out the player's plus-minus. The process is simple and intuitive, and hopefully I've written the code in a way that's readable. Given the player's name, we identify the team that player plays for using the `teamsandplayers` data table we built earlier. Then, we generate new columns on the play-by-play data table for whether the player was on the court (`ishein`) and indicating which events were changes in score (`pointchange`). We drop irrelevant rows and call a function `get_net_points` which takes this information and returns a column (`netpoints`) with the "pluses" and "minuses" assigned correctly. Summing over this column gives us the plus-minus for the player of interest!
+
+You'll note that there were a few helper functions that I called in there. As you can see below, these helpers are pretty simple functions. But by giving them intuitive names, I can make my workhorse function, `get_plus_minus` easier to read and interpret. Ultimately, it's a personal choice, but I favor making functions with easy-to-interpret names over including potentially-confusing syntax in primary function calls.  
+
+Here are the helper functions I used:
+
+```{r}
+player_in_game <- function(playername, ...){
+  playername %in%  c(...)
+  
+}
+
+score_changed <- function(points){
+  
+  !is.na(points) && points > 0
+}
+
+get_net_points <- function(points, histeam, team){
+  if(histeam == team)
+    return(points) else
+      return(points * -1)
+}
+```
+## Generating our matrix
+By calling this function for each player, we can build our desired matrix:
+
+```{r}
+
+pm <- rep(0, nrow(teamsandplayers))
+for(i in 1:nrow(teamsandplayers)){
+  
+ pm[i] <- get_plus_minus(teamsandplayers$player[i], tb, teamsandplayers)[[1]]
+ 
+}
+
+playerplusminus <- teamsandplayers %>% 
+  bind_cols(tibble("Plus/Minus" = pm)) %>% 
+  arrange(player)
+
+playerplusminus
+
+```
+
+
+## Wrap-up
+So there we have it! A quick, DIY plus/minus. Of course, there are some draw-backs to the one-player-at-a-time approach I used. While it was simpler and more intuitive to understand, First, we've built a tool that works for individual players but isn't particularly efficient. If our goal is to calculate plus-minus for *everyone in the NBA*, there's undoubtedly a lot of computational savings we could get by changing our order of operations. For example, we could use `net_points` on a team basis rather than a player basis. 
+
+But making this code efficient is problem for another day. For now, let's just be satisfied that we were able to take these data and get from them the metric we wanted!
