@@ -1,0 +1,35 @@
+---
+title: Local Polynomial Smoothing
+author: Matthew Avery
+date: '2019-02-18'
+slug: local-polynomial-smoothing
+categories:
+  - statistics
+tags: []
+description: ''
+thumbnail: ''
+---
+
+
+
+<p>So this is a blast from the past. NC State (at least while I was there) did something interesting for their prelim. Instead of taking another test like we had to do at the Masters level, they gave all their students a subject unrelated to their research, and had them write a lit review and do a small simulation study.</p>
+<p>My topic was local polynomial smoothing. I don’t think I did a particularly good job, but afterwards, I posted it on my NCSU website as an example of things I’d written. It turned out that over the next few years, some people actually ended up citing this thing, I guess because it was somehow one of the first Google hits for “local polynomial regression” or something. Once I’d been out of school for a while, NCSU took down the website, and there was no longer any way to find this paper.</p>
+<p><a href = "/post/local-polynomial-smoothing.pdf">So here it is!</a> The abstract’s quoted below. It hasn’t been through any real editing aside from a review by some folks from the faculty who, after a few changes, decided it wasn’t bad enough to kick me out of the program. At this point, it’s about 10 years out of date, so I’m sure there are more up-to-date summaries out there. But this’ll get through 2010 in decent shape!</p>
+<p><a href = "/post/local-polynomial-smoothing.pdf">Literature Review for Local Polynomial Regression</a></p>
+<blockquote>
+<p>This paper discusses key results from the literature in the field of local polynomial regression.<br />
+Local polynomial regression (LPR) is a nonparametric technique for smoothing scatter<br />
+plots and modeling functions. For each point, <span class="math inline">\(x_0\)</span>, a low-order polynomial WLS regression is<br />
+fit using only points in some “neighborhood” of <span class="math inline">\(x_0\)</span>. The result is a smooth function over the<br />
+support of the data. LPR has good performance on the boundary and is superior to all other<br />
+linear smoothers in a minimax sense. The quality of the estimated function is dependent on the<br />
+choice of weighting function, <span class="math inline">\(K\)</span>, the size the neighborhood, <span class="math inline">\(h\)</span>, and the order of polynomial fit,<br />
+<span class="math inline">\(p\)</span>. We discuss each of these choices, paying particular attention to bandwidth selection. When<br />
+choosing <span class="math inline">\(h\)</span>, “plug-in” methods tend to outperform cross-validation methods, but computational<br />
+considerations make the latter a desirable choice. Variable bandwidths are more flexible<br />
+than global ones, but both can have good asymptotic and finite-sample properties. Odd-order<br />
+polynomial fits are superior to even fits asymptotically, and an adaptive order method that is<br />
+robust to bandwidth is discussed. While the Epanechnikov kernel is superior is an asymptotic<br />
+minimax sense, a variety are used in practice. Extensions to various types of data and other<br />
+applications of LPR are also discussed.</p>
+</blockquote>

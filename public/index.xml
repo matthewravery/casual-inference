@@ -6,10 +6,20 @@
     <description>Recent content on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Local Polynomial Smoothing</title>
+      <link>/post/local-polynomial-smoothing/</link>
+      <pubDate>Mon, 18 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/local-polynomial-smoothing/</guid>
+      <description>So this is a blast from the past. NC State (at least while I was there) did something interesting for their prelim. Instead of taking another test like we had to do at the Masters level, they gave all their students a subject unrelated to their research, and had them write a lit review and do a small simulation study.
+My topic was local polynomial smoothing. I don’t think I did a particularly good job, but afterwards, I posted it on my NCSU website as an example of things I’d written.</description>
+    </item>
     
     <item>
       <title>DIY Metrics</title>
