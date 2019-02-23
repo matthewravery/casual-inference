@@ -191,3 +191,20 @@ fm %>%
 ### Wrap-up
 
 So that seems like "Mission Accomplished"! Next time, I think it'd be useful to talk about some of the draw-backs to what we've done thus far, the most pressing issue being the lack of time regularization. But dealing with the clock requires some additional data munging, so we'll leave it at this happy place for today.
+
+And finally, here are the helper functions I used above:
+
+```{r}
+score_changed <- function(points){
+  
+  !is.na(points) && points > 0
+}
+
+get_net_points <- function(points, histeam, team){
+  if(histeam == team)
+    return(points) else
+      return(points * -1)
+}
+
+```
+

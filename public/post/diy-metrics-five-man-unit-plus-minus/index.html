@@ -264,6 +264,17 @@ fm</code></pre>
 <div id="wrap-up" class="section level3">
 <h3>Wrap-up</h3>
 <p>So that seems like “Mission Accomplished”! Next time, I think it’d be useful to talk about some of the draw-backs to what we’ve done thus far, the most pressing issue being the lack of time regularization. But dealing with the clock requires some additional data munging, so we’ll leave it at this happy place for today.</p>
+<p>And finally, here are the helper functions I used above:</p>
+<pre class="r"><code>score_changed &lt;- function(points){
+  
+  !is.na(points) &amp;&amp; points &gt; 0
+}
+
+get_net_points &lt;- function(points, histeam, team){
+  if(histeam == team)
+    return(points) else
+      return(points * -1)
+}</code></pre>
 </div>
 
 		</div>
