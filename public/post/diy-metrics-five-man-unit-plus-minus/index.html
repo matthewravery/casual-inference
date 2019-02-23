@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>DIY Metrics:  Five-Man Unit Plus/Minus</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.51" />
+	<meta property="og:title" content="DIY Metrics:  Five-Man Unit Plus/Minus" />
+<meta property="og:description" content="Last week, I described how to build a plus/minus score for individual players based on data from NBAstuffer. I enjoyed walking through that process, so lets continue the series and expand our focus.
+Five-man units vs. Individual PlayersOne of the first things I talked about on this site was comparing different metrics and choosing the right one for the task at hand. Plus/minus for individual players is a weird metric, because it’s taking a team outcome (net change in score) and applying it at an individual level." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/diy-metrics-five-man-unit-plus-minus/" /><meta property="article:published_time" content="2019-02-23T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-02-23T00:00:00&#43;00:00"/>
+
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Casual Inference" rel="home">
+				<div class="logo__title">Casual Inference</div>
+				<div class="logo__tagline">Robust and relaxed</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/about/">About</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://matthewravery.github.io/markdown-cv">CV</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://github.com/jthaman/ciTools">ciTools</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/analysis-statement/">Analysis Philosophy</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">DIY Metrics:  Five-Man Unit Plus/Minus</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-02-23T00:00:00">February 23, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/basketball" rel="category">basketball</a>, <a class="meta__link" href="/categories/metrics" rel="category">metrics</a>, <a class="meta__link" href="/categories/sports" rel="category">sports</a>, <a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/r" rel="category">R</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+
+<p><a href = "/post/diy-metrics/">Last week</a>, I described how to build a plus/minus score for individual players based on data from <a href = "https://www.nbastuffer.com/analytics101/playbyplay-data/">NBAstuffer</a>. I enjoyed walking through that process, so lets continue the series and expand our focus.</p>
+<div id="five-man-units-vs.-individual-players" class="section level3">
+<h3>Five-man units vs. Individual Players</h3>
+<p>One of the first things I talked about on this site was <a href = "/post/prospective-vs-retrospective-metrics/">comparing different metrics</a> and choosing the right one for the task at hand. Plus/minus for individual players is a weird metric, because it’s taking a team outcome (net change in score) and applying it at an individual level. The attempt, I guess, is to estimate individual player contribution to overall team success. Given how much individual success is dependent upon who a player’s teammates are, I don’t think you gain much insite when you ignore them. It goes to a sampling issue; if you ignore confounders (i.e., teammates) in your data collection, you may accidentally compare Player 1 who gets a lot of run with bench units with Player 2, who playes almost exclusively with starters.</p>
+<p>So today we’ll look at five-man units. Calculating the net score change when a full five-player group is together has the benefits of incorporating the main confounders (teammates), but the disadvantage of returning far more granular results. Instead of a simple, single number for a player, we’ve got a set of five-player units that player was a part of, each of which has its own score. This can be helpful if we want to see what units are doing well and which ones aren’t, but doesn’t provide us with a simple summary of individual player usefulness.</p>
+</div>
+<div id="diy-five-man-units" class="section level3">
+<h3>DIY Five-man units</h3>
+<p>First, a reminder of what our data set looks like. These are the free sample data from <a href = "https://www.nbastuffer.com/analytics101/playbyplay-data/">NBAstuffer</a>, and cover a few games from 2017.</p>
+<pre class="r"><code>library(tidyverse)
+suppressMessages(tbraw &lt;- read_csv(&quot;data/sample-combined-pbp-stats.csv&quot;))
+
+tbraw %&gt;% names()</code></pre>
+<pre><code>##  [1] &quot;game_id&quot;        &quot;data_set&quot;       &quot;date&quot;           &quot;a1&quot;            
+##  [5] &quot;a2&quot;             &quot;a3&quot;             &quot;a4&quot;             &quot;a5&quot;            
+##  [9] &quot;h1&quot;             &quot;h2&quot;             &quot;h3&quot;             &quot;h4&quot;            
+## [13] &quot;h5&quot;             &quot;period&quot;         &quot;away_score&quot;     &quot;home_score&quot;    
+## [17] &quot;remaining_time&quot; &quot;elapsed&quot;        &quot;play_length&quot;    &quot;play_id&quot;       
+## [21] &quot;team&quot;           &quot;event_type&quot;     &quot;assist&quot;         &quot;away&quot;          
+## [25] &quot;home&quot;           &quot;block&quot;          &quot;entered&quot;        &quot;left&quot;          
+## [29] &quot;num&quot;            &quot;opponent&quot;       &quot;outof&quot;          &quot;player&quot;        
+## [33] &quot;points&quot;         &quot;possession&quot;     &quot;reason&quot;         &quot;result&quot;        
+## [37] &quot;steal&quot;          &quot;type&quot;           &quot;shot_distance&quot;  &quot;original_x&quot;    
+## [41] &quot;original_y&quot;     &quot;converted_x&quot;    &quot;converted_y&quot;    &quot;description&quot;</code></pre>
+<p>That looks good, but first a little house-keeping.</p>
+<p>First, we want to bring back our <code>teamsandplayers</code> matrix from last time:</p>
+<pre class="r"><code>teamsandplayers &lt;- tbraw %&gt;% 
+  filter(elapsed &gt; 0) %&gt;% #eliminates weird cases like opening jump ball
+  select(player, team) %&gt;% 
+  filter(!is.na(player)) %&gt;% 
+  distinct()</code></pre>
+<p>Also, for some reason, this data set doens’t contain an explicit column stating which team was “Home” and which was “Away”. You can tell easily enough by which players are in the <code>aX</code> columns vice the <code>hX</code> columns, but things will be easier for us if we have this information explicitly included in a column:</p>
+<pre class="r"><code>get_team &lt;- function(playernames, teamsandplayers){
+  
+  teamsandplayers$team[match(playernames, teamsandplayers$player)]
+  
+}
+
+tb &lt;- tbraw %&gt;% 
+  mutate(hometeam = get_team(h1, teamsandplayers),
+         awayteam = get_team(a1, teamsandplayers))</code></pre>
+</div>
+<div id="building-a-data-table-with-list-columns" class="section level3">
+<h3>Building a data table with list columns</h3>
+<p>Today, we’re going to use a great feature of the <a href = "https://www.tidyverse.org/">tidyverse</a> and their unique brand of data tables: List columns! The idea behind list columns is that elements of specific columns in a data table may contain structures more complex than length-one vectors. This can make things easier to organize, as we’ll see. Jenny Bryan has a <a href = "https://jennybc.github.io/purrr-tutorial/ls13_list-columns.html">good description of list columns</a> and their use along with the <code>purrr</code> package, which we’ll also be relying on to do our computations.</p>
+<p>The way our data set is organized, each scoring event is recorded as the number of points (the <code>points</code> column) and the player who scored (<code>player</code>). (The data set includes other events as well, but for today, we only care about scoring events). To create plus/minus scores for a given five-player unit, we need to transform these events into either positive or negative changes in the score from the perspective of that five-player group. When we did this for individual players, we performed the calculation individually for each player. Since the number of players in the NBA is relatively limited (there’s only about 500 unique players any given year), that might seem reasonable. However, there are far more five-player combinations. So instead, we’ll do the plus-minus calculation on the <em>team</em> level, and calculate the plus/minus scores in a seperate step.</p>
+<p>We get these team plus/minus scores through a custom function:</p>
+<pre class="r"><code>get_team_scores &lt;- function(whichteam, tb ){
+  
+  out &lt;- NULL
+  for(i in seq_along(whichteam$team)){
+    thatteam &lt;- whichteam$team[i]
+    teamtbl &lt;- tb %&gt;% 
+      mutate(currentteam = thatteam,
+             pointchange = map_lgl(points, score_changed)) %&gt;% 
+      filter(pointchange,
+             hometeam == currentteam | awayteam == currentteam) %&gt;% 
+      mutate(netpoints = pmap_dbl(list(points, currentteam, team), 
+                                  get_net_points)) %&gt;% 
+      select(-team) %&gt;% rename(team = currentteam)
+    
+    out &lt;- bind_rows(out, teamtbl)
+    
+  }
+  out %&gt;% group_by(team) %&gt;% nest(.key = `team events`)
+}</code></pre>
+<p>This function takes a vector of team names (<code>whichteam</code>) and returns a vector of data sets. For each team, we get a subset of <code>tb</code> that contains only events pertaining to the relevant team along with net scores from that team’s perspective. And these data are all arranged nicely in a list column! (Recall that <code>teamsandplayers</code> is a data table containing a list of players and team names.) There are a couple of helper functions called in <code>get_team_scores</code> that I haven’t defined explicitly here (<code>score_chaged</code> and <code>get_net_points</code>). I’ll inlcude them at the end of the post, but all you need to know for now is that <code>score_changed</code> is used to filter out events in our data set that don’t include score changes, and <code>get_net_points</code> assigns a sign to scoring events based on the perpective of a given team.</p>
+<p>Using this function, we can build our desired matrix:</p>
+<pre class="r"><code>allteams &lt;- teamsandplayers %&gt;% select(team) %&gt;% distinct %&gt;% arrange()
+
+eventsbyteam &lt;- teamsandplayers %&gt;% 
+  group_by(team) %&gt;% 
+  nest(.key = &quot;playerlist&quot;) %&gt;% 
+  left_join(get_team_scores(allteams, tb))</code></pre>
+<pre><code>## Joining, by = &quot;team&quot;</code></pre>
+<pre class="r"><code>eventsbyteam</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    team  playerlist        `team events`      
+##    &lt;chr&gt; &lt;list&gt;            &lt;list&gt;             
+##  1 BOS   &lt;tibble [10 x 1]&gt; &lt;tibble [114 x 47]&gt;
+##  2 CLE   &lt;tibble [10 x 1]&gt; &lt;tibble [114 x 47]&gt;
+##  3 HOU   &lt;tibble [8 x 1]&gt;  &lt;tibble [122 x 47]&gt;
+##  4 GSW   &lt;tibble [12 x 1]&gt; &lt;tibble [122 x 47]&gt;
+##  5 CHA   &lt;tibble [10 x 1]&gt; &lt;tibble [104 x 47]&gt;
+##  6 DET   &lt;tibble [10 x 1]&gt; &lt;tibble [104 x 47]&gt;
+##  7 IND   &lt;tibble [10 x 1]&gt; &lt;tibble [152 x 47]&gt;
+##  8 BKN   &lt;tibble [10 x 1]&gt; &lt;tibble [152 x 47]&gt;
+##  9 MIA   &lt;tibble [10 x 1]&gt; &lt;tibble [122 x 47]&gt;
+## 10 ORL   &lt;tibble [9 x 1]&gt;  &lt;tibble [122 x 47]&gt;</code></pre>
+<p>The data table <code>eventsbyteam</code> has a column of teams and two list columns. The first lists the players on that team, and the second is the subset of our original data matrix containing all events relevant to that team, with the net scores coded in the perspective of that team.</p>
+</div>
+<div id="getting-the-plusminus-scores" class="section level3">
+<h3>Getting the plus/minus scores</h3>
+<p>Before we calculate the scores, we need to do a bit more housekeeping. Events were coded as “home” or “away” previously, but now we’ve built event tables with scores that are specific to a single team’s perspective. We’ll therefore use a function to transform the player labels from being “home” or “away” to being on the <code>p</code>articular team we’re looking at or being on the <code>o</code>ther team:</p>
+<pre class="r"><code>fiveplayers &lt;- function(tb){
+  
+  tb1 &lt;- tb %&gt;% filter(team == hometeam) %&gt;% 
+    rename(p1 = h1, p2 = h2, p3 = h3, p4 = h4, p5 = h5, 
+           o1 = a1, o2 = a2, o3 = a3, o4 = a4, o5 = a5)
+  
+  tb2 &lt;- tb %&gt;% filter(team == awayteam) %&gt;% 
+    rename(p1 = a1, p2 = a2, p3 = a3, p4 = a4, p5 = a5, 
+           o1 = h1, o2 = h2, o3 = h3, o4 = h4, o5 = h5)
+  
+  bind_rows(tb1, tb2)
+  
+}</code></pre>
+<p>The other reason we do this is so that when we group by five-man units, we don’t have to worry about selecting a unique five-man unit from both the “home” and “away” columns. Instead, we can just look at the “particular team” columns and group on those.</p>
+<p>To show how this works for a single team:</p>
+<pre class="r"><code>bv &lt;- eventsbyteam %&gt;% filter(team == &quot;BOS&quot;) %&gt;% 
+  select(`team events`, team) 
+
+bv %&gt;% 
+  unnest() %&gt;% 
+  fiveplayers() %&gt;% 
+  group_by(p1, p2, p3, p4, p5) %&gt;% 
+  summarise(`Plus/Minus` = sum(netpoints)) </code></pre>
+<pre><code>## # A tibble: 21 x 6
+## # Groups:   p1, p2, p3, p4 [?]
+##    p1            p2          p3          p4         p5         `Plus/Minus`
+##    &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;             &lt;dbl&gt;
+##  1 Al Horford    Jaylen Bro~ Marcus Sma~ Terry Roz~ Kyrie Irv~            3
+##  2 Al Horford    Jaylen Bro~ Marcus Sma~ Terry Roz~ Shane Lar~           -1
+##  3 Al Horford    Kyrie Irvi~ Semi Ojele~ Marcus Sm~ Jaylen Br~           -3
+##  4 Gordon Haywa~ Jayson Tat~ Al Horford  Jaylen Br~ Kyrie Irv~            3
+##  5 Jaylen Brown  Kyrie Irvi~ Jayson Tat~ Al Horford Marcus Sm~           -6
+##  6 Jaylen Brown  Marcus Sma~ Aron Baynes Semi Ojel~ Terry Roz~           -4
+##  7 Jaylen Brown  Marcus Sma~ Terry Rozi~ Kyrie Irv~ Aron Bayn~            0
+##  8 Jaylen Brown  Terry Rozi~ Kyrie Irvi~ Aron Bayn~ Jayson Ta~            2
+##  9 Jayson Tatum  Al Horford  Aron Baynes Terry Roz~ Kyrie Irv~           -4
+## 10 Jayson Tatum  Al Horford  Jaylen Bro~ Kyrie Irv~ Marcus Sm~            6
+## # ... with 11 more rows</code></pre>
+<p>So we now have the plus/minus scores for each five-man unit Boston used in our data set! We can write a wrapper for the code above and appl it to every team:</p>
+<pre class="r"><code>get_fiveman_plusminus &lt;- function(tb, team){
+  
+  tb %&gt;% 
+    mutate(team = team) %&gt;% 
+    fiveplayers() %&gt;% 
+    group_by(p1, p2, p3, p4, p5) %&gt;% 
+    summarise(`Plus/Minus` = sum(netpoints)) 
+  
+}
+
+fm &lt;- eventsbyteam %&gt;% 
+  mutate(`Five-man Plus/Minus` = map2(`team events`, 
+                                      team, get_fiveman_plusminus)) 
+
+fm</code></pre>
+<pre><code>## # A tibble: 10 x 4
+##    team  playerlist        `team events`       `Five-man Plus/Minus`
+##    &lt;chr&gt; &lt;list&gt;            &lt;list&gt;              &lt;list&gt;               
+##  1 BOS   &lt;tibble [10 x 1]&gt; &lt;tibble [114 x 47]&gt; &lt;tibble [21 x 6]&gt;    
+##  2 CLE   &lt;tibble [10 x 1]&gt; &lt;tibble [114 x 47]&gt; &lt;tibble [19 x 6]&gt;    
+##  3 HOU   &lt;tibble [8 x 1]&gt;  &lt;tibble [122 x 47]&gt; &lt;tibble [17 x 6]&gt;    
+##  4 GSW   &lt;tibble [12 x 1]&gt; &lt;tibble [122 x 47]&gt; &lt;tibble [21 x 6]&gt;    
+##  5 CHA   &lt;tibble [10 x 1]&gt; &lt;tibble [104 x 47]&gt; &lt;tibble [14 x 6]&gt;    
+##  6 DET   &lt;tibble [10 x 1]&gt; &lt;tibble [104 x 47]&gt; &lt;tibble [14 x 6]&gt;    
+##  7 IND   &lt;tibble [10 x 1]&gt; &lt;tibble [152 x 47]&gt; &lt;tibble [21 x 6]&gt;    
+##  8 BKN   &lt;tibble [10 x 1]&gt; &lt;tibble [152 x 47]&gt; &lt;tibble [19 x 6]&gt;    
+##  9 MIA   &lt;tibble [10 x 1]&gt; &lt;tibble [122 x 47]&gt; &lt;tibble [22 x 6]&gt;    
+## 10 ORL   &lt;tibble [9 x 1]&gt;  &lt;tibble [122 x 47]&gt; &lt;tibble [15 x 6]&gt;</code></pre>
+<p>And now we can drill back down into a single team and verify that we’re getting the numbers we want:</p>
+<pre class="r"><code>fm %&gt;% 
+  filter(team == &quot;BOS&quot;) %&gt;% 
+  select(`Five-man Plus/Minus`) %&gt;% unnest() %&gt;% arrange(desc(`Plus/Minus`))</code></pre>
+<pre><code>## # A tibble: 21 x 6
+##    p1            p2          p3          p4         p5         `Plus/Minus`
+##    &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;             &lt;dbl&gt;
+##  1 Jayson Tatum  Al Horford  Jaylen Bro~ Kyrie Irv~ Marcus Sm~            6
+##  2 Jayson Tatum  Terry Rozi~ Shane Lark~ Marcus Sm~ Al Horford            5
+##  3 Al Horford    Jaylen Bro~ Marcus Sma~ Terry Roz~ Kyrie Irv~            3
+##  4 Gordon Haywa~ Jayson Tat~ Al Horford  Jaylen Br~ Kyrie Irv~            3
+##  5 Jayson Tatum  Jaylen Bro~ Kyrie Irvi~ Terry Roz~ Aron Bayn~            3
+##  6 Kyrie Irving  Marcus Sma~ Jaylen Bro~ Aron Bayn~ Jayson Ta~            3
+##  7 Jaylen Brown  Terry Rozi~ Kyrie Irvi~ Aron Bayn~ Jayson Ta~            2
+##  8 Jayson Tatum  Al Horford  Terry Rozi~ Kyrie Irv~ Semi Ojel~            2
+##  9 Jayson Tatum  Al Horford  Marcus Sma~ Aron Bayn~ Terry Roz~            1
+## 10 Jayson Tatum  Jaylen Bro~ Kyrie Irvi~ Marcus Sm~ Terry Roz~            1
+## # ... with 11 more rows</code></pre>
+</div>
+<div id="wrap-up" class="section level3">
+<h3>Wrap-up</h3>
+<p>So that seems like “Mission Accomplished”! Next time, I think it’d be useful to talk about some of the draw-backs to what we’ve done thus far, the most pressing issue being the lack of time regularization. But dealing with the clock requires some additional data munging, so we’ll leave it at this happy place for today.</p>
+</div>
+
+		</div>
+		
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/local-polynomial-smoothing/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Local Polynomial Smoothing</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-five-man-unit-plus-minus/">DIY Metrics:  Five-Man Unit Plus/Minus</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/local-polynomial-smoothing/">Local Polynomial Smoothing</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics/">DIY Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/the-arrogance-of-noise/">The Arrogance of &#34;Noise&#34;</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/data-generation-processes/">Data Science and Data Generation Processes</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/basketball">Basketball</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/common-analysis-errors">Common analysis errors</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/data-generation">Data generation</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/failure-to-communicate">Failure to communicate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/hot-takes">Hot takes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/life-is-distributional">Life is distributional</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/metrics">Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/misc">Misc</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/picking-at-nits">Picking at nits</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r">R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/sports">Sports</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/statistics">Statistics</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 Casual Inference.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

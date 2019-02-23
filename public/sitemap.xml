@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/post/diy-metrics-five-man-unit-plus-minus/</loc>
+    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/local-polynomial-smoothing/</loc>
     <lastmod>2019-02-18T00:00:00+00:00</lastmod>
   </url>
@@ -69,19 +74,19 @@
   
   <url>
     <loc>/categories/basketball/</loc>
-    <lastmod>2019-02-16T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-02-18T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2019-02-16T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -117,7 +122,7 @@
   
   <url>
     <loc>/categories/metrics/</loc>
-    <lastmod>2019-02-16T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -135,19 +140,19 @@
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2019-02-16T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/sports/</loc>
-    <lastmod>2019-01-13T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/statistics/</loc>
-    <lastmod>2019-02-18T00:00:00+00:00</lastmod>
+    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

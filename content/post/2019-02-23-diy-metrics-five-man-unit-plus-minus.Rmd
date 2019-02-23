@@ -1,0 +1,193 @@
+---
+title: 'DIY Metrics:  Five-Man Unit Plus/Minus'
+author: Matthew Avery
+date: '2019-02-23'
+slug: diy-metrics-five-man-unit-plus-minus
+categories:
+  - basketball
+  - metrics
+  - sports
+  - statistics
+  - R
+tags: []
+description: ''
+thumbnail: ''
+---
+```{r, include = F, message = F}
+library(tidyverse)
+
+score_changed <- function(points){
+  
+  !is.na(points) && points > 0
+}
+
+get_net_points <- function(points, histeam, team){
+  if(histeam == team)
+    return(points) else
+      return(points * -1)
+}
+
+```
+
+<a href = "/post/diy-metrics/">Last week</a>, I described how to build a plus/minus score for individual players based on data from <a href = "https://www.nbastuffer.com/analytics101/playbyplay-data/">NBAstuffer</a>. I enjoyed walking through that process, so lets continue the series and expand our focus. 
+
+### Five-man units vs. Individual Players
+
+One of the first things I talked about on this site was <a href = "/post/prospective-vs-retrospective-metrics/">comparing different metrics</a> and choosing the right one for the task at hand. Plus/minus for individual players is a weird metric, because it's taking a team outcome (net change in score) and applying it at an individual level. The attempt, I guess, is to estimate individual player contribution to overall team success. Given how much individual success is dependent upon who a player's teammates are, I don't think you gain much insite when you ignore them. It goes to a sampling issue; if you ignore confounders (i.e., teammates) in your data collection, you may accidentally compare Player 1 who gets a lot of run with bench units with Player 2, who playes almost exclusively with starters. 
+
+So today we'll look at five-man units. Calculating the net score change when a full five-player group is together has the benefits of incorporating the main confounders (teammates), but the disadvantage of returning far more granular results. Instead of a simple, single number for a player, we've got a set of five-player units that player was a part of, each of which has its own score. This can be helpful if we want to see what units are doing well and which ones aren't, but doesn't provide us with a simple summary of individual player usefulness.
+
+### DIY Five-man units
+
+First, a reminder of what our data set looks like. These are the free sample data from <a href = "https://www.nbastuffer.com/analytics101/playbyplay-data/">NBAstuffer</a>, and cover a few games from 2017.  
+
+
+```{r, message = F, warning = F, quiet = T}
+library(tidyverse)
+suppressMessages(tbraw <- read_csv("data/sample-combined-pbp-stats.csv"))
+
+tbraw %>% names()
+```
+
+That looks good, but first a little house-keeping.
+
+
+First, we want to bring back our `teamsandplayers` matrix from last time:
+
+```{r}
+teamsandplayers <- tbraw %>% 
+  filter(elapsed > 0) %>% #eliminates weird cases like opening jump ball
+  select(player, team) %>% 
+  filter(!is.na(player)) %>% 
+  distinct()
+```
+
+Also, for some reason, this data set doens't contain an explicit column stating which team was "Home" and which was "Away". You can tell easily enough by which players are in the `aX` columns vice the `hX` columns, but things will be easier for us if we have this information explicitly included in a column:
+```{r}
+get_team <- function(playernames, teamsandplayers){
+  
+  teamsandplayers$team[match(playernames, teamsandplayers$player)]
+  
+}
+
+tb <- tbraw %>% 
+  mutate(hometeam = get_team(h1, teamsandplayers),
+         awayteam = get_team(a1, teamsandplayers))
+```
+
+
+### Building a data table with list columns
+Today, we're going to use a great feature of the <a href = "https://www.tidyverse.org/">tidyverse</a> and their unique brand of data tables:  List columns! The idea behind list columns is that elements of specific columns in a data table may contain structures more complex than length-one vectors. This can make things easier to organize, as we'll see. Jenny Bryan has a <a href = "https://jennybc.github.io/purrr-tutorial/ls13_list-columns.html">good description of list columns</a> and  their use along with the `purrr` package, which we'll also be relying on to do our computations.  
+
+The way our data set is organized, each scoring event is recorded as the number of points (the `points` column) and the player who scored (`player`). (The data set includes other events as well, but for today, we only care about scoring events). To create plus/minus scores for a given five-player unit, we need to transform these events into either positive or negative changes in the score from the perspective of that five-player group. When we did this for individual players, we performed the calculation individually for each player. Since the number of players in the NBA is relatively limited (there's only about 500 unique players any given year), that might seem reasonable. However, there are far more five-player combinations. So instead, we'll do the plus-minus calculation on the *team* level, and calculate the plus/minus scores in a seperate step.
+
+We get these team plus/minus scores through a custom function:
+
+```{r}
+
+get_team_scores <- function(whichteam, tb ){
+  
+  out <- NULL
+  for(i in seq_along(whichteam$team)){
+    thatteam <- whichteam$team[i]
+    teamtbl <- tb %>% 
+      mutate(currentteam = thatteam,
+             pointchange = map_lgl(points, score_changed)) %>% 
+      filter(pointchange,
+             hometeam == currentteam | awayteam == currentteam) %>% 
+      mutate(netpoints = pmap_dbl(list(points, currentteam, team), 
+                                  get_net_points)) %>% 
+      select(-team) %>% rename(team = currentteam)
+    
+    out <- bind_rows(out, teamtbl)
+    
+  }
+  out %>% group_by(team) %>% nest(.key = `team events`)
+}
+
+```
+
+This function takes a vector of team names (`whichteam`) and returns a vector of data sets. For each team, we get a subset of `tb` that contains only events pertaining to the relevant team along with net scores from that team's perspective. And these data are all arranged nicely in a list column! (Recall that `teamsandplayers` is a data table containing a list of players and team names.) There are a couple of helper functions called in `get_team_scores` that I haven't defined explicitly here (`score_chaged` and `get_net_points`). I'll inlcude them at the end of the post, but all you need to know for now is that `score_changed` is used to filter out events in our data set that don't include score changes, and `get_net_points` assigns a sign to scoring events based on the perpective of a given team.
+
+Using this function, we can build our desired matrix:
+
+```{r}
+allteams <- teamsandplayers %>% select(team) %>% distinct %>% arrange()
+
+eventsbyteam <- teamsandplayers %>% 
+  group_by(team) %>% 
+  nest(.key = "playerlist") %>% 
+  left_join(get_team_scores(allteams, tb))
+
+eventsbyteam
+```
+
+The data table `eventsbyteam` has a column of teams and two list columns. The first lists the players on that team, and the second is the subset of our original data matrix containing all events relevant to that team, with the net scores coded in the perspective of that team. 
+
+### Getting the plus/minus scores
+
+Before we calculate the scores, we need to do a bit more housekeeping. Events were coded as "home" or "away" previously, but now we've built event tables with scores that are specific to a single team's perspective. We'll therefore use a function to transform the player labels from being "home" or "away" to being on the `p`articular team we're looking at or being on the `o`ther team:
+
+```{r}
+fiveplayers <- function(tb){
+  
+  tb1 <- tb %>% filter(team == hometeam) %>% 
+    rename(p1 = h1, p2 = h2, p3 = h3, p4 = h4, p5 = h5, 
+           o1 = a1, o2 = a2, o3 = a3, o4 = a4, o5 = a5)
+  
+  tb2 <- tb %>% filter(team == awayteam) %>% 
+    rename(p1 = a1, p2 = a2, p3 = a3, p4 = a4, p5 = a5, 
+           o1 = h1, o2 = h2, o3 = h3, o4 = h4, o5 = h5)
+  
+  bind_rows(tb1, tb2)
+  
+}
+```
+
+The other reason we do this is so that when we group by five-man units, we don't have to worry about selecting a unique five-man unit from both the "home" and "away" columns. Instead, we can just look at the "particular team" columns and group on those.
+
+To show how this works for a single team:
+
+```{r}
+bv <- eventsbyteam %>% filter(team == "BOS") %>% 
+  select(`team events`, team) 
+
+bv %>% 
+  unnest() %>% 
+  fiveplayers() %>% 
+  group_by(p1, p2, p3, p4, p5) %>% 
+  summarise(`Plus/Minus` = sum(netpoints)) 
+
+
+```
+
+So we now have the plus/minus scores for each five-man unit Boston used in our data set! We can write a wrapper for the code above and appl it to every team:
+
+```{r}
+get_fiveman_plusminus <- function(tb, team){
+  
+  tb %>% 
+    mutate(team = team) %>% 
+    fiveplayers() %>% 
+    group_by(p1, p2, p3, p4, p5) %>% 
+    summarise(`Plus/Minus` = sum(netpoints)) 
+  
+}
+
+fm <- eventsbyteam %>% 
+  mutate(`Five-man Plus/Minus` = map2(`team events`, 
+                                      team, get_fiveman_plusminus)) 
+
+fm
+```
+
+And now we can drill back down into a single team and verify that we're getting the numbers we want:
+```{r}
+fm %>% 
+  filter(team == "BOS") %>% 
+  select(`Five-man Plus/Minus`) %>% unnest() %>% arrange(desc(`Plus/Minus`))
+```
+
+### Wrap-up
+
+So that seems like "Mission Accomplished"! Next time, I think it'd be useful to talk about some of the draw-backs to what we've done thus far, the most pressing issue being the lack of time regularization. But dealing with the clock requires some additional data munging, so we'll leave it at this happy place for today.

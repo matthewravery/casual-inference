@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>DIY Metrics:  Five-Man Unit Plus/Minus</title>
+      <link>/post/diy-metrics-five-man-unit-plus-minus/</link>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/diy-metrics-five-man-unit-plus-minus/</guid>
+      <description>Last week, I described how to build a plus/minus score for individual players based on data from NBAstuffer. I enjoyed walking through that process, so lets continue the series and expand our focus.
+Five-man units vs. Individual PlayersOne of the first things I talked about on this site was comparing different metrics and choosing the right one for the task at hand. Plus/minus for individual players is a weird metric, because it’s taking a team outcome (net change in score) and applying it at an individual level.</description>
+    </item>
+    
+    <item>
       <title>Local Polynomial Smoothing</title>
       <link>/post/local-polynomial-smoothing/</link>
       <pubDate>Mon, 18 Feb 2019 00:00:00 +0000</pubDate>
