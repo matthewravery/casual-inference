@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>DIY Metrics:  Net Ratings (ish)</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.51" />
+	<meta property="og:title" content="DIY Metrics:  Net Ratings (ish)" />
+<meta property="og:description" content="Last time on DIY Metrics, we calculated five-man-unit plus/minus ratings from scratch. If we want to use measures like this to compare performance for these groups of players, its important to consider how much game time we have for each unit. There’s a relevant discussion to be had about whether “number of posessions” or “elapsed time” is the best way to compare these groups, (IMO, it depends on what specific question you’re trying to answer with your metric) but today we’ll avoid that discussion and normalize over time because it’s easier." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/diy-metrics-net-ratings-ish/" /><meta property="article:published_time" content="2019-03-09T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-03-09T00:00:00&#43;00:00"/>
+
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Casual Inference" rel="home">
+				<div class="logo__title">Casual Inference</div>
+				<div class="logo__tagline">Robust and relaxed</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/about/">About</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://matthewravery.github.io/markdown-cv">CV</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://github.com/jthaman/ciTools">ciTools</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/analysis-statement/">Analysis Philosophy</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">DIY Metrics:  Net Ratings (ish)</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-03-09T00:00:00">March 09, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/basketball" rel="category">basketball</a>, <a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/metrics" rel="category">metrics</a>, <a class="meta__link" href="/categories/sports" rel="category">sports</a>, <a class="meta__link" href="/categories/r" rel="category">R</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+
+<p><a href = "/post/diy-metrics-five-man-unit-plus-minus/">Last time on DIY Metrics</a>, we calculated five-man-unit plus/minus ratings from scratch. If we want to use measures like this to compare performance for these groups of players, its important to consider how much game time we have for each unit. There’s a relevant discussion to be had about whether “number of posessions” or “elapsed time” is the best way to compare these groups, (IMO, it depends on what specific question you’re trying to answer with your metric) but today we’ll avoid that discussion and normalize over time because it’s easier.</p>
+<div id="data-cleaning" class="section level3">
+<h3>Data Cleaning</h3>
+<p>Our first step is to build out our workflow to allow us to do more interesting things. Thus far, we’ve been starting from scratch each time. This isn’t typically how you’d work on a project. The workflow we’ll show today is better for longer term projects. We’ll start by building up a script that generates a “cleaned” version of our raw data set (from <a href = "https://www.nbastuffer.com/analytics101/playbyplay-data/">NBAstuffer</a>).</p>
+<p>Here’s our script for data cleaning:</p>
+<pre class="r"><code>library(tidyverse)
+
+tbraw &lt;- read_csv(&quot;data/sample-combined-pbp-stats.csv&quot;) 
+
+teamsandplayers &lt;- tbraw %&gt;% 
+  filter(elapsed &gt; 0) %&gt;% #eliminates weird cases like opening jump ball
+  select(player, team) %&gt;% 
+  filter(!is.na(player)) %&gt;% 
+  distinct() 
+
+tb &lt;- tbraw %&gt;% 
+  mutate(hometeam = get_team(h1, teamsandplayers),
+         awayteam = get_team(a1, teamsandplayers),
+         pointchange = map_lgl(points, score_changed)) 
+
+
+allteams &lt;- tb %&gt;% 
+  filter(elapsed &gt; 0) %&gt;% #eliminates weird cases like opening jump ball
+  select(team) %&gt;% 
+  filter(!is.na(team)) %&gt;% 
+  distinct() 
+
+tmp &lt;- left_join(allteams, get_team_events(allteams, tb))</code></pre>
+<p>Simple, right? Plus a lot of those function calls look familiar from previous installments. Well, except for one. The main work-horse here is <code>get_team_events</code>, which is worth looking at in more detail. (I’ve included all the helper functions I used at end of the post if you’re interested in them or want to try to run this code on your own.)</p>
+<pre class="r"><code>get_team_events &lt;- function(whichteam, tb){
+  
+  out &lt;- NULL
+  for(i in seq_along(whichteam$team)){
+    
+    thatteam &lt;- whichteam$team[i]
+    
+    teamtbl &lt;- tb %&gt;% 
+      mutate(currentteam = thatteam) %&gt;% 
+      filter(hometeam == currentteam | awayteam == currentteam) %&gt;% 
+      fiveplayers()
+    
+    thisteamsplayers &lt;- get_this_teams_players(teamtbl, thatteam)
+    
+    out &lt;- teamtbl %&gt;% 
+      add_subsections(thisteamsplayers) %&gt;% 
+      mutate(netpoints = pmap_dbl(list(points, currentteam, team), get_net_points)) %&gt;% 
+      select(-team) %&gt;% rename(team = currentteam) %&gt;% 
+      bind_rows(out)
+    
+  }
+  out %&gt;% group_by(team) %&gt;% nest(.key = `team events`)
+  
+}</code></pre>
+<p>For each team in the data set, this function creates a specific table that contains all events that team participated in, and tranforms the outcomes (e.g., whether a basket is a “positive” or “negative” to the perspective of that team. If it does look kinda familiar, it’s an updated version of <code>get_team_scores</code> from last week. The key difference is the <code>add_subsections</code> subfunction, which divides the game into subsections with identical personnel (from the team of interest). This can be useful if we want to aggregate over these time periods.</p>
+<p>The last step in this script is to save the cleaned data set for future retrieval and use:</p>
+<pre class="r"><code>write_rds(tmp, &quot;clean-data/team-events.rds&quot;)</code></pre>
+<p>I save it as an rds file here to preserve the nesting behavior of the <code>tbl_df</code> we’ve just built. You can also just saves it as a .csv if you want the more general formatting.</p>
+</div>
+<div id="getting-the-plusminus-scores-and-times" class="section level3">
+<h3>Getting the plus/minus scores and times</h3>
+<p>With our nicely cleaned data set, it’s now pretty simple to get the information we want.</p>
+<p>First, we read in our data:</p>
+<pre class="r"><code>library(lubridate)
+library(tidyverse)
+
+tmp &lt;- read_rds(&quot;clean-data/team-events.rds&quot;)</code></pre>
+<p>Next, we’ll need a new function:</p>
+<pre class="r"><code>get_fiveman_plusminus &lt;- function(tb, team){
+  
+  tb %&gt;% 
+    mutate(team = team) %&gt;% 
+    mutate(pl = hms(play_length)) %&gt;% 
+    group_by(p1, p2, p3, p4, p5) %&gt;% 
+    summarise(`Plus/Minus` = sum(netpoints, na.rm = T),
+              unittime = sum(pl)) 
+  
+}</code></pre>
+<p>This function is designed to work with <code>purrr::map2</code> on the nested data set we just built. To get the time values, we use the <code>play_length</code> column from our data set along with <code>lubridate::hms</code>, which takes the column and tells <code>R</code> how to process it properly. I found this worked so well that I want to pause to illustrate it quickly:</p>
+<pre class="r"><code>tmp %&gt;% 
+  filter(team == &quot;BOS&quot;) %&gt;% 
+  select(`team events`) %&gt;% 
+  unnest %&gt;% 
+  select(play_length) %&gt;% 
+  mutate(pls = hms(play_length)) #  &lt;-- critical line of code from lubridate</code></pre>
+<pre><code>## # A tibble: 477 x 2
+##    play_length pls         
+##    &lt;chr&gt;       &lt;S4: Period&gt;
+##  1 0:00:00     0S          
+##  2 0:00:00     0S          
+##  3 0:00:16     16S         
+##  4 0:00:17     17S         
+##  5 0:00:04     4S          
+##  6 0:00:02     2S          
+##  7 0:00:03     3S          
+##  8 0:00:16     16S         
+##  9 0:00:03     3S          
+## 10 0:00:08     8S          
+## # ... with 467 more rows</code></pre>
+<p>Boy, howdy that’s easy! And the new column will do intuitive things when, for example, you use functions like <code>sum</code> over it.</p>
+<p>Now let’s build our plus-minus data and check it out!</p>
+<pre class="r"><code>pm &lt;- tmp %&gt;%
+  mutate(`Five-man Plus/Minus` = map2(`team events`, team, get_fiveman_plusminus))
+
+pm %&gt;% filter(team == &quot;BOS&quot;) %&gt;% select(`Five-man Plus/Minus`) %&gt;% unnest()</code></pre>
+<pre><code>## # A tibble: 25 x 7
+##    p1          p2        p3        p4        p5       `Plus/Minus` unittime
+##    &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;
+##  1 Al Horford  Jaylen B~ Marcus S~ Terry Ro~ Kyrie I~            3      103
+##  2 Al Horford  Jaylen B~ Marcus S~ Terry Ro~ Shane L~           -1       89
+##  3 Al Horford  Kyrie Ir~ Semi Oje~ Marcus S~ Jaylen ~           -3      128
+##  4 Al Horford  Terry Ro~ Kyrie Ir~ Semi Oje~ Marcus ~            0        0
+##  5 Gordon Hay~ Jayson T~ Al Horfo~ Jaylen B~ Kyrie I~            3      315
+##  6 Jaylen Bro~ Kyrie Ir~ Jayson T~ Al Horfo~ Marcus ~           -6      298
+##  7 Jaylen Bro~ Kyrie Ir~ Marcus S~ Aron Bay~ Semi Oj~            0        0
+##  8 Jaylen Bro~ Marcus S~ Aron Bay~ Semi Oje~ Terry R~           -4      117
+##  9 Jaylen Bro~ Marcus S~ Terry Ro~ Kyrie Ir~ Aron Ba~            0       88
+## 10 Jaylen Bro~ Terry Ro~ Kyrie Ir~ Aron Bay~ Jayson ~            2      129
+## # ... with 15 more rows</code></pre>
+<p>This is basically where we were last time, except now we’ve got the total duration of game time each of these units played. This also has the values broken out by “game section” as we defined it above, so we’ll have to include a <code>summarise</code> step to aggregate these. Also note that “0 second” periods. This is due to a quirk with the data set, which codes each substitution individually. When two players check in simultaneously, there’s a “0 second duration” section when only one player has checked in. So basically we want to ignore those sections, and we do so with a <code>filter(unittime &gt; 0)</code> step.</p>
+<p>By taking those times, summing over we can normalize unit performance to a per-36-minute basis:</p>
+<pre class="r"><code>pm %&gt;% filter(team == &quot;BOS&quot;) %&gt;% select(`Five-man Plus/Minus`) %&gt;% unnest() %&gt;% 
+  group_by(p1, p2, p3, p4, p5) %&gt;% 
+  filter(unittime &gt; 0) %&gt;% 
+  summarise(tpm = sum(`Plus/Minus`),
+            ttime = sum(unittime)) %&gt;% 
+  mutate(normpm = tpm * 3600 / ttime)</code></pre>
+<pre><code>## # A tibble: 21 x 8
+## # Groups:   p1, p2, p3, p4 [20]
+##    p1          p2         p3         p4        p5          tpm ttime normpm
+##    &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Al Horford  Jaylen Br~ Marcus Sm~ Terry Ro~ Kyrie Ir~     3   103  105. 
+##  2 Al Horford  Jaylen Br~ Marcus Sm~ Terry Ro~ Shane La~    -1    89  -40.4
+##  3 Al Horford  Kyrie Irv~ Semi Ojel~ Marcus S~ Jaylen B~    -3   128  -84.4
+##  4 Gordon Hay~ Jayson Ta~ Al Horford Jaylen B~ Kyrie Ir~     3   315   34.3
+##  5 Jaylen Bro~ Kyrie Irv~ Jayson Ta~ Al Horfo~ Marcus S~    -6   298  -72.5
+##  6 Jaylen Bro~ Marcus Sm~ Aron Bayn~ Semi Oje~ Terry Ro~    -4   117 -123. 
+##  7 Jaylen Bro~ Marcus Sm~ Terry Roz~ Kyrie Ir~ Aron Bay~     0    88    0  
+##  8 Jaylen Bro~ Terry Roz~ Kyrie Irv~ Aron Bay~ Jayson T~     2   129   55.8
+##  9 Jaylen Bro~ Terry Roz~ Kyrie Irv~ Jayson T~ Al Horfo~     0    13    0  
+## 10 Jayson Tat~ Al Horford Aron Bayn~ Terry Ro~ Kyrie Ir~    -4    79 -182. 
+## # ... with 11 more rows</code></pre>
+<p>So there you have it! These numbers look wonky becayse we’re still just looking at one or two game’s worth of data for each team. Suppose I’ll have to break down and pay for the full season’s worth of data at some point so this looks more reasonable….</p>
+<p>But good enough for now!</p>
+<div id="helper-functions-data-cleaning" class="section level4">
+<h4>Helper functions (data cleaning)</h4>
+<p>These are the helper functions used in the <code>get_team_events</code> function which does the main data cleaning from above:</p>
+<pre class="r"><code>get_team &lt;- function(playernames, teamsandplayers){
+  
+  teamsandplayers$team[match(playernames, teamsandplayers$player)]
+  
+}
+
+score_changed &lt;- function(points){
+  
+  !is.na(points) &amp;&amp; points &gt; 0
+}
+
+get_net_points &lt;- function(points, histeam, team){
+  if(is.na(team))
+    return(NA) else
+      if(histeam == team)
+        return(points) else
+          return(points * -1)
+}
+
+
+add_subsections &lt;- function(teamtbl, thisteamsplayers){
+  
+  subsec &lt;- rep(0, nrow(teamtbl))
+  
+  counter &lt;- 1
+  for(i in 1:nrow(teamtbl)){
+    if(!is.na(teamtbl$entered[i]) &amp;&amp; teamtbl$entered[i] %in% thisteamsplayers$player) counter &lt;- counter + 1
+    subsec[i] &lt;- counter
+  }
+  
+  teamtbl$subsec &lt;- subsec
+  teamtbl
+  
+}
+
+
+get_this_teams_players &lt;- function(teamtbl, thatteam){
+  
+  teamtbl %&gt;% 
+    filter(elapsed &gt; 0,             #eliminates weird cases like opening jump ball
+           team == thatteam) %&gt;% 
+    select(player, team) %&gt;% 
+    filter(!is.na(player)) %&gt;% 
+    distinct()
+}
+
+fiveplayers &lt;- function(tb){
+  
+  tb1 &lt;- tb %&gt;% filter(currentteam == hometeam) %&gt;% 
+    rename(p1 = h1, p2 = h2, p3 = h3, p4 = h4, p5 = h5, o1 = a1, o2 = a2, o3 = a3, o4 = a4, o5 = a5)
+  
+  tb2 &lt;- tb %&gt;% filter(currentteam == awayteam) %&gt;% 
+    rename(p1 = a1, p2 = a2, p3 = a3, p4 = a4, p5 = a5, o1 = h1, o2 = h2, o3 = h3, o4 = h4, o5 = h5)
+  
+  bind_rows(tb1, tb2)
+  
+}</code></pre>
+</div>
+</div>
+
+		</div>
+		
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/artificial-intelligence-is-dumb/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">&#34;Artificial Intelligence&#34; is dumb</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-net-ratings-ish/">DIY Metrics:  Net Ratings (ish)</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/artificial-intelligence-is-dumb/">&#34;Artificial Intelligence&#34; is dumb</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-five-man-unit-plus-minus/">DIY Metrics:  Five-Man Unit Plus/Minus</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/local-polynomial-smoothing/">Local Polynomial Smoothing</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics/">DIY Metrics</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/basketball">Basketball</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/common-analysis-errors">Common analysis errors</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/data-generation">Data generation</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/failure-to-communicate">Failure to communicate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/hot-takes">Hot takes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/life-is-distributional">Life is distributional</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/metrics">Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/misc">Misc</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/picking-at-nits">Picking at nits</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r">R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/sports">Sports</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/statistics">Statistics</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 Casual Inference.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

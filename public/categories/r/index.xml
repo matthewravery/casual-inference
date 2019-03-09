@@ -6,10 +6,19 @@
     <description>Recent content in R on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 23 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DIY Metrics:  Net Ratings (ish)</title>
+      <link>/post/diy-metrics-net-ratings-ish/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/diy-metrics-net-ratings-ish/</guid>
+      <description>Last time on DIY Metrics, we calculated five-man-unit plus/minus ratings from scratch. If we want to use measures like this to compare performance for these groups of players, its important to consider how much game time we have for each unit. There’s a relevant discussion to be had about whether “number of posessions” or “elapsed time” is the best way to compare these groups, (IMO, it depends on what specific question you’re trying to answer with your metric) but today we’ll avoid that discussion and normalize over time because it’s easier.</description>
+    </item>
     
     <item>
       <title>DIY Metrics:  Five-Man Unit Plus/Minus</title>

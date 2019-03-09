@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>DIY Metrics:  Net Ratings (ish)</title>
+      <link>/post/diy-metrics-net-ratings-ish/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/diy-metrics-net-ratings-ish/</guid>
+      <description>Last time on DIY Metrics, we calculated five-man-unit plus/minus ratings from scratch. If we want to use measures like this to compare performance for these groups of players, its important to consider how much game time we have for each unit. There’s a relevant discussion to be had about whether “number of posessions” or “elapsed time” is the best way to compare these groups, (IMO, it depends on what specific question you’re trying to answer with your metric) but today we’ll avoid that discussion and normalize over time because it’s easier.</description>
+    </item>
+    
+    <item>
       <title>&#34;Artificial Intelligence&#34; is dumb</title>
       <link>/post/artificial-intelligence-is-dumb/</link>
       <pubDate>Sat, 02 Mar 2019 00:00:00 +0000</pubDate>
