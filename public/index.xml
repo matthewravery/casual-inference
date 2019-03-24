@@ -6,10 +6,21 @@
     <description>Recent content on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Distributionality</title>
+      <link>/post/distributionality/</link>
+      <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/distributionality/</guid>
+      <description>This is an update to my Analysis Philosphy page, which is still working towards completion
+I only get 1,750 hits on Google when I search for “Distributionality”, so maybe I should clarify what I mean, though I don’t think it’s anything profound.
+That data follow distributions is a tautology. When this doesn’t appear the case, it means we’ve failed to properly model hte data generation function. The most typical failure mode is to assume that the distribution is simpler than it is.</description>
+    </item>
     
     <item>
       <title>DIY Metrics:  Net Ratings (ish)</title>

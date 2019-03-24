@@ -1,0 +1,33 @@
+---
+title: Distributionality
+author: Matthew Avery
+date: '2019-03-24'
+slug: distributionality
+categories:
+  - statistics
+  - common analysis errors
+  - failure to communicate
+  - life is distributional
+tags: []
+description: ''
+thumbnail: ''
+---
+*This is an update to my Analysis Philosphy page, which is still working towards completion*
+
+I only get 1,750 hits on Google when I search for "Distributionality", so maybe I should clarify what I mean, though I don't think it's anything profound.
+
+That data follow distributions is a tautology. When this doesn't appear the case, it means we've failed to properly model hte data generation function. The most typical failure mode is to assume that the distribution is simpler than it is. Statistics (and science, and human cognition, and ...) is rife with simplifying assumptions, so there's nothing inherenly wrong about them. 
+
+Take the opposite approach, and imagine modeling data using a purely empirical CDF. Your tool box is now limited, and a lot of inference is now harder, but those are mechanical problems. But you still haven't solved the most challenging problems like, "What can I predict about a new observation that might come from a different sub-population?" 
+
+So we make basic assumptions, either about our data ("IID") or about our inference ("Future observations come from the same distribution as my sample!"), all of which have dubious relation to reality. 
+
+The subpopulation thing is a real challenge, and it crops up all the time. One of the constant demands I have in my current job is summarizing complex systems that are used in a wide variety of environments in the most pithy way possible. How do you explain to that quintessential, "non-technical, executive-level" audience that, across a four-variable space, there are some places where the system works well, others where the performance is indistinguishable from the requirement, and a few where its disastrously bad in a few sentences, while being sure to include the reasons for this variation? 
+
+The most egregious place I see su-populations creep up is when political analysts are attempting to summarize polling results. Even for high-quality polls, they typically get on the order of $n = 1,0000$ respondents. Which is fine, right until they start breaking out the cross-tabs and talking about things like "non-white Hispanic males between the ages of 30 and 49". My main gripe here isn't the sample sizes they have for these inferences, which are necessarily limited. Rather, my complaint is the way such things are discussed. I can't recall hearing even the most data-literate politics reporting (e.g., <a href = "https://fivethirtyeight.com/">538</a>) point out variation across sub-groups in opinion polls then identify which factors are driving the differences and which are a result of correlation across factors. A brief example:
+
+Suppose Americans over 65 favored Policy X by a 56% to 44% margin compared to a 48 to 52 difference among Americans 65 and under. Seems a simple story:  Old people like Policy X! And a lot of times you see political reporting stop there. Or maybe they go one step further and note that, among Whites, the policy is favored 55% to 45, but non-whites are against it by a margin 42 to 58. Well, now we've got a conundrum, because $Age > 64$ is correlated with $Race != White$ in America. So was the initial reporting, about the difference in opinion being based on Age, correct? Incomplete? Useful? It's hard to say, and this is a relatively simple example. You can break these polling results down along a number of additional dimensions (gender, political affiliation, geographic location, etc.) to get a much richer picture of how different groups of people feel about things, but you almost never see this in popular discussions because the samples aren't big enough and the analysis is a bit more complex. It's very frustrating, and in my view, means we typically don't really understand what's going on in these cases. 
+
+When I'm doing my own analyses, I try to bear this in mind. How many subpopulations am I really averaging over when I do my analysis? Are there more robust options (mixed models, etc.) for accounting for subpopulations? If I aggregate over subpopulations, am I distorting the results? 
+
+Conventional wisdom is that the most common failure mode for a statistical analysis is starting from the basis that your data is Gaussian. This is incorrect, IMO. The most common failure is in not accounting for the complexity of the "top-level" distribution and trying to treat data from many subpopulations as if they're from a single, uniform population. Thinking properly about your data's distribution and allowing it to be adequately complex is both challenging and fundamental to doing sound analysis. 

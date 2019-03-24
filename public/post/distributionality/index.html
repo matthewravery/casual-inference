@@ -4,16 +4,17 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Local Polynomial Smoothing</title>
+	<title>Distributionality</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta name="generator" content="Hugo 0.51" />
-	<meta property="og:title" content="Local Polynomial Smoothing" />
-<meta property="og:description" content="So this is a blast from the past. NC State (at least while I was there) did something interesting for their prelim. Instead of taking another test like we had to do at the Masters level, they gave all their students a subject unrelated to their research, and had them write a lit review and do a small simulation study.
-My topic was local polynomial smoothing. I don’t think I did a particularly good job, but afterwards, I posted it on my NCSU website as an example of things I’d written." />
+	<meta property="og:title" content="Distributionality" />
+<meta property="og:description" content="This is an update to my Analysis Philosphy page, which is still working towards completion
+I only get 1,750 hits on Google when I search for “Distributionality”, so maybe I should clarify what I mean, though I don’t think it’s anything profound.
+That data follow distributions is a tautology. When this doesn’t appear the case, it means we’ve failed to properly model hte data generation function. The most typical failure mode is to assume that the distribution is simpler than it is." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/local-polynomial-smoothing/" /><meta property="article:published_time" content="2019-02-18T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-02-18T00:00:00&#43;00:00"/>
+<meta property="og:url" content="/post/distributionality/" /><meta property="article:published_time" content="2019-03-24T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-03-24T00:00:00&#43;00:00"/>
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -65,43 +66,32 @@ My topic was local polynomial smoothing. I don’t think I did a particularly go
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title">Local Polynomial Smoothing</h1>
+			<h1 class="post__title">Distributionality</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-02-18T00:00:00">February 18, 2019</time>
+	<time class="meta__text" datetime="2019-03-24T00:00:00">March 24, 2019</time>
 </div>
 
 <div class="meta__item-categories meta__item">
 	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/statistics" rel="category">statistics</a></span>
+	<span class="meta__text"><a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/common-analysis-errors" rel="category">common analysis errors</a>, <a class="meta__link" href="/categories/failure-to-communicate" rel="category">failure to communicate</a>, <a class="meta__link" href="/categories/life-is-distributional" rel="category">life is distributional</a></span>
 </div>
 </div>
 		</header><div class="content post__content clearfix">
 			
 
 
-<p>So this is a blast from the past. NC State (at least while I was there) did something interesting for their prelim. Instead of taking another test like we had to do at the Masters level, they gave all their students a subject unrelated to their research, and had them write a lit review and do a small simulation study.</p>
-<p>My topic was local polynomial smoothing. I don’t think I did a particularly good job, but afterwards, I posted it on my NCSU website as an example of things I’d written. It turned out that over the next few years, some people actually ended up citing this thing, I guess because it was somehow one of the first Google hits for “local polynomial regression” or something. Once I’d been out of school for a while, NCSU took down the website, and there was no longer any way to find this paper.</p>
-<p><a href = "/post/local-polynomial-smoothing.pdf">So here it is!</a> The abstract’s quoted below. It hasn’t been through any real editing aside from a review by some folks from the faculty who, after a few changes, decided it wasn’t bad enough to kick me out of the program. At this point, it’s about 10 years out of date, so I’m sure there are more up-to-date summaries out there. But this’ll get through 2010 in decent shape!</p>
-<p><a href = "/post/local-polynomial-smoothing.pdf">Literature Review for Local Polynomial Regression</a></p>
-<blockquote>
-<p>This paper discusses key results from the literature in the field of local polynomial regression.<br />
-Local polynomial regression (LPR) is a nonparametric technique for smoothing scatter<br />
-plots and modeling functions. For each point, <span class="math inline">\(x_0\)</span>, a low-order polynomial WLS regression is<br />
-fit using only points in some “neighborhood” of <span class="math inline">\(x_0\)</span>. The result is a smooth function over the<br />
-support of the data. LPR has good performance on the boundary and is superior to all other<br />
-linear smoothers in a minimax sense. The quality of the estimated function is dependent on the<br />
-choice of weighting function, <span class="math inline">\(K\)</span>, the size the neighborhood, <span class="math inline">\(h\)</span>, and the order of polynomial fit,<br />
-<span class="math inline">\(p\)</span>. We discuss each of these choices, paying particular attention to bandwidth selection. When<br />
-choosing <span class="math inline">\(h\)</span>, “plug-in” methods tend to outperform cross-validation methods, but computational<br />
-considerations make the latter a desirable choice. Variable bandwidths are more flexible<br />
-than global ones, but both can have good asymptotic and finite-sample properties. Odd-order<br />
-polynomial fits are superior to even fits asymptotically, and an adaptive order method that is<br />
-robust to bandwidth is discussed. While the Epanechnikov kernel is superior is an asymptotic<br />
-minimax sense, a variety are used in practice. Extensions to various types of data and other<br />
-applications of LPR are also discussed.</p>
-</blockquote>
+<p><em>This is an update to my Analysis Philosphy page, which is still working towards completion</em></p>
+<p>I only get 1,750 hits on Google when I search for “Distributionality”, so maybe I should clarify what I mean, though I don’t think it’s anything profound.</p>
+<p>That data follow distributions is a tautology. When this doesn’t appear the case, it means we’ve failed to properly model hte data generation function. The most typical failure mode is to assume that the distribution is simpler than it is. Statistics (and science, and human cognition, and …) is rife with simplifying assumptions, so there’s nothing inherenly wrong about them.</p>
+<p>Take the opposite approach, and imagine modeling data using a purely empirical CDF. Your tool box is now limited, and a lot of inference is now harder, but those are mechanical problems. But you still haven’t solved the most challenging problems like, “What can I predict about a new observation that might come from a different sub-population?”</p>
+<p>So we make basic assumptions, either about our data (“IID”) or about our inference (“Future observations come from the same distribution as my sample!”), all of which have dubious relation to reality.</p>
+<p>The subpopulation thing is a real challenge, and it crops up all the time. One of the constant demands I have in my current job is summarizing complex systems that are used in a wide variety of environments in the most pithy way possible. How do you explain to that quintessential, “non-technical, executive-level” audience that, across a four-variable space, there are some places where the system works well, others where the performance is indistinguishable from the requirement, and a few where its disastrously bad in a few sentences, while being sure to include the reasons for this variation?</p>
+<p>The most egregious place I see su-populations creep up is when political analysts are attempting to summarize polling results. Even for high-quality polls, they typically get on the order of <span class="math inline">\(n = 1,0000\)</span> respondents. Which is fine, right until they start breaking out the cross-tabs and talking about things like “non-white Hispanic males between the ages of 30 and 49”. My main gripe here isn’t the sample sizes they have for these inferences, which are necessarily limited. Rather, my complaint is the way such things are discussed. I can’t recall hearing even the most data-literate politics reporting (e.g., <a href = "https://fivethirtyeight.com/">538</a>) point out variation across sub-groups in opinion polls then identify which factors are driving the differences and which are a result of correlation across factors. A brief example:</p>
+<p>Suppose Americans over 65 favored Policy X by a 56% to 44% margin compared to a 48 to 52 difference among Americans 65 and under. Seems a simple story: Old people like Policy X! And a lot of times you see political reporting stop there. Or maybe they go one step further and note that, among Whites, the policy is favored 55% to 45, but non-whites are against it by a margin 42 to 58. Well, now we’ve got a conundrum, because <span class="math inline">\(Age &gt; 64\)</span> is correlated with <span class="math inline">\(Race != White\)</span> in America. So was the initial reporting, about the difference in opinion being based on Age, correct? Incomplete? Useful? It’s hard to say, and this is a relatively simple example. You can break these polling results down along a number of additional dimensions (gender, political affiliation, geographic location, etc.) to get a much richer picture of how different groups of people feel about things, but you almost never see this in popular discussions because the samples aren’t big enough and the analysis is a bit more complex. It’s very frustrating, and in my view, means we typically don’t really understand what’s going on in these cases.</p>
+<p>When I’m doing my own analyses, I try to bear this in mind. How many subpopulations am I really averaging over when I do my analysis? Are there more robust options (mixed models, etc.) for accounting for subpopulations? If I aggregate over subpopulations, am I distorting the results?</p>
+<p>Conventional wisdom is that the most common failure mode for a statistical analysis is starting from the basis that your data is Gaussian. This is incorrect, IMO. The most common failure is in not accounting for the complexity of the “top-level” distribution and trying to treat data from many subpopulations as if they’re from a single, uniform population. Thinking properly about your data’s distribution and allowing it to be adequately complex is both challenging and fundamental to doing sound analysis.</p>
 
 		</div>
 		
@@ -111,10 +101,7 @@ applications of LPR are also discussed.</p>
 
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
-		<a class="post-nav__link" href="/post/diy-metrics/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">DIY Metrics</p></a>
-	</div>
-	<div class="post-nav__item post-nav__item--next">
-		<a class="post-nav__link" href="/post/diy-metrics-five-man-unit-plus-minus/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">DIY Metrics:  Five-Man Unit Plus/Minus</p></a>
+		<a class="post-nav__link" href="/post/diy-metrics-net-ratings-ish/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">DIY Metrics:  Net Ratings (ish)</p></a>
 	</div>
 </nav>
 
