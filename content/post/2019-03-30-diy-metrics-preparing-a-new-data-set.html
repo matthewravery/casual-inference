@@ -1,0 +1,222 @@
+---
+title: 'DIY Metrics:  Preparing a new data set'
+author: Matthew Avery
+date: '2019-03-30'
+slug: diy-metrics-preparing-a-new-data-set
+categories:   
+  - basketball
+  - metrics
+  - sports
+  - statistics
+  - R
+tags: []
+description: ''
+thumbnail: ''
+---
+
+
+
+<p>So I finally broke down and got a full season’s worth of NBA play-by-play data to work on. Going forward, I’ll be using the full 2017-2018 play-by-play data from <a href = "https://www.nbastuffer.com/analytics101/playbyplay-data/">NBAstuffer</a>.</p>
+<p>To date, I’ve been building my scripts using functional programming with the goal of having each step easily work with new data sets. This will be a good test of whether I’ve been successful!</p>
+<p>But before we do that, we need to look at the new data set and see what, if anything has changed. This means a new round of data cleaning!</p>
+<div id="cleaning-a-new-data-set" class="section level3">
+<h3>Cleaning a new data set</h3>
+<p>The data set we’re dealing with is large enough that I don’t think my free spreadsheet software can handle it. So the first thing I do is try to read it into R and see what breaks:</p>
+<pre class="r"><code>library(tidyverse)
+tbraw &lt;- read_csv(&quot;data/[10-17-2017]-[06-08-2018]-combined-stats.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   period = col_double(),
+##   away_score = col_double(),
+##   home_score = col_double(),
+##   remaining_time = col_time(format = &quot;&quot;),
+##   elapsed = col_time(format = &quot;&quot;),
+##   play_id = col_double(),
+##   num = col_double(),
+##   outof = col_double(),
+##   points = col_double(),
+##   shot_distance = col_double(),
+##   original_x = col_double(),
+##   original_y = col_double(),
+##   converted_x = col_double(),
+##   converted_y = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## Warning: 676 parsing failures.
+##   row         col   expected     actual                                                file
+## 11390 original_x  a double   unknown    &#39;data/[10-17-2017]-[06-08-2018]-combined-stats.csv&#39;
+## 11390 original_y  a double   unknown    &#39;data/[10-17-2017]-[06-08-2018]-combined-stats.csv&#39;
+## 11390 converted_x a double   unknown    &#39;data/[10-17-2017]-[06-08-2018]-combined-stats.csv&#39;
+## 11390 converted_y a double   unknown    &#39;data/[10-17-2017]-[06-08-2018]-combined-stats.csv&#39;
+## 34256 NA          44 columns 46 columns &#39;data/[10-17-2017]-[06-08-2018]-combined-stats.csv&#39;
+## ..... ........... .......... .......... ...................................................
+## See problems(...) for more details.</code></pre>
+<p>Three things jump out to me: The first is that the data has remarkably few problems going in. The second is that the game_id’s are flubbed, and I"m not sure why. We can fix that easily enough:</p>
+<pre class="r"><code>tbraw %&gt;% 
+  mutate(game_id = as.numeric(str_extract(game_id, &quot;\\d+&quot;))) %&gt;% head</code></pre>
+<pre><code>## # A tibble: 6 x 44
+##   game_id data_set date  a1    a2    a3    a4    a5    h1    h2    h3   
+##     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1  2.17e7 2017-20~ 2017~ Gord~ Jays~ Al H~ Jayl~ Kyri~ LeBr~ Jae ~ Kevi~
+## 2  2.17e7 2017-20~ 2017~ Gord~ Jays~ Al H~ Jayl~ Kyri~ LeBr~ Jae ~ Kevi~
+## 3  2.17e7 2017-20~ 2017~ Gord~ Jays~ Al H~ Jayl~ Kyri~ LeBr~ Jae ~ Kevi~
+## 4  2.17e7 2017-20~ 2017~ Gord~ Jays~ Al H~ Jayl~ Kyri~ LeBr~ Jae ~ Kevi~
+## 5  2.17e7 2017-20~ 2017~ Gord~ Jays~ Al H~ Jayl~ Kyri~ LeBr~ Jae ~ Kevi~
+## 6  2.17e7 2017-20~ 2017~ Gord~ Jays~ Al H~ Jayl~ Kyri~ LeBr~ Jae ~ Kevi~
+## # ... with 33 more variables: h4 &lt;chr&gt;, h5 &lt;chr&gt;, period &lt;dbl&gt;,
+## #   away_score &lt;dbl&gt;, home_score &lt;dbl&gt;, remaining_time &lt;time&gt;,
+## #   elapsed &lt;time&gt;, play_length &lt;chr&gt;, play_id &lt;dbl&gt;, team &lt;chr&gt;,
+## #   event_type &lt;chr&gt;, assist &lt;chr&gt;, away &lt;chr&gt;, home &lt;chr&gt;, block &lt;chr&gt;,
+## #   entered &lt;chr&gt;, left &lt;chr&gt;, num &lt;dbl&gt;, opponent &lt;chr&gt;, outof &lt;dbl&gt;,
+## #   player &lt;chr&gt;, points &lt;dbl&gt;, possession &lt;chr&gt;, reason &lt;chr&gt;,
+## #   result &lt;chr&gt;, steal &lt;chr&gt;, type &lt;chr&gt;, shot_distance &lt;dbl&gt;,
+## #   original_x &lt;dbl&gt;, original_y &lt;dbl&gt;, converted_x &lt;dbl&gt;,
+## #   converted_y &lt;dbl&gt;, description &lt;chr&gt;</code></pre>
+<p>The third thing is all of the “problems”</p>
+<pre class="r"><code>problems(tbraw)</code></pre>
+<pre><code>## # A tibble: 676 x 5
+##      row col        expected   actual   file                               
+##    &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                              
+##  1 11390 original_x a double   unknown  &#39;data/[10-17-2017]-[06-08-2018]-co~
+##  2 11390 original_y a double   unknown  &#39;data/[10-17-2017]-[06-08-2018]-co~
+##  3 11390 converted~ a double   unknown  &#39;data/[10-17-2017]-[06-08-2018]-co~
+##  4 11390 converted~ a double   unknown  &#39;data/[10-17-2017]-[06-08-2018]-co~
+##  5 34256 &lt;NA&gt;       44 columns 46 colu~ &#39;data/[10-17-2017]-[06-08-2018]-co~
+##  6 34257 &lt;NA&gt;       44 columns 46 colu~ &#39;data/[10-17-2017]-[06-08-2018]-co~
+##  7 34258 &lt;NA&gt;       44 columns 46 colu~ &#39;data/[10-17-2017]-[06-08-2018]-co~
+##  8 34259 &lt;NA&gt;       44 columns 46 colu~ &#39;data/[10-17-2017]-[06-08-2018]-co~
+##  9 34260 &lt;NA&gt;       44 columns 46 colu~ &#39;data/[10-17-2017]-[06-08-2018]-co~
+## 10 34261 &lt;NA&gt;       44 columns 46 colu~ &#39;data/[10-17-2017]-[06-08-2018]-co~
+## # ... with 666 more rows</code></pre>
+</div>
+<div id="extra-columns" class="section level2">
+<h2>Extra columns</h2>
+<p>Going back to point 1, 676 “problems” out of a total of nearly 600k rows is not very bad at all. But we still need to address them. It looks like there are a couple categories of problems. The easiest to deal with might be the rows where there are two extra columns. It looks like these are all consecutive, so I’m going to go out on a limb and guess that there’s a single game that, for whatever reason, we read in as having two extra rows. Let’s start by looking at that game:</p>
+<pre class="r"><code>tbcols &lt;- tbraw %&gt;% slice(
+  (problems(tbraw) %&gt;% filter(actual == &quot;46 columns&quot;) %&gt;% select(row) %&gt;% unique)$row
+  ) 
+
+tbcols %&gt;% select(game_id) %&gt;% unique</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   game_id   
+##   &lt;chr&gt;     
+## 1 0021700074</code></pre>
+<p>Yeah, definitely just a single game. Visual inspection doesn’t indicate that anything’s missing, so we might be able to ignore these “problems” and move on, but let’s look at one more thing before we do so:</p>
+<pre class="r"><code>con &lt;- file(&quot;data/[10-17-2017]-[06-08-2018]-combined-stats.csv&quot;, &quot;r&quot;)
+ab &lt;- read.csv(con, header = F,
+         skip = min((problems(tbraw) %&gt;% filter(actual == &quot;46 columns&quot;) %&gt;% select(row) %&gt;% unique)$row),
+         nrow = nrow(tbcols)) %&gt;% 
+  as_tibble()
+close(con)
+ab</code></pre>
+<pre><code>## # A tibble: 486 x 46
+##        V1 V2    V3    V4    V5    V6    V7    V8    V9    V10   V11   V12  
+##     &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;
+##  1 2.17e7 2017~ 10/2~ Paul~ Carm~ Stev~ Andr~ Russ~ Andr~ Taj ~ Karl~ Jimm~
+##  2 2.17e7 2017~ 10/2~ Paul~ Carm~ Stev~ Andr~ Russ~ Andr~ Taj ~ Karl~ Jimm~
+##  3 2.17e7 2017~ 10/2~ Paul~ Carm~ Stev~ Andr~ Russ~ Andr~ Taj ~ Karl~ Jimm~
+##  4 2.17e7 2017~ 10/2~ Paul~ Carm~ Stev~ Andr~ Russ~ Andr~ Taj ~ Karl~ Jimm~
+##  5 2.17e7 2017~ 10/2~ Paul~ Carm~ Stev~ Andr~ Russ~ Andr~ Taj ~ Karl~ Jimm~
+##  6 2.17e7 2017~ 10/2~ Paul~ Carm~ Stev~ Andr~ Russ~ Andr~ Taj ~ Karl~ Jimm~
+##  7 2.17e7 2017~ 10/2~ Paul~ Carm~ Stev~ Andr~ Russ~ Andr~ Taj ~ Karl~ Jimm~
+##  8 2.17e7 2017~ 10/2~ Paul~ Carm~ Stev~ Andr~ Russ~ Andr~ Taj ~ Karl~ Jimm~
+##  9 2.17e7 2017~ 10/2~ Paul~ Carm~ Stev~ Andr~ Russ~ Andr~ Taj ~ Karl~ Jimm~
+## 10 2.17e7 2017~ 10/2~ Paul~ Carm~ Stev~ Andr~ Russ~ Andr~ Taj ~ Karl~ Jimm~
+## # ... with 476 more rows, and 34 more variables: V13 &lt;fct&gt;, V14 &lt;int&gt;,
+## #   V15 &lt;int&gt;, V16 &lt;int&gt;, V17 &lt;fct&gt;, V18 &lt;fct&gt;, V19 &lt;fct&gt;, V20 &lt;int&gt;,
+## #   V21 &lt;fct&gt;, V22 &lt;fct&gt;, V23 &lt;fct&gt;, V24 &lt;fct&gt;, V25 &lt;fct&gt;, V26 &lt;fct&gt;,
+## #   V27 &lt;fct&gt;, V28 &lt;fct&gt;, V29 &lt;int&gt;, V30 &lt;fct&gt;, V31 &lt;int&gt;, V32 &lt;fct&gt;,
+## #   V33 &lt;int&gt;, V34 &lt;fct&gt;, V35 &lt;fct&gt;, V36 &lt;fct&gt;, V37 &lt;fct&gt;, V38 &lt;fct&gt;,
+## #   V39 &lt;int&gt;, V40 &lt;int&gt;, V41 &lt;int&gt;, V42 &lt;dbl&gt;, V43 &lt;dbl&gt;, V44 &lt;fct&gt;,
+## #   V45 &lt;lgl&gt;, V46 &lt;lgl&gt;</code></pre>
+<p>The code above reads in only the rows of our original .csv that we identified earlier as having two extra columns. I used <code>read.csv</code> instead of <code>read_csv</code> because, as far as I can tell, there isn’t a way to use the latter to read in a specific subset of the target data file. Please correct me if I’m wrong.</p>
+<p>Now we can look directly at what’s in those columns:</p>
+<pre class="r"><code>ab %&gt;% select(V45, V46)</code></pre>
+<pre><code>## # A tibble: 486 x 2
+##    V45   V46  
+##    &lt;lgl&gt; &lt;lgl&gt;
+##  1 NA    NA   
+##  2 NA    NA   
+##  3 NA    NA   
+##  4 NA    NA   
+##  5 NA    NA   
+##  6 NA    NA   
+##  7 NA    NA   
+##  8 NA    NA   
+##  9 NA    NA   
+## 10 NA    NA   
+## # ... with 476 more rows</code></pre>
+<p>As I suspected, they’re just empty columns that got included in extraneously for some reason. Probably just an error when the data set was being built. No big deal. I think this is the kind of thing that can happen when you’re working in Excel and you click in a cell beyond the scope of your data. At that point, Excel decides you “care” about those rows/columns even though you haven’t bothered to put anything into them. Then when you convert to .csv, it includes those cells in the file as “empty” cells. Bottom line is we can ignore them.</p>
+<p>At this point, I fee safe ignoring the parsing problems associated with this game file, reducing our list greatly!</p>
+</div>
+<div id="other-problems" class="section level2">
+<h2>Other problems</h2>
+<p>We’re left with 190 “problems”, each of which is related to an “unknown” entry type being located where a “double” was expected:</p>
+<pre class="r"><code>pr &lt;- problems(tbraw) %&gt;% filter(actual != &quot;46 columns&quot;)
+pr</code></pre>
+<pre><code>## # A tibble: 190 x 5
+##       row col         expected actual  file                                
+##     &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;                               
+##  1  11390 original_x  a double unknown &#39;data/[10-17-2017]-[06-08-2018]-com~
+##  2  11390 original_y  a double unknown &#39;data/[10-17-2017]-[06-08-2018]-com~
+##  3  11390 converted_x a double unknown &#39;data/[10-17-2017]-[06-08-2018]-com~
+##  4  11390 converted_y a double unknown &#39;data/[10-17-2017]-[06-08-2018]-com~
+##  5 392313 shot_dista~ a double unknown &#39;data/[10-17-2017]-[06-08-2018]-com~
+##  6 392313 original_x  a double unknown &#39;data/[10-17-2017]-[06-08-2018]-com~
+##  7 392313 original_y  a double unknown &#39;data/[10-17-2017]-[06-08-2018]-com~
+##  8 392313 converted_x a double unknown &#39;data/[10-17-2017]-[06-08-2018]-com~
+##  9 392313 converted_y a double unknown &#39;data/[10-17-2017]-[06-08-2018]-com~
+## 10 421256 original_x  a double unknown &#39;data/[10-17-2017]-[06-08-2018]-com~
+## # ... with 180 more rows</code></pre>
+<p>Conveniently, it looks like these problems occur in a few specific columns and only in a few specific games:</p>
+<pre class="r"><code>pr %&gt;% select(col) %&gt;% unique </code></pre>
+<pre><code>## # A tibble: 5 x 1
+##   col          
+##   &lt;chr&gt;        
+## 1 original_x   
+## 2 original_y   
+## 3 converted_x  
+## 4 converted_y  
+## 5 shot_distance</code></pre>
+<pre class="r"><code>ap &lt;- tbraw %&gt;% slice(
+  (pr %&gt;% select(row) %&gt;% unique)$row
+)
+ap %&gt;% mutate(game_id = as.numeric(str_extract(game_id, &quot;\\d+&quot;))) %&gt;% select(game_id) %&gt;% unique</code></pre>
+<pre><code>## # A tibble: 3 x 1
+##    game_id
+##      &lt;dbl&gt;
+## 1 21700025
+## 2 21700861
+## 3 21700923</code></pre>
+<p>All of these problems relate to shot location data, and these problems occur in only three games. When we look at these games individually, and we see that these values are coded as “unknown” in the raw files. The use of a character string is what produced the <code>warning</code> from <code>read_csv</code>, so that’s one mystery solved. Additionally, this indicates to me that there was an error with the cameras and/or software used to measure the shot locations for those specific shots. Since nothing we’ve done to date relies on shot location data, we can safely ignore these problems for now. If we ever want to do anything with shot quality or shot locations, it might be worth asking how these missing data points effect our evaluation, but for now, I’m fine ignoring them.</p>
+</div>
+<div id="data-cleaning-wrap-up" class="section level2">
+<h2>Data cleaning wrap up</h2>
+<p>So after all of that, it looks like <code>read_csv</code> did a fine job of parsing our data, and we don’t have to take any specific actions to resolve the problems it tagged! Even though we didn’t end up doing anything to our data set, it’s good to know that we’ve discovered exactly what abnormalities exist with our data set and when we should care about them. We may eventually need to consider the implications of the missing shot location data if we ever get to the point that we want to incorporate shot quality into our DIY statistics, but for now, we’re safe to move on!</p>
+<div id="finalizing-a-cleaned-data-file" class="section level3">
+<h3>Finalizing a cleaned data file</h3>
+<p>The last thing we have to do is run the code we’d written to clean the original sample data on our full-season data set:</p>
+<pre class="r"><code>teamsandplayers &lt;- tbraw %&gt;% 
+  filter(elapsed &gt; 0) %&gt;% #eliminates weird cases like opening jump ball
+  select(player, team) %&gt;% 
+  filter(!is.na(player)) %&gt;% 
+  distinct() 
+
+tb &lt;- tbraw %&gt;% 
+  mutate(hometeam = get_team(h1, teamsandplayers),
+         awayteam = get_team(a1, teamsandplayers),
+         pointchange = map_lgl(points, score_changed)) 
+
+
+allteams &lt;- tb %&gt;% 
+  filter(elapsed &gt; 0) %&gt;% #eliminates weird cases like opening jump ball
+  select(team) %&gt;% 
+  filter(!is.na(team)) %&gt;% 
+  distinct() 
+tmp &lt;- left_join(allteams, get_team_events(allteams, tb))
+
+write_rds(tmp, &quot;clean-data/team-events-1718.rds&quot;)</code></pre>
+<p>And miracle of miracles, it looks like its worked! We save the cleaned data file and can now run our existing DIY stats code with a full expectation that it’ll work properly!</p>
+</div>
+</div>

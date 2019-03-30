@@ -6,10 +6,21 @@
     <description>Recent content on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 24 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DIY Metrics:  Preparing a new data set</title>
+      <link>/post/diy-metrics-preparing-a-new-data-set/</link>
+      <pubDate>Sat, 30 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/diy-metrics-preparing-a-new-data-set/</guid>
+      <description>So I finally broke down and got a full season’s worth of NBA play-by-play data to work on. Going forward, I’ll be using the full 2017-2018 play-by-play data from NBAstuffer.
+To date, I’ve been building my scripts using functional programming with the goal of having each step easily work with new data sets. This will be a good test of whether I’ve been successful!
+But before we do that, we need to look at the new data set and see what, if anything has changed.</description>
+    </item>
     
     <item>
       <title>Distributionality</title>

@@ -1,0 +1,141 @@
+---
+title: 'DIY Metrics:  Preparing a new data set'
+author: Matthew Avery
+date: '2019-03-30'
+slug: diy-metrics-preparing-a-new-data-set
+categories:   
+  - basketball
+  - metrics
+  - sports
+  - statistics
+  - R
+tags: []
+description: ''
+thumbnail: ''
+---
+
+```{r, message = F, warning = F, quiet = T, include = F}
+library(tidyverse)
+
+```
+
+So I finally broke down and got a full season's worth of NBA play-by-play data to work on. Going forward, I'll be using the full 2017-2018 play-by-play data from <a href = "https://www.nbastuffer.com/analytics101/playbyplay-data/">NBAstuffer</a>. 
+
+To date, I've been building my scripts using functional programming with the goal of having each step easily work with new data sets. This will be a good test of whether I've been successful!
+
+But before we do that, we need to look at the new data set and see what, if anything has changed. This means a new round of data cleaning! 
+
+### Cleaning a new data set
+
+The data set we're dealing with is large enough that I don't think my free spreadsheet software can handle it. So the first thing I do is try to read it into R and see what breaks:
+
+```{r, message = T, warning = T, quiet = F, eval = T}
+library(tidyverse)
+tbraw <- read_csv("data/[10-17-2017]-[06-08-2018]-combined-stats.csv")
+
+```
+
+Three things jump out to me:  The first is that the data has remarkably few problems going in. The second is that the game_id's are flubbed, and I"m not sure why. We can fix that easily enough:
+
+```{r}
+tbraw %>% 
+  mutate(game_id = as.numeric(str_extract(game_id, "\\d+"))) %>% head
+```
+
+The third thing is all of the "problems"
+
+```{r}
+problems(tbraw)
+```
+
+## Extra columns 
+Going back to point 1, 676 "problems" out of a total of nearly 600k rows is not very bad at all. But we still need to address them. It looks like there are a couple categories of problems. The easiest to deal with might be the rows where there are two extra columns. It looks like these are all consecutive, so I'm going to go out on a limb and guess that there's a single game that, for whatever reason, we read in as having two extra rows. Let's start by looking at that game:
+
+```{r}
+tbcols <- tbraw %>% slice(
+  (problems(tbraw) %>% filter(actual == "46 columns") %>% select(row) %>% unique)$row
+  ) 
+
+tbcols %>% select(game_id) %>% unique
+
+```
+
+Yeah, definitely just a single game.  Visual inspection doesn't indicate that anything's missing, so we might be able to ignore these "problems" and move on, but let's look at one more thing before we do so:
+
+```{r}
+con <- file("data/[10-17-2017]-[06-08-2018]-combined-stats.csv", "r")
+ab <- read.csv(con, header = F,
+         skip = min((problems(tbraw) %>% filter(actual == "46 columns") %>% select(row) %>% unique)$row),
+         nrow = nrow(tbcols)) %>% 
+  as_tibble()
+close(con)
+ab
+```
+
+The code above reads in only the rows of our original .csv that we identified earlier as having two extra columns. I used `read.csv` instead of `read_csv` because, as far as I can tell, there isn't a way to use the latter to read in a specific subset of the target data file. Please correct me if I'm wrong.
+
+Now we can look directly at what's in those columns:
+
+```{r}
+ab %>% select(V45, V46)
+```
+
+As I suspected, they're just empty columns that got included in extraneously for some reason. Probably just an error when the data set was being built. No big deal. I think this is the kind of thing that can happen when you're working in Excel and you click in a cell beyond the scope of your data. At that point, Excel decides you "care" about those rows/columns even though you haven't bothered to put anything into them. Then when you convert to .csv, it includes those cells in the file as "empty" cells. Bottom line is we can ignore them. 
+
+At this point, I fee safe ignoring the parsing problems associated with this game file, reducing our list greatly!
+
+
+## Other problems
+
+We're left with 190 "problems", each of which is related to an "unknown" entry type being located where a "double" was expected:
+
+```{r}
+pr <- problems(tbraw) %>% filter(actual != "46 columns")
+pr
+```
+
+Conveniently, it looks like these problems occur in a few specific columns and only in a few specific games:
+
+```{r}
+pr %>% select(col) %>% unique 
+
+ap <- tbraw %>% slice(
+  (pr %>% select(row) %>% unique)$row
+)
+ap %>% mutate(game_id = as.numeric(str_extract(game_id, "\\d+"))) %>% select(game_id) %>% unique
+```
+
+All of these problems relate to shot location data, and these problems occur in only three games. When we look at these games individually, and we see that these values are coded as "unknown" in the raw files. The use of a character string is what produced the `warning` from `read_csv`, so that's one mystery solved. Additionally, this indicates to me that there was an error with the cameras and/or software used to measure the shot locations for those specific shots. Since nothing we've done to date relies on shot location data, we can safely ignore these problems for now. If we ever want to do anything with shot quality or shot locations, it might be worth asking how these missing data points effect our evaluation, but for now, I'm fine ignoring them.
+
+## Data cleaning wrap up
+
+So after all of that, it looks like `read_csv` did a fine job of parsing our data, and we don't have to take any specific actions to resolve the problems it tagged! Even though we didn't end up doing anything to our data set, it's good to know that we've discovered exactly what abnormalities exist with our data set and when we should care about them. We may eventually need to consider the implications of the missing shot location data if we ever get to the point that we want to incorporate shot quality into our DIY statistics, but for now, we're safe to move on!
+
+### Finalizing a cleaned data file
+
+The last thing we have to do is run the code we'd written to clean the original sample data on our full-season data set:
+
+```{r, eval = F}
+teamsandplayers <- tbraw %>% 
+  filter(elapsed > 0) %>% #eliminates weird cases like opening jump ball
+  select(player, team) %>% 
+  filter(!is.na(player)) %>% 
+  distinct() 
+
+tb <- tbraw %>% 
+  mutate(hometeam = get_team(h1, teamsandplayers),
+         awayteam = get_team(a1, teamsandplayers),
+         pointchange = map_lgl(points, score_changed)) 
+
+
+allteams <- tb %>% 
+  filter(elapsed > 0) %>% #eliminates weird cases like opening jump ball
+  select(team) %>% 
+  filter(!is.na(team)) %>% 
+  distinct() 
+tmp <- left_join(allteams, get_team_events(allteams, tb))
+
+write_rds(tmp, "clean-data/team-events-1718.rds")
+```
+
+And miracle of miracles, it looks like its worked! We save the cleaned data file and can now run our existing DIY stats code with a full expectation that it'll work properly!
