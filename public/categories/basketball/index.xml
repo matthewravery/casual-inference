@@ -6,10 +6,20 @@
     <description>Recent content in Basketball on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/basketball/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DIY Metrics:  Full-season five-man Plus/Minus</title>
+      <link>/post/diy-metrics-full-season-five-man-plus-minus/</link>
+      <pubDate>Sat, 06 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/diy-metrics-full-season-five-man-plus-minus/</guid>
+      <description>Previously on DIY Metrics, we did some remedial cleaning on the full 17-18 play-by-play data set. Today, we’re going to take that clean data, generate full-season five-man plus/minus numbers, and then do some plotting!
+Cleaning, againSo, turns out there were a few bugs that I didn’t catch the first time we went through the cleaning process. This is fairly typical in my experience: You’ll go through your data cleaning and think everything is Gucci only to find once you start your analysis that there are irregularities or issues you hadn’t considered.</description>
+    </item>
     
     <item>
       <title>DIY Metrics:  Preparing a new data set</title>

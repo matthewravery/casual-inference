@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Diymetrics on Casual Inference</title>
+    <link>/categories/diymetrics/</link>
+    <description>Recent content in Diymetrics on Casual Inference</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 06 Apr 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/diymetrics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DIY Metrics:  Full-season five-man Plus/Minus</title>
+      <link>/post/diy-metrics-full-season-five-man-plus-minus/</link>
+      <pubDate>Sat, 06 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/diy-metrics-full-season-five-man-plus-minus/</guid>
+      <description>Previously on DIY Metrics, we did some remedial cleaning on the full 17-18 play-by-play data set. Today, we’re going to take that clean data, generate full-season five-man plus/minus numbers, and then do some plotting!
+Cleaning, againSo, turns out there were a few bugs that I didn’t catch the first time we went through the cleaning process. This is fairly typical in my experience: You’ll go through your data cleaning and think everything is Gucci only to find once you start your analysis that there are irregularities or issues you hadn’t considered.</description>
+    </item>
+    
+    <item>
+      <title>DIY Metrics:  Net Ratings (ish)</title>
+      <link>/post/diy-metrics-net-ratings-ish/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/diy-metrics-net-ratings-ish/</guid>
+      <description>Last time on DIY Metrics, we calculated five-man-unit plus/minus ratings from scratch. If we want to use measures like this to compare performance for these groups of players, its important to consider how much game time we have for each unit. There’s a relevant discussion to be had about whether “number of posessions” or “elapsed time” is the best way to compare these groups, (IMO, it depends on what specific question you’re trying to answer with your metric) but today we’ll avoid that discussion and normalize over time because it’s easier.</description>
+    </item>
+    
+  </channel>
+</rss>
