@@ -146,10 +146,12 @@ First, we extract the hex colors from the `teamcolors` package and match them wi
 ```{r, warnings = F}
 library(teamcolors)
 colortib <- teamcolors %>% filter(league == "nba") %>% 
-  bind_cols(tibble(team = c("ATL", "BOS", "BKN", "CHA", "CHI", "CLE", "DAL", "DEN",
-                              "DET", "GSW", "HOU", "IND", "LAC", "LAL", "MEM", "MIA",
-                              "MIL", "MIN", "NOP", "NYK", "OKC", "ORL", "PHI", "PHX",
-                              "POR", "SAC", "SAS", "TOR", "UTA", "WAS"))) %>% 
+  bind_cols(tibble(team = c("ATL", "BOS", "BKN", "CHA", "CHI", 
+                            "CLE", "DAL", "DEN", "DET", "GSW",
+                            "HOU", "IND", "LAC", "LAL", "MEM", 
+                            "MIA", "MIL", "MIN", "NOP", "NYK",
+                            "OKC", "ORL", "PHI", "PHX", "POR", 
+                            "SAC", "SAS", "TOR", "UTA", "WAS"))) %>% 
   arrange(team)
 
 nbacolors <- colortib$primary
@@ -178,10 +180,12 @@ nba_cols <- function(...){
 nba_pal <- function(whichteams = "all", ...){
   
   theseteams <- whichteams
-  if(whichteams == "all") theseteams <- c("ATL", "BKN", "BOS", "CHA", "CHI", "CLE", "DAL", "DEN",
-                                          "DET", "GSW", "HOU", "IND", "LAC", "LAL", "MEM", "MIA",
-                                          "MIL", "MIN", "NOP", "NYK", "OKC", "ORL", "PHI", "PHX",
-                                          "POR", "SAC", "SAS", "TOR", "UTA", "WAS")
+  if(whichteams == "all") theseteams <- c("ATL", "BKN", "BOS", "CHA", "CHI", 
+                                          "CLE", "DAL", "DEN", "DET", "GSW",
+                                          "HOU", "IND", "LAC", "LAL", "MEM", 
+                                          "MIA", "MIL", "MIN", "NOP", "NYK",
+                                          "OKC", "ORL", "PHI", "PHX", "POR", 
+                                          "SAC", "SAS", "TOR", "UTA", "WAS")
   
   pal <- nba_cols(theseteams)
   
@@ -196,7 +200,8 @@ scale_color_nba <- function(whichteams = "all", ...){
   
   pal <- nba_pal(whichteams = whichteams)
   
-  discrete_scale("colour", paste0("nba_discrete_", whichteams), palette = pal, ...)
+  discrete_scale("colour", paste0("nba_discrete_", whichteams), 
+                 palette = pal, ...)
   
 }
 
@@ -204,7 +209,8 @@ scale_fill_nba <- function(whichteams = "all", ...){
   
   pal <- nba_pal(whichteams = whichteams)
   
-  discrete_scale("fill", paste0("nba_discrete_", whichteams), palette = pal, ...)
+  discrete_scale("fill", paste0("nba_discrete_", whichteams), 
+                 palette = pal, ...)
   
 }
 
@@ -224,9 +230,11 @@ tmp %>% select(team, `Five-man Plus/Minus`) %>%
   mutate(normpm = `Plus/Minus` * 48 * 60 / unittime) %>% 
   filter(unittime > 60 * 48) %>% 
   filter(normpm > -50) %>% 
-  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + geom_jitter(width = 0) +
-  scale_color_nba() + theme_bw() + ylab("") + theme(legend.position = "top") + xlab("Plus/Minus") +
-  scale_y_continuous(labels = NULL) + guides(size = guide_legend(title = "Minutes Played")) 
+  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + 
+  geom_jitter(width = 0) + scale_color_nba() + theme_bw() + ylab("") + 
+  theme(legend.position = "top") + xlab("Plus/Minus") +
+  scale_y_continuous(labels = NULL) + 
+  guides(size = guide_legend(title = "Minutes Played")) 
 ```
 
 In this picture, the larger the dot, the more the five-player unit has played together. Note that the y-axis is jitter induced to make it easier to see the individual dots. This illustrates the spread across the NBA, but the colors aren't great at helping us distinguish one team from another. So let's try a different approach:
@@ -239,9 +247,11 @@ tmp %>% select(team, `Five-man Plus/Minus`) %>%
   mutate(normpm = `Plus/Minus` * 48 * 60 / unittime) %>% 
   filter(unittime > 60 * 48) %>% 
   filter(normpm > -50) %>% 
-  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + geom_jitter(width = 0) +
-  scale_color_nba() + theme_bw() + ylab("") + theme(legend.position = "top") + xlab("Plus/Minus") +
-  scale_y_continuous(labels = NULL) + guides(size = guide_legend(title = "Minutes Played")) +
+  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + 
+  geom_jitter(width = 0) + scale_color_nba() + theme_bw() + ylab("") + 
+  theme(legend.position = "top") + xlab("Plus/Minus") +
+  scale_y_continuous(labels = NULL) + 
+  guides(size = guide_legend(title = "Minutes Played")) +
   facet_wrap(~team)
 ```
 
@@ -259,9 +269,12 @@ tmp %>% select(team, `Five-man Plus/Minus`) %>%
   mutate(normpm = `Plus/Minus` * 48 * 60 / unittime) %>% 
   filter(unittime > 60 * 48) %>% 
   filter(normpm > -50) %>% 
-  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + geom_jitter(width = 0) +
-  scale_color_nba(whichteams = c("BOS", "SAS")) + theme_bw() + ylab("") + theme(legend.position = "top") + xlab("Plus/Minus") +
-  scale_y_continuous(labels = NULL) + guides(size = guide_legend(title = "Minutes Played")) +
+  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + 
+  geom_jitter(width = 0) +
+  scale_color_nba(whichteams = c("BOS", "SAS")) + theme_bw() + 
+  ylab("") + theme(legend.position = "top") + xlab("Plus/Minus") +
+  scale_y_continuous(labels = NULL) + 
+  guides(size = guide_legend(title = "Minutes Played")) +
   facet_wrap(~team)
 ```
 
