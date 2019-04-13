@@ -1,0 +1,46 @@
+---
+title: 'DIY Metrics:  Why Do we Normalize'
+author: Matthew Avery
+date: '2019-04-13'
+slug: diy-metrics-why-normalize
+categories:
+  - basketball
+  - metrics
+  - diymetrics
+  - R
+  - statistics
+  - sports
+tags: []
+description: ''
+thumbnail: ''
+---
+
+
+
+<p>Until now, we’ve normalized our data by time. This means we’ve been reporting out stats on a “per X minutes” basis. Today, we’re going to unpack a little bit about why we normalize and why we might not always want to normalize by time in the context of the NBA.</p>
+<div id="what-is-normalizing" class="section level2">
+<h2>What is “normalizing”?</h2>
+<p><a href = "https://en.wikipedia.org/wiki/Normalization">Normalization</a> is the act of putting different observations on a level playing field. (That’s not literally what Wikipedia says, but I think it’s a fair paraphrasing for our application.) I think of it as a way to reduce structural variation in the data, allowing you, the analyst, to focus on the relevant types of variation. I wrote my dissertation on functional data analysis, and one of the key steps in a lot of FDA (think MRI studies, etc.) is <a href = "http://www.psych.mcgill.ca/misc/fda/downloads/FDAtalks/regist_talk.pdf">registration</a>. In that context, it means lining up all of your images or curves based on a few specific markers or “landmarks” that you know <em>a prior</em> should be there. This eliminates variation from factors like small deltas in how the measurements were taken (in time or space, for example) and focus on the varaition in the image or curve that’s most directly of interst. It also makes generalization of results more easy; take the new data point, run it through registration, and now you can apply your algoirthm or make predictions.</p>
+<p>So the idea is to transform our data in a way that eliminates some sources of variation that we’ve decided we’re not interested in at the moment.</p>
+</div>
+<div id="normalizing-nba-performance-data" class="section level2">
+<h2>Normalizing NBA performance data</h2>
+<p>In the context of NBA metrics, normalization allows you to compare one player to the next or one team to the next in terms of their production rather than, for example, how long they were on the floor. Traditional box score statistics don’t normalize. You just see the number of points a player scored in a game. But that doesn’t tell the whole story. A player who score 15 points in 10 minutes was arguably a better scorer than the player who scored 20 points in 32 minutes. Accounting for time on the floor and reporting out points per 36 minutes eliminates this extraneous variable (time on floor) and allows us to more directly compare how well players scored.</p>
+<p>Normalizing by time on the floor is pretty easy and also pretty intuitive, but if you want to, you can go bananas with this. The next post in this series is going to explore an alternative approach to normaliziation of NBA data that uses posessions instead of clock time to normalize. Before we ask why one approach might be preferred to the other, there’s another question to answer.</p>
+</div>
+<div id="but-wait-why-do-i-want-to-normalize-things" class="section level2">
+<h2>But wait, why do I want to normalize things?</h2>
+<p>Given that most of statistical modeling is about exploring variation in data, this is a fair question to ask. If normalization just eliminates some extraneous noise, then couldn’t I accomplish the same goal by just building a better model/metric? This way, I don’t have to muck around transofrming my original dataset, which is surely beneficial.</p>
+<p>The most common reason to transform data is to make your life easier. Specifically, to make it easier for you to make the comparison you want to make. If you can pre-identify some variation that you’re not interested in and will make it more difficult to explore the relationship(s) you are interested in, then zapping it out at the start of your analysis can be beneficial.</p>
+<p>I think this is analogous to controlling for other factors via the use of covariates. Mechanistically, they’re different because a covariate is included explicitly in a statistical model whereas in this case, we’re transforming variables before fitting the model, but the goals are broadly the same.</p>
+</div>
+<div id="cautions-for-normalizing" class="section level2">
+<h2>Cautions for normalizing</h2>
+<p>Like most things that are useful, normalization can cause disaster if applied improperly. Unlike with a modeled covariate, once you normalize, any information provided by the variable you normalized over is <strong>gone</strong>. It’s no longer visible unless you explicitly go back and look for it. And that’s probably a best practice. This is why last week, when I reported <a href = "/post/diy-metrics-full-season-five-man-plus-minus/">five-man-unit plus/minus numbers</a>, I made sure to include the total time-on-court in my graphical displays via the save of the dots. So just be aware that when you normalize, you are in some way eliminating information from your data unless you specifically build it back in later.</p>
+</div>
+<div id="by-time-or-by-posession" class="section level2">
+<h2>By time or by posession?</h2>
+<p>So back to our original question: Why would I want to normalize by posession instead of by time? As I indicated above, it depends on what you’re trying to do. As a general rule, clock time and number of posessions are the two sensible ways to tracking “how long” and NBA game lasted. The clock time is the most obvious, since it’s literally how we track when the game is over. Posesions, however, offer an alternative view. If we want to discritize an NBA game, “posesions” are wonderful quanta that have a fixed set of outcomes we can look at. If we know how teams use these quanta (on average), then we can compare them effecitvely. Normalizing for clock time eliminates variance due to how long individual players or groups of players played. Normalizing by posession elimiantes variance due to how teams structure their posessions, <em>i.e.</em> their <a href = "https://www.nbastuffer.com/analytics101/pace/">pace</a>.</p>
+<p>Pace is actually a very important component of how team’s play basketball and has implications for shot distribution, posession type (transition vice on the break), and others. However, teams that play faster paced games will tend to both allow and score more points than teams that play slower games. This makes comparing the relative strength of these teams’ offense and defense difficult. By normalizing by posession, we can make these comparisons much more easily.</p>
+<p>In the next post in this series, we’ll go back to our raw data and generate a cleaned data set that’s been noramlized by posession. Then, we’ll look at the types of metrics we can build using this by-posession data!</p>
+</div>

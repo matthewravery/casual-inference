@@ -6,10 +6,20 @@
     <description>Recent content in Basketball on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/basketball/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DIY Metrics:  Why Do we Normalize</title>
+      <link>/post/diy-metrics-why-normalize/</link>
+      <pubDate>Sat, 13 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/diy-metrics-why-normalize/</guid>
+      <description>Until now, we’ve normalized our data by time. This means we’ve been reporting out stats on a “per X minutes” basis. Today, we’re going to unpack a little bit about why we normalize and why we might not always want to normalize by time in the context of the NBA.
+What is “normalizing”?Normalization is the act of putting different observations on a level playing field. (That’s not literally what Wikipedia says, but I think it’s a fair paraphrasing for our application.</description>
+    </item>
     
     <item>
       <title>DIY Metrics:  Full-season five-man Plus/Minus</title>

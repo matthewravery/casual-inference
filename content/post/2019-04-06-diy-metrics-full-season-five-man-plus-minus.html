@@ -122,10 +122,12 @@ fpm %&gt;% print(n = 30)</code></pre>
 <pre class="r"><code>library(teamcolors)</code></pre>
 <pre><code>## Warning: package &#39;teamcolors&#39; was built under R version 3.5.3</code></pre>
 <pre class="r"><code>colortib &lt;- teamcolors %&gt;% filter(league == &quot;nba&quot;) %&gt;% 
-  bind_cols(tibble(team = c(&quot;ATL&quot;, &quot;BOS&quot;, &quot;BKN&quot;, &quot;CHA&quot;, &quot;CHI&quot;, &quot;CLE&quot;, &quot;DAL&quot;, &quot;DEN&quot;,
-                              &quot;DET&quot;, &quot;GSW&quot;, &quot;HOU&quot;, &quot;IND&quot;, &quot;LAC&quot;, &quot;LAL&quot;, &quot;MEM&quot;, &quot;MIA&quot;,
-                              &quot;MIL&quot;, &quot;MIN&quot;, &quot;NOP&quot;, &quot;NYK&quot;, &quot;OKC&quot;, &quot;ORL&quot;, &quot;PHI&quot;, &quot;PHX&quot;,
-                              &quot;POR&quot;, &quot;SAC&quot;, &quot;SAS&quot;, &quot;TOR&quot;, &quot;UTA&quot;, &quot;WAS&quot;))) %&gt;% 
+  bind_cols(tibble(team = c(&quot;ATL&quot;, &quot;BOS&quot;, &quot;BKN&quot;, &quot;CHA&quot;, &quot;CHI&quot;, 
+                            &quot;CLE&quot;, &quot;DAL&quot;, &quot;DEN&quot;, &quot;DET&quot;, &quot;GSW&quot;,
+                            &quot;HOU&quot;, &quot;IND&quot;, &quot;LAC&quot;, &quot;LAL&quot;, &quot;MEM&quot;, 
+                            &quot;MIA&quot;, &quot;MIL&quot;, &quot;MIN&quot;, &quot;NOP&quot;, &quot;NYK&quot;,
+                            &quot;OKC&quot;, &quot;ORL&quot;, &quot;PHI&quot;, &quot;PHX&quot;, &quot;POR&quot;, 
+                            &quot;SAC&quot;, &quot;SAS&quot;, &quot;TOR&quot;, &quot;UTA&quot;, &quot;WAS&quot;))) %&gt;% 
   arrange(team)
 
 nbacolors &lt;- colortib$primary
@@ -147,10 +149,12 @@ names(nbacolors) &lt;- colortib$team</code></pre>
 nba_pal &lt;- function(whichteams = &quot;all&quot;, ...){
   
   theseteams &lt;- whichteams
-  if(whichteams == &quot;all&quot;) theseteams &lt;- c(&quot;ATL&quot;, &quot;BKN&quot;, &quot;BOS&quot;, &quot;CHA&quot;, &quot;CHI&quot;, &quot;CLE&quot;, &quot;DAL&quot;, &quot;DEN&quot;,
-                                          &quot;DET&quot;, &quot;GSW&quot;, &quot;HOU&quot;, &quot;IND&quot;, &quot;LAC&quot;, &quot;LAL&quot;, &quot;MEM&quot;, &quot;MIA&quot;,
-                                          &quot;MIL&quot;, &quot;MIN&quot;, &quot;NOP&quot;, &quot;NYK&quot;, &quot;OKC&quot;, &quot;ORL&quot;, &quot;PHI&quot;, &quot;PHX&quot;,
-                                          &quot;POR&quot;, &quot;SAC&quot;, &quot;SAS&quot;, &quot;TOR&quot;, &quot;UTA&quot;, &quot;WAS&quot;)
+  if(whichteams == &quot;all&quot;) theseteams &lt;- c(&quot;ATL&quot;, &quot;BKN&quot;, &quot;BOS&quot;, &quot;CHA&quot;, &quot;CHI&quot;, 
+                                          &quot;CLE&quot;, &quot;DAL&quot;, &quot;DEN&quot;, &quot;DET&quot;, &quot;GSW&quot;,
+                                          &quot;HOU&quot;, &quot;IND&quot;, &quot;LAC&quot;, &quot;LAL&quot;, &quot;MEM&quot;, 
+                                          &quot;MIA&quot;, &quot;MIL&quot;, &quot;MIN&quot;, &quot;NOP&quot;, &quot;NYK&quot;,
+                                          &quot;OKC&quot;, &quot;ORL&quot;, &quot;PHI&quot;, &quot;PHX&quot;, &quot;POR&quot;, 
+                                          &quot;SAC&quot;, &quot;SAS&quot;, &quot;TOR&quot;, &quot;UTA&quot;, &quot;WAS&quot;)
   
   pal &lt;- nba_cols(theseteams)
   
@@ -161,7 +165,8 @@ nba_pal &lt;- function(whichteams = &quot;all&quot;, ...){
   
   pal &lt;- nba_pal(whichteams = whichteams)
   
-  discrete_scale(&quot;colour&quot;, paste0(&quot;nba_discrete_&quot;, whichteams), palette = pal, ...)
+  discrete_scale(&quot;colour&quot;, paste0(&quot;nba_discrete_&quot;, whichteams), 
+                 palette = pal, ...)
   
 }
 
@@ -169,7 +174,8 @@ scale_fill_nba &lt;- function(whichteams = &quot;all&quot;, ...){
   
   pal &lt;- nba_pal(whichteams = whichteams)
   
-  discrete_scale(&quot;fill&quot;, paste0(&quot;nba_discrete_&quot;, whichteams), palette = pal, ...)
+  discrete_scale(&quot;fill&quot;, paste0(&quot;nba_discrete_&quot;, whichteams), 
+                 palette = pal, ...)
   
 }</code></pre>
 <p>Note again the <code>whichteams</code> argument which is passed to <code>discrete_scale</code> via <code>pal</code>.</p>
@@ -183,9 +189,11 @@ scale_fill_nba &lt;- function(whichteams = &quot;all&quot;, ...){
   mutate(normpm = `Plus/Minus` * 48 * 60 / unittime) %&gt;% 
   filter(unittime &gt; 60 * 48) %&gt;% 
   filter(normpm &gt; -50) %&gt;% 
-  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + geom_jitter(width = 0) +
-  scale_color_nba() + theme_bw() + ylab(&quot;&quot;) + theme(legend.position = &quot;top&quot;) + xlab(&quot;Plus/Minus&quot;) +
-  scale_y_continuous(labels = NULL) + guides(size = guide_legend(title = &quot;Minutes Played&quot;)) </code></pre>
+  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + 
+  geom_jitter(width = 0) + scale_color_nba() + theme_bw() + ylab(&quot;&quot;) + 
+  theme(legend.position = &quot;top&quot;) + xlab(&quot;Plus/Minus&quot;) +
+  scale_y_continuous(labels = NULL) + 
+  guides(size = guide_legend(title = &quot;Minutes Played&quot;)) </code></pre>
 <p><img src="/post/2019-04-06-diy-metrics-full-season-five-man-plus-minus_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>In this picture, the larger the dot, the more the five-player unit has played together. Note that the y-axis is jitter induced to make it easier to see the individual dots. This illustrates the spread across the NBA, but the colors aren’t great at helping us distinguish one team from another. So let’s try a different approach:</p>
 <pre class="r"><code>tmp %&gt;% select(team, `Five-man Plus/Minus`) %&gt;% 
@@ -194,9 +202,11 @@ scale_fill_nba &lt;- function(whichteams = &quot;all&quot;, ...){
   mutate(normpm = `Plus/Minus` * 48 * 60 / unittime) %&gt;% 
   filter(unittime &gt; 60 * 48) %&gt;% 
   filter(normpm &gt; -50) %&gt;% 
-  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + geom_jitter(width = 0) +
-  scale_color_nba() + theme_bw() + ylab(&quot;&quot;) + theme(legend.position = &quot;top&quot;) + xlab(&quot;Plus/Minus&quot;) +
-  scale_y_continuous(labels = NULL) + guides(size = guide_legend(title = &quot;Minutes Played&quot;)) +
+  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + 
+  geom_jitter(width = 0) + scale_color_nba() + theme_bw() + ylab(&quot;&quot;) + 
+  theme(legend.position = &quot;top&quot;) + xlab(&quot;Plus/Minus&quot;) +
+  scale_y_continuous(labels = NULL) + 
+  guides(size = guide_legend(title = &quot;Minutes Played&quot;)) +
   facet_wrap(~team)</code></pre>
 <p><img src="/post/2019-04-06-diy-metrics-full-season-five-man-plus-minus_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>By adding <code>facet_wrap</code>, we break out each team separately, allowing us to get a pretty good look at what each team is doing in terms of plus/minus for five-player units. For example, we can see that Denver was pretty consistent and didn’t have any single unit that played a ton of time together. Minnesota and Charlotte, on the other hand, both had a single five-player unit that was by far their most played group. Almost every Golden State unit was a net-positive, while the opposite is true for Phoenix and Atlanta. The Spurs has a lot of variability, including some very good and very bad units, while the Lakers and Nuggets were more consistent.</p>
@@ -208,9 +218,12 @@ scale_fill_nba &lt;- function(whichteams = &quot;all&quot;, ...){
   mutate(normpm = `Plus/Minus` * 48 * 60 / unittime) %&gt;% 
   filter(unittime &gt; 60 * 48) %&gt;% 
   filter(normpm &gt; -50) %&gt;% 
-  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + geom_jitter(width = 0) +
-  scale_color_nba(whichteams = c(&quot;BOS&quot;, &quot;SAS&quot;)) + theme_bw() + ylab(&quot;&quot;) + theme(legend.position = &quot;top&quot;) + xlab(&quot;Plus/Minus&quot;) +
-  scale_y_continuous(labels = NULL) + guides(size = guide_legend(title = &quot;Minutes Played&quot;)) +
+  ggplot(aes(x = normpm, color = team, y = 1, size = (unittime/60))) + 
+  geom_jitter(width = 0) +
+  scale_color_nba(whichteams = c(&quot;BOS&quot;, &quot;SAS&quot;)) + theme_bw() + 
+  ylab(&quot;&quot;) + theme(legend.position = &quot;top&quot;) + xlab(&quot;Plus/Minus&quot;) +
+  scale_y_continuous(labels = NULL) + 
+  guides(size = guide_legend(title = &quot;Minutes Played&quot;)) +
   facet_wrap(~team)</code></pre>
 <pre><code>## Warning in if (whichteams == &quot;all&quot;) theseteams &lt;- c(&quot;ATL&quot;, &quot;BKN&quot;, &quot;BOS&quot;, :
 ## the condition has length &gt; 1 and only the first element will be used</code></pre>
