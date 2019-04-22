@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>DIY Metrics:  Normalizing by Posession</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.51" />
+	<meta property="og:title" content="DIY Metrics:  Normalizing by Posession" />
+<meta property="og:description" content="As promised, today we’re going to talk about normalizing by possession instead of time on court.
+First, a but of motivation. Different teams play at different paces. Some teams try to score a lot in transition, some teams try to slow the ball down and make sure they get good shots in the half-court. Part of this is related to a team’s defense and how quickly they get rebounds in the hands of players who can push the ball." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/diy-metrics-normalizing-by-posession/" /><meta property="article:published_time" content="2019-04-21T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-04-21T00:00:00&#43;00:00"/>
+
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Casual Inference" rel="home">
+				<div class="logo__title">Casual Inference</div>
+				<div class="logo__tagline">Robust and relaxed</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/about/">About</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://matthewravery.github.io/markdown-cv">CV</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://github.com/jthaman/ciTools">ciTools</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/analysis-statement/">Analysis Philosophy</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">DIY Metrics:  Normalizing by Posession</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-04-21T00:00:00">April 21, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/r" rel="category">R</a>, <a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/basketball" rel="category">basketball</a>, <a class="meta__link" href="/categories/metrics" rel="category">metrics</a>, <a class="meta__link" href="/categories/sports" rel="category">sports</a>, <a class="meta__link" href="/categories/diymetrics" rel="category">diymetrics</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+
+<p><a href = "/post/diy-metrics-why-normalize">As promised</a>, today we’re going to talk about normalizing by possession instead of time on court.</p>
+<p>First, a but of motivation. Different teams play at different paces. Some teams try to score a lot in transition, some teams try to slow the ball down and make sure they get good shots in the half-court. Part of this is related to a team’s defense and how quickly they get rebounds in the hands of players who can push the ball. While folks make fun of Russell Westbrook for <a href = "https://www.youtube.com/watch?v=StQ0ormf_Lo&ab_channel=DoseOfBall">“stealing” rebounds</a>, it’s part of a <a href = "https://www.cbssports.com/nba/news/carmelo-anthony-says-russell-westbrook-steals-rebounds-but-it-helps-the-thunder/">deliberate strategy</a> by the Thunder to push the ball up court quickly. All this adds up to possessions being arguably a more useful tool by which to compare team and player performance. Scoring 105 points on 110 possessions is a lot different from scoring 105 points on 95 possessions, even if both took the same 48 minutes of game time.</p>
+<p>The problem is that it’s a lot harder to do. First, you have to agree on what a “possession” is (not as obvious as it seems), and then you’ve got to actually go into the data and break the game up by those specific tags. Oh, and players can conceivably enter and leave the game within a possession. So there’s that.</p>
+<p>Luckily, rather than trying to reinvent the wheel, (Wait a minute, isn’t this whole series an attempt to reinvent the wheel?) we can borrow some stuff. First, definitions:</p>
+<div id="what-is-a-posession" class="section level2">
+<h2>What is a ‘posession’?</h2>
+<p>According to our original data source, <a href = "https://www.nbastuffer.com/analytics101/possession/">NBAStuffer</a>, a possession concludes whenever a player/team:</p>
+<ol style="list-style-type: decimal">
+<li>attempts a field goal,</li>
+<li>misses a shot and does not get the offensive rebound,</li>
+<li>turns the ball over (some sources add “turnovers that are assigned to teams” for a more precise possession calculation),</li>
+<li>goes to the line for two or three shots and either makes the last shot or does not get the rebound of a missed last shot.</li>
+</ol>
+<p>This is a little different from the NBA’s <a href = "https://www.nba.com/analysis/rules_4.html">official definition</a>:</p>
+<blockquote>
+<p>Section XVIII-Team Possession<br />
+A team is in possession when a player is holding, dribbling or passing the ball. Team possession ends when the defensive team gains possession or there is a field goal attempt.</p>
+</blockquote>
+<p><a href = "https://www.basketball-reference.com/about/ratings.html">BasketballReference</a> has weird, convoluted formulas because they’re trying to use aggregated stats rather than play-by-play numbers to calculate possession-based statistics, but I think they’re trying to do basically what’s listed above from NBAStuffer. So we’ll just stick with those four bullets above for our purposes.</p>
+</div>
+<div id="getting-a-bit-more-precise" class="section level2">
+<h2>Getting a bit more precise</h2>
+<p>In order to translate our definition of a possession above into something we can practically use with our data, we need to be a bit more precise. Take the first two statements from above:</p>
+<ol style="list-style-type: decimal">
+<li>attempts a field goal,</li>
+<li>misses a shot and does not get the offensive rebound,</li>
+</ol>
+<p>These are kinda the same thing; you can’t “mist a shot and not get the offensive rebound” unless you… attempt a field goal. Here’s my translation of conditions where a “possession” ends:</p>
+<ol style="list-style-type: decimal">
+<li>Made field goal</li>
+<li>Missed field goal without offensive rebound</li>
+<li>Turnover</li>
+<li>Two- or three-shot trips to the line with a make on the last shot OR a miss with no offensive rebound on the last shot.</li>
+</ol>
+<p>For our data set, two of these are easy, and the other two are challenging.</p>
+</div>
+<div id="adjusting-our-cleaning-step" class="section level2">
+<h2>Adjusting our cleaning step</h2>
+<p>To code this information into our data, we adjust our data cleaning step a bit, specifically by adding in a new function:</p>
+<pre class="r"><code>possession_change &lt;- function(tb){
+  # This function identifies whether a particular event resulted in a change-of-possession
+  
+  tb %&gt;% 
+    mutate(possessionchange = map2_lgl(event_type, isoreb, 
+                                       function(a, b) {a == &quot;turnover&quot; |
+                                           a == &quot;shot&quot; |
+                                           !b}))
+}</code></pre>
+<p><code>possession_change</code> makes use of an existing column (<code>event_type</code>) that already tell us if there was a turnover (<code>event_type == "turnover"</code>) or a made shot (<code>event_type == "shot"</code>, and don’t ask my why it’s coded as “shot” instead of “made shot” or something clearer like that). So that’s numbers 1 and 3 on our list above. And the other two are related. They’re both basically “missed shots that don’t result in an offensive rebound”. <code>possession_change</code> accounts for this using the column, <code>isoreb</code>, which I mean to be read as “is oreb” rather than “iso reb”. To generate this column, I also added the following function:</p>
+<pre class="r"><code>id_orebs &lt;- function(teamtbl, thatteam){
+  # this is currently written to interface with team-specific dataframes. 
+  # There&#39;s no good reason for this, and it would be more efficient to 
+  # re-write and create this column for the full data table.
+  
+  ftmiss &lt;- teamtbl %&gt;% 
+    filter(event_type == &quot;free throw&quot;, type %in% c(&quot;Free Throw 1 of 1&quot;,
+                                                   &quot;Free Throw 2 of 2&quot;,
+                                                   &quot;Free Throw 3 of 3&quot;)) %&gt;% 
+    mutate(miss = map_chr(description, str_match, &quot;MISS&quot;),
+           shooterhome = (player %in% c(o1, o2, o3, o4, o5)), hometeam == thatteam) %&gt;% 
+    filter(miss == &quot;MISS&quot;) 
+  
+  
+  omiss &lt;- teamtbl %&gt;% filter(event_type == &quot;miss&quot;) %&gt;% 
+    mutate(miss = &quot;MISS&quot;,
+           shooterhome = (player %in% c(o1, o2, o3, o4, o5)), hometeam == thatteam)
+  
+  ...
+  
+  teamtbl %&gt;% left_join(
+    (bind_rows(ab, bb) %&gt;% select(isoreb, old_id) %&gt;% 
+       rename(mplay_id = old_id))
+  )
+}</code></pre>
+<p>The ellipsis in that function is doing a lot of work. There’s another 100 lines of code in there that I’ve omitted. It’s probably the ugliest function I’ve written thus far on this project, and if I wasn’t trying to get this post done on a (self-imposed) deadline, I’d probably re-factor it into a couple (or 10) smaller functions that are more intelligible. I’ll include the full version at the end, but the gist of it is: For missed last free throws from unmade baskets and missed field goals, this function creates a column of logicals that tell you whether the miss resulted in an offensive rebound.</p>
+<p>The tricky bit is that the missed free throw or missed shot was coded on a single row of the data frame, and the rebound was on a subsequent line. Usually (but not always) this was the exact next line. Regardless, I had to recover this information and feed it back into the previous line. Doing this involved getting a consistent ID for each event (<code>mplay_id</code>) and then pairing up missed shots with the subsequent rebound information. <code>old_id</code> helped me do that while keeping track of the location of the original roles. Check out the end of the post if you really want to get into the details. (Or see a from-the-wild example of bad code that could be improved!)</p>
+<p>The chief result is the two extra lines in <code>get_team_events</code>, which you might recall from previous editions of this series is the principal work-horse function for cleaning the data:</p>
+<pre class="r"><code>get_team_events &lt;- function(whichteam, tb){
+  
+  out &lt;- NULL
+  for(i in seq_along(whichteam$team)){
+    
+    thatteam &lt;- whichteam$team[i]
+    
+    teamtbl &lt;- tb %&gt;% 
+      mutate(currentteam = thatteam) %&gt;% 
+      filter(hometeam == currentteam | awayteam == currentteam) %&gt;% 
+      fiveplayers() %&gt;% 
+      mutate(fiveplayers = pmap(list(p1, p2, p3, p4, p5), make_player_list),
+             p1 = map_chr(fiveplayers, get_player, 1),
+             p2 = map_chr(fiveplayers, get_player, 2),
+             p3 = map_chr(fiveplayers, get_player, 3),
+             p4 = map_chr(fiveplayers, get_player, 4),
+             p5 = map_chr(fiveplayers, get_player, 5)) %&gt;% select(-fiveplayers) %&gt;% 
+      arrange(game_id) %&gt;% 
+      add_index() %&gt;% 
+      id_orebs(thatteam)
+      
+    
+    thisteamsplayers &lt;- get_this_teams_players(teamtbl, thatteam)
+    
+    out &lt;- teamtbl %&gt;% 
+      add_subsections(thisteamsplayers) %&gt;% 
+      possession_change() %&gt;% 
+      pos_count() %&gt;% 
+      mutate(netpoints = pmap_dbl(list(points, currentteam, team), get_net_points)) %&gt;% 
+      select(-team) %&gt;% rename(team = currentteam) %&gt;% 
+      bind_rows(out)
+    
+  }
+  out %&gt;% group_by(team) %&gt;% nest(.key = `team events`)
+  
+}</code></pre>
+</div>
+<div id="plots-but-using-net-ratings" class="section level2">
+<h2>Plots, but using net ratings!</h2>
+<p>Now that we’ve got our net ratings, lets plot them! We can basically re-use our code from two weeks ago to make cool visuals using net rating instead of time-normalized plus/minus:</p>
+<pre class="r"><code>bm &lt;- tmp %&gt;% 
+  unnest() %&gt;% 
+  group_by(team, p1, p2, p3, p4, p5) %&gt;% 
+  summarise(pts = sum(netpoints, na.rm = T),
+            npos = length(unique(possessioncount)),
+            netrtg = pts / npos * 100) 
+
+bm %&gt;% 
+  filter(npos &gt; 200) %&gt;% 
+  ggplot(aes(x = netrtg, y = 1, size = npos, color = team)) + 
+  geom_jitter(width = 0) +scale_color_nba() + theme_bw() + ylab(&quot;&quot;) + 
+  theme(legend.position = &quot;top&quot;) + xlab(&quot;Net Rating&quot;) +
+  scale_y_continuous(labels = NULL) + 
+  guides(size = guide_legend(title = &quot;Possessions Played&quot;)) +
+  facet_wrap(~team)</code></pre>
+<p><img src="/post/2019-04-21-diy-metrics-normalizing-by-posession_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>good stuff!</p>
+<div id="how-to-id-orebs" class="section level3">
+<h3>How to ID ORebs</h3>
+<p>You’ve been warned…</p>
+<pre class="r"><code>id_orebs &lt;- function(teamtbl, thatteam){
+  # this is currently written to interface with team-specific dataframes. 
+  # There&#39;s no good reason for this, and it would be more efficient to 
+  # re-write and create this column for the full data table.
+  
+  ftmiss &lt;- teamtbl %&gt;% 
+    filter(event_type == &quot;free throw&quot;, type %in% c(&quot;Free Throw 1 of 1&quot;,
+                                                   &quot;Free Throw 2 of 2&quot;,
+                                                   &quot;Free Throw 3 of 3&quot;)) %&gt;% 
+    mutate(miss = map_chr(description, str_match, &quot;MISS&quot;),
+           shooterhome = (player %in% c(o1, o2, o3, o4, o5)), hometeam == thatteam) %&gt;% 
+    filter(miss == &quot;MISS&quot;) 
+  
+  
+  omiss &lt;- teamtbl %&gt;% filter(event_type == &quot;miss&quot;) %&gt;% 
+    mutate(miss = &quot;MISS&quot;,
+           shooterhome = (player %in% c(o1, o2, o3, o4, o5)), hometeam == thatteam)
+  
+  smiss &lt;- bind_rows(ftmiss, omiss) %&gt;% 
+    select(game_id, mplay_id, miss, shooterhome) %&gt;% 
+    mutate(old_id = mplay_id,
+           mplay_id = mplay_id + 1) %&gt;% 
+    arrange(mplay_id) 
+  
+  #two weird issues remain:  One, sometimes the data frame has a substitute recorded after the 2nd ft instead of before it. we shoudl try to skip these and just get the subsequent play. Two, sometimes the rebound is omitted all together and there&#39;s just another play next. This we can basically ignore, assuming that the team that recovered the ball is indicated by the player shooting the next shot. 
+  
+  smiss$mplay_id[left_join(smiss, teamtbl)$event_type == &quot;sub&quot;] &lt;- 
+    smiss$mplay_id[left_join(smiss, teamtbl)$event_type == &quot;sub&quot;] + 1
+  
+  ab &lt;- smiss %&gt;% left_join(teamtbl) %&gt;% 
+    filter(event_type == &quot;rebound&quot;) %&gt;% 
+    select(event_type, description, shooterhome, o1, o2, o3, o4, o5, player, 
+           hometeam, shooterhome, mplay_id, old_id) %&gt;% 
+    separate(description, into = &quot;rbname&quot;, sep = &quot; &quot;, extra = &quot;drop&quot;) %&gt;% 
+    mutate(homelong = map_chr(hometeam, city_to_team),
+           rbhome = (player %in% c(o1, o2, o3, o4, o5)), hometeam == thatteam,
+           teamrbhome = rbname == homelong,
+           isoreb = pmap_lgl(list(rbhome, teamrbhome, shooterhome),
+                             function(a, b, c) {(a||b) &amp;&amp; c }))
+  
+  
+  bb &lt;- smiss %&gt;% left_join(teamtbl) %&gt;% 
+    filter(event_type != &quot;rebound&quot;, !is.na(player)) %&gt;% 
+    select(event_type, description, shooterhome, o1, o2, o3, o4, o5,
+           player, hometeam, shooterhome, mplay_id, old_id) %&gt;% 
+    separate(description, into = &quot;rbname&quot;, sep = &quot; &quot;, extra = &quot;drop&quot;) %&gt;% 
+    mutate(homelong = map_chr(hometeam, city_to_team),
+           rbhome = (player %in% c(o1, o2, o3, o4, o5)), hometeam == thatteam,
+           teamrbhome = rbname == homelong,
+           isoreb = pmap_lgl(list(rbhome, teamrbhome, shooterhome),
+                             function(a, b, c) {(a||b) &amp;&amp; c }))
+  
+  
+  
+  
+  teamtbl %&gt;% left_join(
+    (bind_rows(ab, bb) %&gt;% select(isoreb, old_id) %&gt;% 
+       rename(mplay_id = old_id))
+  )
+}</code></pre>
+</div>
+</div>
+
+		</div>
+		
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/diy-metrics-why-normalize/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">DIY Metrics:  Why Do we Normalize</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-normalizing-by-posession/">DIY Metrics:  Normalizing by Posession</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-why-normalize/">DIY Metrics:  Why Do we Normalize</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-full-season-five-man-plus-minus/">DIY Metrics:  Full-season five-man Plus/Minus</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-preparing-a-new-data-set/">DIY Metrics:  Preparing a new data set</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/distributionality/">Distributionality</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/basketball">Basketball</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/common-analysis-errors">Common analysis errors</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/data-generation">Data generation</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/diymetrics">Diymetrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/failure-to-communicate">Failure to communicate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/hot-takes">Hot takes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/life-is-distributional">Life is distributional</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/metrics">Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/misc">Misc</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/picking-at-nits">Picking at nits</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r">R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r-diymetrics">R diymetrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/sports">Sports</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/statistics">Statistics</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 Casual Inference.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
