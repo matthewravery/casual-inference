@@ -1,0 +1,263 @@
+---
+title: 'DIY Metrics:  Counting up simple statistics'
+author: Matthew Avery
+date: '2019-05-04'
+slug: diy-metrics-simple-stats-and-game-logs
+categories:
+  - diymetrics
+  - basketball
+  - R
+  - metrics
+  - statistics
+  - sports
+tags: []
+description: ''
+thumbnail: ''
+---
+
+
+
+<p>Alrighty! This post got delayed a bit due to real life as well as some challenges with the data. But it’s also an exciting post because we’re finally on the road to generating player-level counting statistics!</p>
+<div id="simple-statitistics" class="section level3">
+<h3>Simple Statitistics</h3>
+<p>This post is focused on simple counting stats or box score statistics that were basically the standard way to discuss NBA players until quite recently. So aggregate numbers of rebounds, assists, steals, etc. We’ve dabbled a bit already with more “advanced” metrics like raw and pace-adjusted plus/minus, so this is in some ways going back to basics. I think it’s worth exploring, however, because many of the things we look at here are key for taking some of the more “advanced” looks that folks like to do.</p>
+</div>
+<div id="cleaning-again." class="section level2">
+<h2>Cleaning, again.</h2>
+<p>Our first challenge is that the play-by-play data we’re working with doesn’t treat each type of event equally. For some (e.g., a turnover), there’s a specific tag showing that a turnover occurred. And as far as I can tell, it’s pretty consistent! There’s a column for it and everything. This is what it looks like:</p>
+<pre class="r"><code>tmp &lt;- read_csv(&quot;data/[10-17-2017]-[06-08-2018]-combined-stats.csv&quot;) %&gt;%
+    slice(1:1000)
+
+tmp %&gt;%
+    select(player, event_type, description) %&gt;%
+    print(n = 10)</code></pre>
+<pre><code>## # A tibble: 1,000 x 3
+##    player       event_type    description                                  
+##    &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;                                        
+##  1 &lt;NA&gt;         start of per~ &lt;NA&gt;                                         
+##  2 Kevin Love   jump ball     Jump Ball Love vs. Horford: Tip to Irving    
+##  3 Kyrie Irving shot          Irving 10&#39; Driving Floating Jump Shot (2 PTS~
+##  4 Derrick Rose miss          Horford BLOCK (1 BLK), MISS Rose 2&#39; Layup    
+##  5 Al Horford   rebound       Horford REBOUND (Off:0 Def:1)                
+##  6 Gordon Hayw~ miss          MISS Hayward 25&#39; 3PT Jump Shot               
+##  7 Derrick Rose rebound       Rose REBOUND (Off:0 Def:1)                   
+##  8 Kevin Love   miss          MISS Love 16&#39; Jump Shot                      
+##  9 Jaylen Brown rebound       Brown REBOUND (Off:0 Def:1)                  
+## 10 Jayson Tatum miss          MISS Tatum 3&#39; Cutting Layup Shot, James BLOC~
+## # ... with 990 more rows</code></pre>
+<p>The three columns highlighted above are generally our best bets for information about the play. When we were working with point values directly, there were some other columns of interest, but for anything that isn’t a change in point values, these seem to be where it’s at. As you can see, there’s information on whether there was a TO, whether someone got a rebound, block, etc. So what we need to do is extract that.</p>
+<p>Our first step is generating indicator functions from these columns to tell us when an event occurred. For some types, this is easier than others. For example, we can see pretty clearly that the <code>event_type</code> column gives us a ready-made indicator of when someone made a basket or missed a basket. Made baskets are coded as <code>shot</code> and missed baskets are coded as <code>miss</code>. Thus, we build columns for made and missed field goals:</p>
+<pre class="r"><code>tmp %&gt;% 
+  mutate(fgmade = event_type == &quot;shot&quot;,
+         fgmiss = event_type == &quot;miss&quot;) %&gt;% 
+  select(player, fgmade, fgmiss)</code></pre>
+<pre><code>## # A tibble: 1,000 x 3
+##    player         fgmade fgmiss
+##    &lt;chr&gt;          &lt;lgl&gt;  &lt;lgl&gt; 
+##  1 &lt;NA&gt;           FALSE  FALSE 
+##  2 Kevin Love     FALSE  FALSE 
+##  3 Kyrie Irving   TRUE   FALSE 
+##  4 Derrick Rose   FALSE  TRUE  
+##  5 Al Horford     FALSE  FALSE 
+##  6 Gordon Hayward FALSE  TRUE  
+##  7 Derrick Rose   FALSE  FALSE 
+##  8 Kevin Love     FALSE  TRUE  
+##  9 Jaylen Brown   FALSE  FALSE 
+## 10 Jayson Tatum   FALSE  TRUE  
+## # ... with 990 more rows</code></pre>
+<p>Free throws and 3-point baskets are a bit more complicated because required information resides in two columns. Specifically, we need to dive into the <code>description</code> column to dig out whether the field goal was a 3-point shot and whether the free throw was made or missed. (Disclaimer: As is often the case when analyzing data, I have no idea why the data generators chose to code their data in this way!)</p>
+<p>So we do this in a couple of steps. For 3-pointers, we first identify whether each field goal was a 3-pointer. Then, made field goals that were also 3’s were counted as made 3s and likewise with missed field goals. Here, the <code>purrr</code> and <code>stringr</code> packages come in handy for extracting particular character strings from the the <code>description</code> column.</p>
+<pre class="r"><code>tmp %&gt;% 
+  mutate(fgmade = event_type == &quot;shot&quot;,
+         fgmiss = event_type == &quot;miss&quot;,
+         shot3 = map_lgl(description, str_detect, &quot;3PT&quot;),
+         made3 = shot3 &amp; fgmade,
+         miss3 = shot3 &amp; fgmiss,
+         
+         shotft = event_type == &quot;free throw&quot;,
+         missathing = map_lgl(description, str_detect, &quot;MISS&quot;),
+         madeft = shotft &amp; !missathing,
+         missft = shotft &amp; missathing) %&gt;% 
+  select(player, made3, miss3, madeft, missft) %&gt;% 
+  slice(921:930)</code></pre>
+<pre><code>## # A tibble: 10 x 5
+##    player           made3 miss3 madeft missft
+##    &lt;chr&gt;            &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt;  &lt;lgl&gt; 
+##  1 Eric Gordon      FALSE TRUE  FALSE  FALSE 
+##  2 &lt;NA&gt;             FALSE FALSE FALSE  FALSE 
+##  3 Shaun Livingston FALSE FALSE FALSE  FALSE 
+##  4 PJ Tucker        FALSE FALSE TRUE   FALSE 
+##  5 PJ Tucker        FALSE FALSE TRUE   FALSE 
+##  6 Stephen Curry    FALSE FALSE FALSE  FALSE 
+##  7 James Harden     FALSE TRUE  FALSE  FALSE 
+##  8 &lt;NA&gt;             FALSE FALSE FALSE  FALSE 
+##  9 PJ Tucker        FALSE FALSE FALSE  FALSE 
+## 10 &lt;NA&gt;             FALSE FALSE FALSE  FALSE</code></pre>
+<p>We can use these columns for totaling up the number of field goals, free throws, and 3-pointers each player took and made each game!</p>
+<div id="events-with-multiple-players-involved" class="section level3">
+<h3>Events with multiple players involved</h3>
+<p>The other tricky thing is dealing with events where multiple players were involved. For example:</p>
+<pre class="r"><code>tmp %&gt;%
+    select(player, event_type, description) %&gt;%
+    filter(event_type == &quot;turnover&quot; | event_type == &quot;shot&quot;) %&gt;% 
+    slice(11:20)</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    player           event_type description                                 
+##    &lt;chr&gt;            &lt;chr&gt;      &lt;chr&gt;                                       
+##  1 Dwyane Wade      turnover   Wade Traveling Turnover (P1.T2)             
+##  2 Jaylen Brown     shot       Brown 1&#39; Layup (4 PTS)                      
+##  3 Jaylen Brown     turnover   Brown Step Out of Bounds Turnover (P2.T2)   
+##  4 LeBron James     shot       James 22&#39; Jump Shot (2 PTS)                 
+##  5 Kyrie Irving     shot       Irving 16&#39; Pullup Jump Shot (6 PTS)         
+##  6 Derrick Rose     shot       Rose 1&#39; Driving Layup (4 PTS)               
+##  7 LeBron James     shot       James 1&#39; Running Layup (4 PTS)              
+##  8 Jaylen Brown     shot       Brown 1&#39; Layup (6 PTS) (Irving 2 AST)       
+##  9 Tristan Thompson shot       Thompson  Alley Oop Layup (2 PTS) (Smith 1 ~
+## 10 JR Smith         shot       Smith  3PT Jump Shot (3 PTS) (James 3 AST)</code></pre>
+<p>For some turnovers, there’s also a steal. For some made baskets, there’s an assist. In these cases, our data set records an event that involves multiple players accumulating stats simultaneously. However, only one player (the player committing the turnover or making the basket respectively) is recorded in the <code>player</code> column. The exploits of the other player are only referenced in the <code>description</code>! So we’ll need to go into there to ferret out the data we want.</p>
+<p>Doing this actually requires a lot of work! The basic steps we need to take are below:</p>
+<ol style="list-style-type: decimal">
+<li>Figure out when an event we care about (for now, say a Steal) occurred</li>
+<li>Figure out if that event was caused by a player on the team we’re looking at</li>
+<li>If so, attribute that event to that player</li>
+<li>Build a new row in our data frame containing information on that event for easy processing later</li>
+</ol>
+<p>For (1), we’ll exploit the consistent way in which these events are written in the description. For steals and blocks, the <code>description</code> is written as “[player last name] STEAL”. (Block are done the same way.) For assists, it’s “([player last name] [integer] AST)”. These lend themselves well to some good ’ole regular expressions!</p>
+<pre class="r"><code>tmp %&gt;%
+  mutate(gotit = map_chr(description, str_extract, paste(&quot;[:alpha:]+&quot;, &quot;STEAL&quot;))) %&gt;% 
+  filter(!is.na(gotit)) %&gt;% 
+  select(player, description, gotit)</code></pre>
+<pre><code>## # A tibble: 29 x 3
+##    player      description                                     gotit       
+##    &lt;chr&gt;       &lt;chr&gt;                                           &lt;chr&gt;       
+##  1 Derrick Ro~ Irving STEAL (1 STL), Rose Lost Ball Turnover ~ Irving STEAL
+##  2 Aron Baynes Baynes Lost Ball Turnover (P1.T3), Shumpert ST~ Shumpert ST~
+##  3 Kevin Love  Irving STEAL (2 STL), Love Bad Pass Turnover (~ Irving STEAL
+##  4 Kyrie Irvi~ Irving Bad Pass Turnover (P1.T7), Crowder STEA~ Crowder STE~
+##  5 Jae Crowder Smart STEAL (1 STL), Crowder Lost Ball Turnove~ Smart STEAL 
+##  6 Derrick Ro~ Brown STEAL (1 STL), Rose Bad Pass Turnover (P~ Brown STEAL 
+##  7 Dwyane Wade Smart STEAL (2 STL), Wade Bad Pass Turnover (P~ Smart STEAL 
+##  8 Dwyane Wade Brown STEAL (2 STL), Wade Bad Pass Turnover (P~ Brown STEAL 
+##  9 Dwyane Wade Irving STEAL (3 STL), Wade Bad Pass Turnover (~ Irving STEAL
+## 10 LeBron Jam~ Rozier STEAL (1 STL), James Bad Pass Turnover ~ Rozier STEAL
+## # ... with 19 more rows</code></pre>
+<p>Using <code>purrr::map_chr</code> and <code>stringr::str_extract</code>, we’re able to pick out the relevant bit of information we want from these data points. Next, we add a little bit of processing to separate the player from the event and then use the player’s full name rather than just the last name. This latter step allows us to be consistent with the conventions for other events (like field goals, above).</p>
+<pre class="r"><code>  evplayer &lt;- &quot;STEAL player&quot;
+  tmp %&gt;%
+    mutate(allplayers = paste(a1, a2, a3, a4, a5, sep = &quot;,&quot;),
+           gotit = map_chr(description, str_extract, paste(&quot;[:alpha:]+&quot;, &quot;STEAL&quot;)),
+           evlastname = map_chr(gotit, str_sub, end = -7),
+           regexname = paste(&quot;[:alpha:]+&quot;, evlastname),
+           !!evplayer := map2_chr(allplayers, regexname, str_extract)) %&gt;% 
+    filter(!is.na(gotit)) %&gt;% 
+    select(-allplayers, -gotit, -evlastname, -regexname) %&gt;% 
+    select(description, `STEAL player`)</code></pre>
+<pre><code>## # A tibble: 29 x 2
+##    description                                               `STEAL player`
+##    &lt;chr&gt;                                                     &lt;chr&gt;         
+##  1 Irving STEAL (1 STL), Rose Lost Ball Turnover (P1.T1)     Kyrie Irving  
+##  2 Baynes Lost Ball Turnover (P1.T3), Shumpert STEAL (1 STL) &lt;NA&gt;          
+##  3 Irving STEAL (2 STL), Love Bad Pass Turnover (P1.T5)      Kyrie Irving  
+##  4 Irving Bad Pass Turnover (P1.T7), Crowder STEAL (1 STL)   &lt;NA&gt;          
+##  5 Smart STEAL (1 STL), Crowder Lost Ball Turnover (P1.T6)   Marcus Smart  
+##  6 Brown STEAL (1 STL), Rose Bad Pass Turnover (P2.T7)       Jaylen Brown  
+##  7 Smart STEAL (2 STL), Wade Bad Pass Turnover (P2.T8)       Marcus Smart  
+##  8 Brown STEAL (2 STL), Wade Bad Pass Turnover (P3.T9)       Jaylen Brown  
+##  9 Irving STEAL (3 STL), Wade Bad Pass Turnover (P4.T10)     Kyrie Irving  
+## 10 Rozier STEAL (1 STL), James Bad Pass Turnover (P3.T12)    Terry Rozier  
+## # ... with 19 more rows</code></pre>
+<p>The <code>!!</code> in the code above is from <code>rlang</code> and allows us to name columns in <code>tidyverse</code>-style functions like <code>mutate</code>. It doesn’t make much sense in the above chunk, but is super useful if we want to write a general function that will let us re-use the code above for multiple types of events (like blocks!):</p>
+<pre class="r"><code>get_event_and_player &lt;- function(ab, event){
+  
+  evplayer &lt;- paste(event, &quot;player&quot;)
+  ab %&gt;% 
+    mutate(allplayers = paste(a1, a2, a3, a4, a5, sep = &quot;,&quot;),
+           gotit = map_chr(description, str_extract, paste(&quot;[:alpha:]+&quot;, event)),
+           evlastname = map_chr(gotit, str_sub, end = -7),
+           regexname = paste(&quot;[:alpha:]+&quot;, evlastname),
+           !!evplayer := map2_chr(allplayers, regexname, str_extract)) %&gt;% 
+    select(-allplayers, -gotit, -evlastname, -regexname)
+  
+}</code></pre>
+<p>Because assists are coded differently, I wrote a separate function for them:</p>
+<pre class="r"><code>get_ast_and_player &lt;- function(ab){
+  
+  ab %&gt;% 
+    mutate(allplayers = paste(a1, a2, a3, a4, a5, sep = &quot;,&quot;),
+           gotast = map_chr(description, str_extract, paste(&quot;[:alpha:]+ [:digit:] AST&quot;)),
+           astlastname = map_chr(gotast, str_sub, end = -7),
+           regexname = paste(&quot;[:alpha:]+&quot;, astlastname),
+           `ASSIST player` = map2_chr(allplayers, regexname, str_extract)) %&gt;% 
+    select(-allplayers, -gotast, -astlastname, -regexname)
+  
+}</code></pre>
+<p>Each of these functions will now generate new columns describing events with multiple players involved:</p>
+<pre class="r"><code>tmp %&gt;% 
+  get_ast_and_player() %&gt;% 
+  select(description, `ASSIST player`) %&gt;% slice(3)</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   description                                               `ASSIST player`
+##   &lt;chr&gt;                                                     &lt;chr&gt;          
+## 1 Irving 10&#39; Driving Floating Jump Shot (2 PTS) (Horford 1~ Al Horford</code></pre>
+<p>The next step is to re-format these columns to be consistent with the ways in which other data are recorded. To do that, we’ll generate all of our new columns and use a <code>gather</code> to re-format them with the event type in one column and the player name in another. We’ll name these <code>description</code> and <code>player</code> respectively, and then append these new rows to our original data frame. This new data frame will then have simple tags in <code>description</code> and <code>player</code> telling us what event occurred and who did it, which is what we already have for things like made field goals and turnovers!</p>
+<p>The function below does the above in a single go:</p>
+<pre class="r"><code>get_ast_stl_blk &lt;- function(tb){
+  
+  tb %&gt;% 
+    get_event_and_player(&quot;BLOCK&quot;) %&gt;% 
+    get_event_and_player(&quot;STEAL&quot;) %&gt;% 
+    get_ast_and_player() %&gt;% 
+    mutate(dropit = pmap_lgl(list(`BLOCK player`, `STEAL player`, `ASSIST player`), 
+                             function(a, b, d) !(is.na(a) &amp;&amp; 
+                                                   is.na(b) &amp;&amp; 
+                                                   is.na(d)
+                             )
+    )) %&gt;% filter(dropit) %&gt;% 
+    select(`BLOCK player`, `STEAL player`, `ASSIST player`, game_id, 
+           date, playoffs, mplay_id, possessioncount) %&gt;% 
+    gather(-game_id, -mplay_id, -possessioncount, -date, 
+           -playoffs,
+           key = &quot;description&quot;, value = &quot;player&quot;) %&gt;% 
+    filter(!is.na(player)) %&gt;% 
+    mutate(description = map_chr(description, str_sub, end = -8)) %&gt;% 
+    bind_rows(tb)
+}</code></pre>
+<p>We can run this function on our raw data to create new rows, and then throw that data table into our cleaning function as before.</p>
+</div>
+<div id="putting-it-all-together" class="section level3">
+<h3>Putting it all together</h3>
+<p>Finally, we build a function that will be added to our cleaning step that creates columns for each event we’re interested in. This is basically wrapping together all of the stuff we did above:</p>
+<pre class="r"><code>add_simple_stat_indicators &lt;- function(tb){
+  
+  tb %&gt;% 
+    mutate(
+      gotblk = (description == &quot;BLOCK&quot;),
+      gotstl = (description == &quot;STEAL&quot;),
+      gotast = (description == &quot;ASSIST&quot;),
+      gotreb = map_lgl(description, str_detect, &quot;REBOUND&quot;),
+      tfoulu = map_lgl(description, str_detect, &quot;T.FOUL&quot;),
+      tfoull = map_lgl(description, str_detect, &quot;T.Foul&quot;),
+      fgmade = event_type == &quot;shot&quot;,
+      fgmiss = event_type == &quot;miss&quot;,
+      shotft = event_type == &quot;free throw&quot;,
+      foul = event_type == &quot;foul&quot;,
+      turnover = event_type == &quot;turnover&quot;,
+      shot3 = map_lgl(description, str_detect, &quot;3PT&quot;),
+      made3 = map2_lgl(shot3, fgmade, function(a, b) a &amp;&amp; b),
+      miss3 = map2_lgl(shot3, fgmiss, function(a, b) a &amp;&amp; b),
+      missathing = map_lgl(description, str_detect, &quot;MISS&quot;),
+      madeft = map2_lgl(shotft, !missathing, function(a, b) a &amp;&amp; b),
+      missft = map2_lgl(shotft, missathing, function(a, b) a &amp;&amp; b),
+      tfoul = map2_lgl(tfoulu, tfoull, function(a, b) a | b),
+      pfoul = map2_lgl(foul, !tfoul , function(a, b) a &amp;&amp; b))
+  
+}</code></pre>
+<p>This function takes all of the things we covered above (plus a few others!) and wraps them into a convenient function that we can apply to our raw data set in the cleaning portion.</p>
+</div>
+</div>
+<div id="wrapping-up" class="section level2">
+<h2>Wrapping up</h2>
+<p>And unfortunately, there’s where I’m going to leave things for now! Next time, we’ll take these functions, build game logs, and then from those game logs, compute our simple summary statistics.</p>
+<p>My main take-away from today is that even curated data are always going to be messy. The original data set treated in-game “events” as their unit of measure, with each row referencing a single event. However, as we discovered, often times, single events involve multiple players, and we want information on all of the players involved! Therefore, we had to do some slashing and chopping of the data to get where we wanted to go. <code>purrr</code> and <code>stringr</code> were very useful for this, and we even got to use a bit of <code>rlang</code> when we wanted to write a single, general function that we could apply to multiple types of events.</p>
+<p>I think we also learned that sometimes even seemingly simple questions like, “How many assists did Player X get?” can require a fair bit of work before we can even start to answer them!</p>
+</div>

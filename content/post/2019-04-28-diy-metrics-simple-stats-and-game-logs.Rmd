@@ -1,0 +1,258 @@
+---
+title: 'DIY Metrics:  Counting up simple statistics'
+author: Matthew Avery
+date: '2019-05-04'
+slug: diy-metrics-simple-stats-and-game-logs
+categories:
+  - diymetrics
+  - basketball
+  - R
+  - metrics
+  - statistics
+  - sports
+tags: []
+description: ''
+thumbnail: ''
+---
+
+```{r, include = F, message = F, warning = F}
+
+
+suppressMessages(library(tidyverse))
+suppressMessages(library(lubridate))
+source("r code/nba-color-scale.R")
+
+get_fiveman_plusminus <- function(tb, team){
+  
+  tb %>% 
+    mutate(team = team) %>% 
+    mutate(pl = hms(play_length)) %>% 
+    group_by(p1, p2, p3, p4, p5) %>% 
+    summarise(`Plus/Minus` = sum(netpoints, na.rm = T),
+              unittime = sum(pl)) 
+  
+}
+
+
+```
+
+
+Alrighty! This post got delayed a bit due to real life as well as some challenges with the data. But it's also an exciting post because we're finally on the road to generating player-level counting statistics!
+
+### Simple Statitistics
+
+This post is focused on simple counting stats or box score statistics that were basically the standard way to discuss NBA players until quite recently. So aggregate numbers of rebounds, assists, steals, etc. We've dabbled a bit already with more "advanced" metrics like raw and pace-adjusted plus/minus, so this is in some ways going back to basics. I think it's worth exploring, however, because many of the things we look at here are key for taking some of the more "advanced" looks that folks like to do. 
+
+## Cleaning, again.
+
+Our first challenge is that the play-by-play data we're working with doesn't treat each type of event equally. For some (e.g., a turnover), there's a specific tag showing that a turnover occurred. And as far as I can tell, it's pretty consistent! There's a column for it and everything. This is what it looks like:
+
+```{r, message = F, warning = F}
+tmp <- read_csv("data/[10-17-2017]-[06-08-2018]-combined-stats.csv") %>%
+    slice(1:1000)
+
+tmp %>%
+    select(player, event_type, description) %>%
+    print(n = 10)
+```
+
+The three columns highlighted above are generally our best bets for information about the play. When we were working with point values directly, there were some other columns of interest, but for anything that isn't a change in point values, these seem to be where it's at. As you can see, there's information on whether there was a TO, whether someone got a rebound, block, etc. So what we need to do is extract that. 
+
+Our first step is generating indicator functions from these columns to tell us when an event occurred. For some types, this is easier than others. For example, we can see pretty clearly that the `event_type` column gives us a ready-made indicator of when someone made a basket or missed a basket. Made baskets are coded as `shot` and missed baskets are coded as `miss`. Thus, we build columns for made and missed field goals:
+
+```{r}
+
+tmp %>% 
+  mutate(fgmade = event_type == "shot",
+         fgmiss = event_type == "miss") %>% 
+  select(player, fgmade, fgmiss)
+
+```
+
+
+Free throws and 3-point baskets are a bit more complicated because required information resides in two columns. Specifically, we need to dive into the `description` column to dig out whether the field goal was a 3-point shot and whether the free throw was made or missed. (Disclaimer:  As is often the case when analyzing data, I have no idea why the data generators chose to code their data in this way!) 
+
+So we do this in a couple of steps. For 3-pointers, we first identify whether each field goal was a 3-pointer. Then, made field goals that were also 3's were counted as made 3s and likewise with missed field goals. Here, the `purrr` and `stringr` packages come in handy for extracting particular character strings from the the `description` column.
+
+```{r}
+tmp %>% 
+  mutate(fgmade = event_type == "shot",
+         fgmiss = event_type == "miss",
+         shot3 = map_lgl(description, str_detect, "3PT"),
+         made3 = shot3 & fgmade,
+         miss3 = shot3 & fgmiss,
+         
+         shotft = event_type == "free throw",
+         missathing = map_lgl(description, str_detect, "MISS"),
+         madeft = shotft & !missathing,
+         missft = shotft & missathing) %>% 
+  select(player, made3, miss3, madeft, missft) %>% 
+  slice(921:930)
+
+```
+We can use these columns for totaling up the number of field goals, free throws, and 3-pointers each player took and made each game!
+
+### Events with multiple players involved
+
+The other tricky thing is dealing with events where multiple players were involved. For example:
+
+```{r}
+
+tmp %>%
+    select(player, event_type, description) %>%
+    filter(event_type == "turnover" | event_type == "shot") %>% 
+    slice(11:20)
+
+```
+
+For some turnovers, there's also a steal. For some made baskets, there's an assist. In these cases, our data set records an event that involves multiple players accumulating stats simultaneously. However, only one player (the player committing the turnover or making the basket respectively) is recorded in the `player` column. The exploits of the other player are only referenced in the `description`! So we'll need to go into there to ferret out the data we want. 
+
+Doing this actually requires a lot of work! The basic steps we need to take are below:
+
+1. Figure out when an event we care about (for now, say a Steal) occurred
+2. Figure out if that event was caused by a player on the team we're looking at
+3. If so, attribute that event to that player
+4. Build a new row in our data frame containing information on that event for easy processing later
+
+For (1), we'll exploit the consistent way in which these events are written in the description. For steals and blocks, the `description` is written as "[player last name] STEAL". (Block are done the same way.) For assists, it's "([player last name] [integer] AST)". These lend themselves well to some good 'ole regular expressions!
+
+```{r}
+
+tmp %>%
+  mutate(gotit = map_chr(description, str_extract, paste("[:alpha:]+", "STEAL"))) %>% 
+  filter(!is.na(gotit)) %>% 
+  select(player, description, gotit)
+```
+
+Using `purrr::map_chr` and `stringr::str_extract`, we're able to pick out the relevant bit of information we want from these data points. Next, we add a little bit of processing to separate the player from the event and then use the player's full name rather than just the last name. This latter step allows us to be consistent with the conventions for other events (like field goals, above).
+
+```{r}
+
+  evplayer <- "STEAL player"
+  tmp %>%
+    mutate(allplayers = paste(a1, a2, a3, a4, a5, sep = ","),
+           gotit = map_chr(description, str_extract, paste("[:alpha:]+", "STEAL")),
+           evlastname = map_chr(gotit, str_sub, end = -7),
+           regexname = paste("[:alpha:]+", evlastname),
+           !!evplayer := map2_chr(allplayers, regexname, str_extract)) %>% 
+    filter(!is.na(gotit)) %>% 
+    select(-allplayers, -gotit, -evlastname, -regexname) %>% 
+    select(description, `STEAL player`)
+  
+```
+
+The `!!` in the code above is from `rlang` and allows us to name columns in `tidyverse`-style functions like `mutate`. It doesn't make much sense in the above chunk, but is super useful if we want to write a general function that will let us re-use the code above for multiple types of events (like blocks!):
+
+```{r}
+get_event_and_player <- function(ab, event){
+  
+  evplayer <- paste(event, "player")
+  ab %>% 
+    mutate(allplayers = paste(a1, a2, a3, a4, a5, sep = ","),
+           gotit = map_chr(description, str_extract, paste("[:alpha:]+", event)),
+           evlastname = map_chr(gotit, str_sub, end = -7),
+           regexname = paste("[:alpha:]+", evlastname),
+           !!evplayer := map2_chr(allplayers, regexname, str_extract)) %>% 
+    select(-allplayers, -gotit, -evlastname, -regexname)
+  
+}
+```
+
+Because assists are coded differently, I wrote a separate function for them:
+
+```{r}
+get_ast_and_player <- function(ab){
+  
+  ab %>% 
+    mutate(allplayers = paste(a1, a2, a3, a4, a5, sep = ","),
+           gotast = map_chr(description, str_extract, paste("[:alpha:]+ [:digit:] AST")),
+           astlastname = map_chr(gotast, str_sub, end = -7),
+           regexname = paste("[:alpha:]+", astlastname),
+           `ASSIST player` = map2_chr(allplayers, regexname, str_extract)) %>% 
+    select(-allplayers, -gotast, -astlastname, -regexname)
+  
+}
+```
+
+Each of these functions will now generate new columns describing events with multiple players involved:
+
+```{r}
+tmp %>% 
+  get_ast_and_player() %>% 
+  select(description, `ASSIST player`) %>% slice(3)
+```
+
+The next step is to re-format these columns to be consistent with the ways in which other data are recorded. To do that, we'll generate all of our new columns and use a `gather` to re-format them with the event type in one column and the player name in another. We'll name these `description` and `player` respectively, and then append these new rows to our original data frame. This new data frame will then have simple tags in `description` and `player` telling us what event occurred and who did it, which is what we already have for things like made field goals and turnovers!
+
+The function below does the above in a single go:
+
+```{r}
+get_ast_stl_blk <- function(tb){
+  
+  tb %>% 
+    get_event_and_player("BLOCK") %>% 
+    get_event_and_player("STEAL") %>% 
+    get_ast_and_player() %>% 
+    mutate(dropit = pmap_lgl(list(`BLOCK player`, `STEAL player`, `ASSIST player`), 
+                             function(a, b, d) !(is.na(a) && 
+                                                   is.na(b) && 
+                                                   is.na(d)
+                             )
+    )) %>% filter(dropit) %>% 
+    select(`BLOCK player`, `STEAL player`, `ASSIST player`, game_id, 
+           date, playoffs, mplay_id, possessioncount) %>% 
+    gather(-game_id, -mplay_id, -possessioncount, -date, 
+           -playoffs,
+           key = "description", value = "player") %>% 
+    filter(!is.na(player)) %>% 
+    mutate(description = map_chr(description, str_sub, end = -8)) %>% 
+    bind_rows(tb)
+}
+
+```
+
+We can run this function on our raw data to create new rows, and then throw that data table into our cleaning function as before.
+
+### Putting it all together
+
+Finally, we build a function that will be added to our cleaning step that creates columns for each event we're interested in. This is basically wrapping together all of the stuff we did above:
+
+```{r}
+
+add_simple_stat_indicators <- function(tb){
+  
+  tb %>% 
+    mutate(
+      gotblk = (description == "BLOCK"),
+      gotstl = (description == "STEAL"),
+      gotast = (description == "ASSIST"),
+      gotreb = map_lgl(description, str_detect, "REBOUND"),
+      tfoulu = map_lgl(description, str_detect, "T.FOUL"),
+      tfoull = map_lgl(description, str_detect, "T.Foul"),
+      fgmade = event_type == "shot",
+      fgmiss = event_type == "miss",
+      shotft = event_type == "free throw",
+      foul = event_type == "foul",
+      turnover = event_type == "turnover",
+      shot3 = map_lgl(description, str_detect, "3PT"),
+      made3 = map2_lgl(shot3, fgmade, function(a, b) a && b),
+      miss3 = map2_lgl(shot3, fgmiss, function(a, b) a && b),
+      missathing = map_lgl(description, str_detect, "MISS"),
+      madeft = map2_lgl(shotft, !missathing, function(a, b) a && b),
+      missft = map2_lgl(shotft, missathing, function(a, b) a && b),
+      tfoul = map2_lgl(tfoulu, tfoull, function(a, b) a | b),
+      pfoul = map2_lgl(foul, !tfoul , function(a, b) a && b))
+  
+}
+```
+
+This function takes all of the things we covered above (plus a few others!) and wraps them into a convenient function that we can apply to our raw data set in the cleaning portion. 
+
+
+## Wrapping up
+And unfortunately, there's where I'm going to leave things for now! Next time, we'll take these functions, build game logs, and then from those game logs, compute our simple summary statistics. 
+
+My main take-away from today is that even curated data are always going to be messy. The original data set treated in-game "events" as their unit of measure, with each row referencing a single event. However, as we discovered, often times, single events involve multiple players, and we want information on all of the players involved! Therefore, we had to do some slashing and chopping of the data to get where we wanted to go. `purrr` and `stringr` were very useful for this, and we even got to use a bit of `rlang` when we wanted to write a single, general function that we could apply to multiple types of events. 
+
+I think we also learned that sometimes even seemingly simple questions like, "How many assists did Player X get?" can require a fair bit of work before we can even start to answer them!
+
