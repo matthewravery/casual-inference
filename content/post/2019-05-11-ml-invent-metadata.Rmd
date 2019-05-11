@@ -1,0 +1,50 @@
+---
+title: ML Invent Metadata
+author: Matthew Avery
+date: '2019-05-11'
+slug: ml-invent-metadata
+categories:
+  - ML Invents
+  - Hot takes
+  - statistics
+tags: []
+description: ''
+thumbnail: ''
+---
+
+*Disclaimer:  This post is at least tongue-half-way-in-cheek. I acutally like the article I'm lampooning.*
+
+
+A <a href = "https://arxiv.org/pdf/1803.09010.pdf">recent publication</a> by academics and AI researchers titled "Data Sheets for Datasets" calls for the Machine Learning community to ensure that all of their datasets are accompanied by a "datasheet." These datasheets would contain information the dataset's "motivation, composition,
+collection process, recommended uses, and so on." The authors, Gebru, et al., would you like to include more data about your dataset. 
+
+Congratulations, Machine Learning, you've just invented metadata.
+
+## Datasets of Datasheets
+
+The Gobru, et al. paper makes the case for using datasheets by analogy to other fields. Specically, they point out that in the field of Electronics, there are Standards which describe the product, and in the field of Medicine, there are IRBs which <a href = "https://slatestarcodex.com/2017/08/29/my-irb-nightmare/">weed out the Nazis</a>. 
+
+To bring this level of sophistication to ML, Gobru, et al. propose a short questionnaire consisting of over 50 open-ended, ill-posed questions. (As an aside, the questions could use a *lot* of work. ML should take a minute and <a href = "https://www.pewresearch.org/methods/u-s-survey-research/questionnaire-design/">invent some best practices for writing questions</a>.) These questions are designed to cover everything from the purpose of the dataset to whether it contains private information to what tasks the dataset might be used for. 
+
+The idea is to make this information available to future users of the dataset, and particular emphasis is placed on the moral implications of using the dataset (e.g., whether there are embedded biases in it or whether there are privacy concerns assocaited with teh dataset). These are laudible goals, but if your dataset has these issues associated with it... maybe you shouldn't be putting it out there in the first place?
+
+If the concepts and goals of these datasheets sound familiar to you, it's probably beacuse you've heard of...
+
+## Metadata & Data Pedigree
+<a href = "https://www.merriam-webster.com/dictionary/metadata">Metadata</a> is "data that provides information about other data". This might cover, for example, what's in the data, how it might've been collected, what's it's used for, etc. Metadata is also increasingly important as we try to navigate a data-filled world. Metadata is critical for implementing data management best practices such as <a href = "https://www.nature.com/articles/sdata201618">FAIR</a>. Depending on what you mean, <a href = "https://www.dataversity.net/a-brief-history-of-metadata/">metadata has existed as a concept</a> for 52 years or nearly 2,400. 
+
+<a href = "https://ldapwiki.com/wiki/Data%20Pedigree">Data pedigree</a> (or <a href = "https://en.wikipedia.org/wiki/Data_lineage#cite_note-1">data lineage</a> or <a href = "https://ldapwiki.com/wiki/Data%20Provenance">data provenance</a>) describes the origins and processing of a dataset. Data pedigree should not be confused with <a href = "http://www.pedigreedatabase.com/">pedigree data</a>. How data are created, who they were created by, how data are processed, and who is doing the processing are all elements of data pedigre. Depending on who you're listening to, privacy considerations associated with a dataset fall into this category as well. 
+
+## Getting Meta
+
+I don't want this to sound too much like I don't appreciate the effort to standardize and more thoroughly document datasets, as described in "Datasheets for Datasets". These are good goals, and the effort is worthwhile. I'm leading an effort to take similar steps to standardize and formalize the metadata process within my organization. For the most part, I think the questions they ask cover the ground necessary to document data for future use.
+
+However, I think Gobru, et al. fall into a common trap by trying to invent concepts and nomenclature when existing ones would do. They only mention "metadata" once in the entire paper, and that's to dismissively say that fields with "existing practices relating to metadata" can integrate those practices into datasheets. Perhaps instead the authors could've used these existing practices as a starting point for their datasheets project, identifying the most useful elements from them? 
+
+I also think motivating the project through the lens of privacy and social justice concerns provides an overly-narrow view of the utility of metadata. It's not just about understanding how your data were collected so as not to build a predictive algorithm that's biased for some subset of the population. (As an aside, the fault in cases like that lies more with the person who builds the predictive model than the person who builds the dataset.) There are lots of other good reasons to want to thoroughly document your dataset! Broadening the focus and motivation would, IMO, provide a stronger rationale for data generators to expend the time and effort to do a thorough job of completing the questionnaire the authors propose. 
+
+But who knows. <a href = "https://brenocon.com/blog/2008/12/statistics-vs-machine-learning-fight/">Re-branding existing concepts</a> has worked well for the ML community thus far. I won't complain if doing it here means we have richer metadata and more complete data pedigrees moving forward. :-) 
+
+
+
+

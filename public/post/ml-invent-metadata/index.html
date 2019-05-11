@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ML Invent Metadata</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.51" />
+	<meta property="og:title" content="ML Invent Metadata" />
+<meta property="og:description" content="Disclaimer: This post is at least tongue-half-way-in-cheek. I acutally like the article I’m lampooning.
+A recent publication by academics and AI researchers titled “Data Sheets for Datasets” calls for the Machine Learning community to ensure that all of their datasets are accompanied by a “datasheet.” These datasheets would contain information the dataset’s “motivation, composition,collection process, recommended uses, and so on.” The authors, Gebru, et al., would you like to include more data about your dataset." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/ml-invent-metadata/" /><meta property="article:published_time" content="2019-05-11T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-05-11T00:00:00&#43;00:00"/>
+
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Casual Inference" rel="home">
+				<div class="logo__title">Casual Inference</div>
+				<div class="logo__tagline">Robust and relaxed</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/about/">About</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://matthewravery.github.io/markdown-cv">CV</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://github.com/jthaman/ciTools">ciTools</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/analysis-statement/">Analysis Philosophy</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">ML Invent Metadata</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-05-11T00:00:00">May 11, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/ml-invents" rel="category">ML Invents</a>, <a class="meta__link" href="/categories/hot-takes" rel="category">Hot takes</a>, <a class="meta__link" href="/categories/statistics" rel="category">statistics</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+
+<p><em>Disclaimer: This post is at least tongue-half-way-in-cheek. I acutally like the article I’m lampooning.</em></p>
+<p>A <a href = "https://arxiv.org/pdf/1803.09010.pdf">recent publication</a> by academics and AI researchers titled “Data Sheets for Datasets” calls for the Machine Learning community to ensure that all of their datasets are accompanied by a “datasheet.” These datasheets would contain information the dataset’s “motivation, composition,
+collection process, recommended uses, and so on.” The authors, Gebru, et al., would you like to include more data about your dataset.</p>
+<p>Congratulations, Machine Learning, you’ve just invented metadata.</p>
+<div id="datasets-of-datasheets" class="section level2">
+<h2>Datasets of Datasheets</h2>
+<p>The Gobru, et al. paper makes the case for using datasheets by analogy to other fields. Specically, they point out that in the field of Electronics, there are Standards which describe the product, and in the field of Medicine, there are IRBs which <a href = "https://slatestarcodex.com/2017/08/29/my-irb-nightmare/">weed out the Nazis</a>.</p>
+<p>To bring this level of sophistication to ML, Gobru, et al. propose a short questionnaire consisting of over 50 open-ended, ill-posed questions. (As an aside, the questions could use a <em>lot</em> of work. ML should take a minute and <a href = "https://www.pewresearch.org/methods/u-s-survey-research/questionnaire-design/">invent some best practices for writing questions</a>.) These questions are designed to cover everything from the purpose of the dataset to whether it contains private information to what tasks the dataset might be used for.</p>
+<p>The idea is to make this information available to future users of the dataset, and particular emphasis is placed on the moral implications of using the dataset (e.g., whether there are embedded biases in it or whether there are privacy concerns assocaited with teh dataset). These are laudible goals, but if your dataset has these issues associated with it… maybe you shouldn’t be putting it out there in the first place?</p>
+<p>If the concepts and goals of these datasheets sound familiar to you, it’s probably beacuse you’ve heard of…</p>
+</div>
+<div id="metadata-data-pedigree" class="section level2">
+<h2>Metadata &amp; Data Pedigree</h2>
+<p><a href = "https://www.merriam-webster.com/dictionary/metadata">Metadata</a> is “data that provides information about other data”. This might cover, for example, what’s in the data, how it might’ve been collected, what’s it’s used for, etc. Metadata is also increasingly important as we try to navigate a data-filled world. Metadata is critical for implementing data management best practices such as <a href = "https://www.nature.com/articles/sdata201618">FAIR</a>. Depending on what you mean, <a href = "https://www.dataversity.net/a-brief-history-of-metadata/">metadata has existed as a concept</a> for 52 years or nearly 2,400.</p>
+<p><a href = "https://ldapwiki.com/wiki/Data%20Pedigree">Data pedigree</a> (or <a href = "https://en.wikipedia.org/wiki/Data_lineage#cite_note-1">data lineage</a> or <a href = "https://ldapwiki.com/wiki/Data%20Provenance">data provenance</a>) describes the origins and processing of a dataset. Data pedigree should not be confused with <a href = "http://www.pedigreedatabase.com/">pedigree data</a>. How data are created, who they were created by, how data are processed, and who is doing the processing are all elements of data pedigre. Depending on who you’re listening to, privacy considerations associated with a dataset fall into this category as well.</p>
+</div>
+<div id="getting-meta" class="section level2">
+<h2>Getting Meta</h2>
+<p>I don’t want this to sound too much like I don’t appreciate the effort to standardize and more thoroughly document datasets, as described in “Datasheets for Datasets”. These are good goals, and the effort is worthwhile. I’m leading an effort to take similar steps to standardize and formalize the metadata process within my organization. For the most part, I think the questions they ask cover the ground necessary to document data for future use.</p>
+<p>However, I think Gobru, et al. fall into a common trap by trying to invent concepts and nomenclature when existing ones would do. They only mention “metadata” once in the entire paper, and that’s to dismissively say that fields with “existing practices relating to metadata” can integrate those practices into datasheets. Perhaps instead the authors could’ve used these existing practices as a starting point for their datasheets project, identifying the most useful elements from them?</p>
+<p>I also think motivating the project through the lens of privacy and social justice concerns provides an overly-narrow view of the utility of metadata. It’s not just about understanding how your data were collected so as not to build a predictive algorithm that’s biased for some subset of the population. (As an aside, the fault in cases like that lies more with the person who builds the predictive model than the person who builds the dataset.) There are lots of other good reasons to want to thoroughly document your dataset! Broadening the focus and motivation would, IMO, provide a stronger rationale for data generators to expend the time and effort to do a thorough job of completing the questionnaire the authors propose.</p>
+<p>But who knows. <a href = "https://brenocon.com/blog/2008/12/statistics-vs-machine-learning-fight/">Re-branding existing concepts</a> has worked well for the ML community thus far. I won’t complain if doing it here means we have richer metadata and more complete data pedigrees moving forward. :-)</p>
+</div>
+
+		</div>
+		
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/diy-metrics-simple-stats-and-game-logs/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">DIY Metrics:  Counting up simple statistics</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/ml-invent-metadata/">ML Invent Metadata</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-simple-stats-and-game-logs/">DIY Metrics:  Counting up simple statistics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-normalizing-by-posession/">DIY Metrics:  Normalizing by Posession</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-why-normalize/">DIY Metrics:  Why Do we Normalize</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-full-season-five-man-plus-minus/">DIY Metrics:  Full-season five-man Plus/Minus</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/basketball">Basketball</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/common-analysis-errors">Common analysis errors</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/data-generation">Data generation</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/diymetrics">Diymetrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/failure-to-communicate">Failure to communicate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/hot-takes">Hot takes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/life-is-distributional">Life is distributional</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/metrics">Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/misc">Misc</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/ml-invents">Ml invents</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/picking-at-nits">Picking at nits</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r">R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r-diymetrics">R diymetrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/sports">Sports</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/statistics">Statistics</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 Casual Inference.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

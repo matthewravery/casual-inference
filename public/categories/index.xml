@@ -59,7 +59,7 @@
     <item>
       <title>Hot Takes</title>
       <link>/categories/hot-takes/</link>
-      <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 11 May 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/hot-takes/</guid>
       <description></description>
@@ -89,6 +89,15 @@
       <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ml Invents</title>
+      <link>/categories/ml-invents/</link>
+      <pubDate>Sat, 11 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/ml-invents/</guid>
       <description></description>
     </item>
     
@@ -131,7 +140,7 @@
     <item>
       <title>Statistics</title>
       <link>/categories/statistics/</link>
-      <pubDate>Sat, 04 May 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 11 May 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/statistics/</guid>
       <description></description>

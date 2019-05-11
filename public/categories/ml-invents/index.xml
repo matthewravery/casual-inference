@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hot Takes on Casual Inference</title>
-    <link>/categories/hot-takes/</link>
-    <description>Recent content in Hot Takes on Casual Inference</description>
+    <title>Ml Invents on Casual Inference</title>
+    <link>/categories/ml-invents/</link>
+    <description>Recent content in Ml Invents on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 11 May 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/categories/hot-takes/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/ml-invents/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,17 +19,6 @@
       <guid>/post/ml-invent-metadata/</guid>
       <description>Disclaimer: This post is at least tongue-half-way-in-cheek. I acutally like the article I’m lampooning.
 A recent publication by academics and AI researchers titled “Data Sheets for Datasets” calls for the Machine Learning community to ensure that all of their datasets are accompanied by a “datasheet.” These datasheets would contain information the dataset’s “motivation, composition,collection process, recommended uses, and so on.” The authors, Gebru, et al., would you like to include more data about your dataset.</description>
-    </item>
-    
-    <item>
-      <title>Weird Al is basically Shakespeare</title>
-      <link>/post/weird-al-is-basically-shakespeare/</link>
-      <pubDate>Fri, 30 Nov 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/weird-al-is-basically-shakespeare/</guid>
-      <description>Not the bit about plays, the bit about sonnets.
-Writing song parodies is like writing sonnetsSonnets are an interesting because of how restrictive they are. According to American poet Aaron Kramer
-First, you are handcuffed by having to write fourteen lines. Then, you are shackled by having to write with a set meter. They put you into a sack called rhyme. But think what a magic act it is if you can set your meaning free!</description>
     </item>
     
   </channel>
