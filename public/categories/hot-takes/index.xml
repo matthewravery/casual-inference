@@ -6,10 +6,19 @@
     <description>Recent content in Hot Takes on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 May 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/hot-takes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How Analytics Ruins Sports</title>
+      <link>/post/how-analytics-ruins-sports/</link>
+      <pubDate>Sat, 25 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/how-analytics-ruins-sports/</guid>
+      <description>With the recent success of the Rockets, people are trotting out that old saw about analytics nerds ruining sports. With the Houston Rockets specifically, the question is a combined referendum on the numbers-based approach of GM Daryl Morey and the foul-drawing proclivities of Houston’s two stars, James Harden and Chris Paul. Of course, the latter is linked with the former, since analytics shows us that drawing shooting fouls is extremely efficient offense.</description>
+    </item>
     
     <item>
       <title>ML Invents Metadata</title>

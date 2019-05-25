@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/post/how-analytics-ruins-sports/</loc>
+    <lastmod>2019-05-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/ml-invent-metadata/</loc>
     <lastmod>2019-05-11T00:00:00+00:00</lastmod>
   </url>
@@ -119,19 +124,19 @@
   
   <url>
     <loc>/categories/basketball/</loc>
-    <lastmod>2019-05-04T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-05-11T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2019-05-04T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -161,7 +166,7 @@
   
   <url>
     <loc>/categories/hot-takes/</loc>
-    <lastmod>2019-05-11T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -209,13 +214,13 @@
   
   <url>
     <loc>/categories/sports/</loc>
-    <lastmod>2019-05-04T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/statistics/</loc>
-    <lastmod>2019-05-11T00:00:00+00:00</lastmod>
+    <lastmod>2019-05-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
