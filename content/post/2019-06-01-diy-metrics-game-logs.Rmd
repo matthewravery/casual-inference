@@ -1,0 +1,167 @@
+---
+title: 'DIY Metrics: Game Logs '
+author: Matthew Avery
+date: '2019-06-01'
+slug: diy-metrics-game-logs
+categories:
+  - basketball
+  - metrics
+  - sports
+  - statistics
+  - common analysis errors
+  - diymetrics
+tags: []
+description: ''
+thumbnail: ''
+---
+
+```{r, include = F, message = F, warning = F}
+
+
+suppressMessages(library(tidyverse))
+suppressMessages(library(lubridate))
+source("r code/nba-color-scale.R")
+source("r code/basic-stat-functions.R")
+source("r code/basic-plus-minus.R")
+
+tmp <- read_rds("clean-data/team-events-1718.rds")
+pt <-  read_rds("clean-data/players-on-teams-1718.rds")
+```
+
+### Previously on DIY Metircs...
+
+<a href = "/post/diy-metrics-simple-stats-and-game-logs/">Last time</a> in the DIY Metrics series, we had reached the point where we could extract a host of individual metrics from our data set using a function we'd named `add_simple_stat_indicators`:
+
+
+```{r}
+
+add_simple_stat_indicators <- function(tb){
+  
+  tb %>% 
+    mutate(
+      gotblk = (description == "BLOCK"),
+      gotstl = (description == "STEAL"),
+      gotast = (description == "ASSIST"),
+      gotreb = map_lgl(description, str_detect, "REBOUND"),
+      tfoulu = map_lgl(description, str_detect, "T.FOUL"),
+      tfoull = map_lgl(description, str_detect, "T.Foul"),
+      fgmade = event_type == "shot",
+      fgmiss = event_type == "miss",
+      shotft = event_type == "free throw",
+      foul = event_type == "foul",
+      turnover = event_type == "turnover",
+      shot3 = map_lgl(description, str_detect, "3PT"),
+      made3 = map2_lgl(shot3, fgmade, function(a, b) a && b),
+      miss3 = map2_lgl(shot3, fgmiss, function(a, b) a && b),
+      missathing = map_lgl(description, str_detect, "MISS"),
+      madeft = map2_lgl(shotft, !missathing, function(a, b) a && b),
+      missft = map2_lgl(shotft, missathing, function(a, b) a && b),
+      tfoul = map2_lgl(tfoulu, tfoull, function(a, b) a | b),
+      pfoul = map2_lgl(foul, !tfoul , function(a, b) a && b))
+  
+}
+```
+
+This time, we'll use the output to build player game logs!
+
+## Game Logs
+
+Game logs are a common type data form used when looking at NBA data or data from any other source. You can find them, for example, on <a href = "https://www.basketball-reference.com/">basketball-reference.com</a> organized by player. <a href = "https://www.basketball-reference.com/players/r/redicjj01/gamelog/2018">Here</a> is the game log for JJ Redick from 2017-2018, for example.
+
+They're useful both as ends of themselves (e.g., looking at how a player's counting stats have changed over the course of a season) but more importantly as building blocks for more "advanced" metrics. Advanced stats basically come in three varieties. There are those based on aggregated team performance with and without individual players or combinations of players on the court (I think of these as "plus/minus-type" metrics; net rating would be an example), metrics based on linear combinations of traditional box score statistics (think PER or Effective Field goal % and similar), and then there are stats based on player position/tracking data. This last category includes things like shot quality based on location on the floor, defender location on the floor, etc. Game logs are critical mostly for the second type.
+
+## Building a game log
+
+Generally, game logs record "box score" stats by game. These include:
+- Field Goals Made
+- Field Goals Attempted
+- Free Throws Made
+- Free Throws Attempted
+- 3-point Field Goals Made
+- 3-point Field Goals Attempted
+- Rebounds
+- Steals
+- Assists
+- Blocks
+- Turnovers
+
+If you refer back to the function above, these are the same values we spent the last post counting up!
+
+To get back to where we were last time, let's take our raw data set and run our function to get counting statistic indicators:
+```{r}
+
+tmp %>%
+  filter(team == "PHI") %>% 
+  unnest() %>% 
+  group_by(game_id) %>% nest() %>% slice(1) %>% unnest() %>% 
+  get_ast_stl_blk(pt) %>% 
+    add_simple_stat_indicators() %>% 
+  select(player, gotblk, gotstl, gotast, shot3, made3, miss3)
+```
+
+We can see from the above output that the function we concluded with last time is creating the indicator files we wanted. (Also note that the above code has only taken a single game's worth of data. This makes things a bit easier to work with for now.)
+
+The next thing we've got to do is aggregate these values to get our game log. We do this with the function below, which takes simple sums over the relevant statistical categories:
+
+
+```{r}
+make_simple_stats_game_log <- function(tb){
+  
+  tb %>% 
+    filter(!is.na(player)) %>% 
+    group_by(game_id, player, playoffs, date) %>%
+    summarise(
+      FGM = sum(fgmade, na.rm = T),
+      FGA = sum(fgmade, na.rm = T) + sum(fgmiss, na.rm = T),
+      FTM = sum(madeft, na.rm = T),
+      FTA = sum(madeft, na.rm = T) + sum(missft, na.rm = T),
+      `3PM` = sum(made3, na.rm = T),
+      `3PA` = sum(made3, na.rm = T) + sum(miss3, na.rm = T),
+      REB = sum(gotreb, na.rm = T),
+      STL = sum(gotstl, na.rm = T),
+      AST = sum(gotast, na.rm = T),
+      BLK = sum(gotblk, na.rm = T),
+      TO = sum(turnover, na.rm = T)
+    )
+}
+```
+
+We can wrap all of these functions up into a single one to make our code easier to read:
+
+```{r}
+get_simple_game_log <- function(tb, tn){
+  
+  tb %>% 
+    mutate(team = tn) %>% 
+    get_ast_stl_blk(tn) %>% 
+    add_simple_stat_indicators() %>% 
+    make_simple_stats_game_log() %>% ungroup
+  
+}
+```
+
+And now, it becomes a simple matter to generate game logs for the whole season:
+
+```{r, eval = F}
+
+simplestats <- tmp %>% 
+  mutate(`Game Log (Simple stats)` =  
+           map2(`team events`, pt, get_simple_game_log),
+         `Regular Season per game (Simple stats)` = 
+           map2(`Game Log (Simple stats)`, pt, make_simple_stats_pergame))
+
+write_rds(simplestats, "clean-data/simple-stats-1718.rds")
+```
+
+Running the code above actually takes forever, so we won't do it here. But we can look at the results from a single game:
+
+```{r}
+tmp %>% 
+  filter(team == "PHI") %>% unnest() %>% 
+  group_by(game_id) %>% nest() %>% slice(1) %>% unnest() %>% 
+  get_ast_stl_blk(pt) %>% 
+  add_simple_stat_indicators() %>% 
+  make_simple_stats_game_log() %>% ungroup %>% select(-game_id, -playoffs)
+```
+
+So there we have it! Game logs with simple counting statistics generated from  play-by-play data. Not too shabby!

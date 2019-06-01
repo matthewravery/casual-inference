@@ -6,10 +6,20 @@
     <description>Recent content in Sports on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/sports/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DIY Metrics: Game Logs </title>
+      <link>/post/diy-metrics-game-logs/</link>
+      <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/diy-metrics-game-logs/</guid>
+      <description>Previously on DIY Metircs…Last time in the DIY Metrics series, we had reached the point where we could extract a host of individual metrics from our data set using a function we’d named add_simple_stat_indicators:
+add_simple_stat_indicators &amp;lt;- function(tb){tb %&amp;gt;% mutate(gotblk = (description == &amp;quot;BLOCK&amp;quot;),gotstl = (description == &amp;quot;STEAL&amp;quot;),gotast = (description == &amp;quot;ASSIST&amp;quot;),gotreb = map_lgl(description, str_detect, &amp;quot;REBOUND&amp;quot;),tfoulu = map_lgl(description, str_detect, &amp;quot;T.FOUL&amp;quot;),tfoull = map_lgl(description, str_detect, &amp;quot;T.</description>
+    </item>
     
     <item>
       <title>How Analytics Ruins Sports</title>

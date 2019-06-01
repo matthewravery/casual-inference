@@ -1,0 +1,153 @@
+---
+title: 'DIY Metrics: Game Logs '
+author: Matthew Avery
+date: '2019-06-01'
+slug: diy-metrics-game-logs
+categories:
+  - basketball
+  - metrics
+  - sports
+  - statistics
+  - common analysis errors
+  - diymetrics
+tags: []
+description: ''
+thumbnail: ''
+---
+
+
+
+<div id="previously-on-diy-metircs" class="section level3">
+<h3>Previously on DIY Metircs…</h3>
+<p><a href = "/post/diy-metrics-simple-stats-and-game-logs/">Last time</a> in the DIY Metrics series, we had reached the point where we could extract a host of individual metrics from our data set using a function we’d named <code>add_simple_stat_indicators</code>:</p>
+<pre class="r"><code>add_simple_stat_indicators &lt;- function(tb){
+  
+  tb %&gt;% 
+    mutate(
+      gotblk = (description == &quot;BLOCK&quot;),
+      gotstl = (description == &quot;STEAL&quot;),
+      gotast = (description == &quot;ASSIST&quot;),
+      gotreb = map_lgl(description, str_detect, &quot;REBOUND&quot;),
+      tfoulu = map_lgl(description, str_detect, &quot;T.FOUL&quot;),
+      tfoull = map_lgl(description, str_detect, &quot;T.Foul&quot;),
+      fgmade = event_type == &quot;shot&quot;,
+      fgmiss = event_type == &quot;miss&quot;,
+      shotft = event_type == &quot;free throw&quot;,
+      foul = event_type == &quot;foul&quot;,
+      turnover = event_type == &quot;turnover&quot;,
+      shot3 = map_lgl(description, str_detect, &quot;3PT&quot;),
+      made3 = map2_lgl(shot3, fgmade, function(a, b) a &amp;&amp; b),
+      miss3 = map2_lgl(shot3, fgmiss, function(a, b) a &amp;&amp; b),
+      missathing = map_lgl(description, str_detect, &quot;MISS&quot;),
+      madeft = map2_lgl(shotft, !missathing, function(a, b) a &amp;&amp; b),
+      missft = map2_lgl(shotft, missathing, function(a, b) a &amp;&amp; b),
+      tfoul = map2_lgl(tfoulu, tfoull, function(a, b) a | b),
+      pfoul = map2_lgl(foul, !tfoul , function(a, b) a &amp;&amp; b))
+  
+}</code></pre>
+<p>This time, we’ll use the output to build player game logs!</p>
+</div>
+<div id="game-logs" class="section level2">
+<h2>Game Logs</h2>
+<p>Game logs are a common type data form used when looking at NBA data or data from any other source. You can find them, for example, on <a href = "https://www.basketball-reference.com/">basketball-reference.com</a> organized by player. <a href = "https://www.basketball-reference.com/players/r/redicjj01/gamelog/2018">Here</a> is the game log for JJ Redick from 2017-2018, for example.</p>
+<p>They’re useful both as ends of themselves (e.g., looking at how a player’s counting stats have changed over the course of a season) but more importantly as building blocks for more “advanced” metrics. Advanced stats basically come in three varieties. There are those based on aggregated team performance with and without individual players or combinations of players on the court (I think of these as “plus/minus-type” metrics; net rating would be an example), metrics based on linear combinations of traditional box score statistics (think PER or Effective Field goal % and similar), and then there are stats based on player position/tracking data. This last category includes things like shot quality based on location on the floor, defender location on the floor, etc. Game logs are critical mostly for the second type.</p>
+</div>
+<div id="building-a-game-log" class="section level2">
+<h2>Building a game log</h2>
+<p>Generally, game logs record “box score” stats by game. These include:
+- Field Goals Made
+- Field Goals Attempted
+- Free Throws Made
+- Free Throws Attempted
+- 3-point Field Goals Made
+- 3-point Field Goals Attempted
+- Rebounds
+- Steals
+- Assists
+- Blocks
+- Turnovers</p>
+<p>If you refer back to the function above, these are the same values we spent the last post counting up!</p>
+<p>To get back to where we were last time, let’s take our raw data set and run our function to get counting statistic indicators:</p>
+<pre class="r"><code>tmp %&gt;%
+  filter(team == &quot;PHI&quot;) %&gt;% 
+  unnest() %&gt;% 
+  group_by(game_id) %&gt;% nest() %&gt;% slice(1) %&gt;% unnest() %&gt;% 
+  get_ast_stl_blk(pt) %&gt;% 
+    add_simple_stat_indicators() %&gt;% 
+  select(player, gotblk, gotstl, gotast, shot3, made3, miss3)</code></pre>
+<pre><code>## # A tibble: 269 x 7
+##    player           gotblk gotstl gotast shot3 made3 miss3
+##    &lt;chr&gt;            &lt;lgl&gt;  &lt;lgl&gt;  &lt;lgl&gt;  &lt;lgl&gt; &lt;lgl&gt; &lt;lgl&gt;
+##  1 Robert Covington TRUE   FALSE  FALSE  FALSE FALSE FALSE
+##  2 Ben Simmons      TRUE   FALSE  FALSE  FALSE FALSE FALSE
+##  3 Markelle Fultz   TRUE   FALSE  FALSE  FALSE FALSE FALSE
+##  4 Dario Saric      TRUE   FALSE  FALSE  FALSE FALSE FALSE
+##  5 Joel Embiid      TRUE   FALSE  FALSE  FALSE FALSE FALSE
+##  6 Robert Covington TRUE   FALSE  FALSE  FALSE FALSE FALSE
+##  7 Ben Simmons      FALSE  TRUE   FALSE  FALSE FALSE FALSE
+##  8 JJ Redick        FALSE  TRUE   FALSE  FALSE FALSE FALSE
+##  9 Robert Covington FALSE  TRUE   FALSE  FALSE FALSE FALSE
+## 10 Ben Simmons      FALSE  TRUE   FALSE  FALSE FALSE FALSE
+## # ... with 259 more rows</code></pre>
+<p>We can see from the above output that the function we concluded with last time is creating the indicator files we wanted. (Also note that the above code has only taken a single game’s worth of data. This makes things a bit easier to work with for now.)</p>
+<p>The next thing we’ve got to do is aggregate these values to get our game log. We do this with the function below, which takes simple sums over the relevant statistical categories:</p>
+<pre class="r"><code>make_simple_stats_game_log &lt;- function(tb){
+  
+  tb %&gt;% 
+    filter(!is.na(player)) %&gt;% 
+    group_by(game_id, player, playoffs, date) %&gt;%
+    summarise(
+      FGM = sum(fgmade, na.rm = T),
+      FGA = sum(fgmade, na.rm = T) + sum(fgmiss, na.rm = T),
+      FTM = sum(madeft, na.rm = T),
+      FTA = sum(madeft, na.rm = T) + sum(missft, na.rm = T),
+      `3PM` = sum(made3, na.rm = T),
+      `3PA` = sum(made3, na.rm = T) + sum(miss3, na.rm = T),
+      REB = sum(gotreb, na.rm = T),
+      STL = sum(gotstl, na.rm = T),
+      AST = sum(gotast, na.rm = T),
+      BLK = sum(gotblk, na.rm = T),
+      TO = sum(turnover, na.rm = T)
+    )
+}</code></pre>
+<p>We can wrap all of these functions up into a single one to make our code easier to read:</p>
+<pre class="r"><code>get_simple_game_log &lt;- function(tb, tn){
+  
+  tb %&gt;% 
+    mutate(team = tn) %&gt;% 
+    get_ast_stl_blk(tn) %&gt;% 
+    add_simple_stat_indicators() %&gt;% 
+    make_simple_stats_game_log() %&gt;% ungroup
+  
+}</code></pre>
+<p>And now, it becomes a simple matter to generate game logs for the whole season:</p>
+<pre class="r"><code>simplestats &lt;- tmp %&gt;% 
+  mutate(`Game Log (Simple stats)` =  
+           map2(`team events`, pt, get_simple_game_log),
+         `Regular Season per game (Simple stats)` = 
+           map2(`Game Log (Simple stats)`, pt, make_simple_stats_pergame))
+
+write_rds(simplestats, &quot;clean-data/simple-stats-1718.rds&quot;)</code></pre>
+<p>Running the code above actually takes forever, so we won’t do it here. But we can look at the results from a single game:</p>
+<pre class="r"><code>tmp %&gt;% 
+  filter(team == &quot;PHI&quot;) %&gt;% unnest() %&gt;% 
+  group_by(game_id) %&gt;% nest() %&gt;% slice(1) %&gt;% unnest() %&gt;% 
+  get_ast_stl_blk(pt) %&gt;% 
+  add_simple_stat_indicators() %&gt;% 
+  make_simple_stats_game_log() %&gt;% ungroup %&gt;% select(-game_id, -playoffs)</code></pre>
+<pre><code>## # A tibble: 10 x 13
+##    player date    FGM   FGA   FTM   FTA `3PM` `3PA`   REB   STL   AST   BLK
+##    &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1 Amir ~ 2017~     2     7     1     2     0     0     5     0     1     0
+##  2 Ben S~ 2017~     7    15     4     6     0     0    10     2     5     1
+##  3 Dario~ 2017~     1     5     1     1     0     2     3     0     2     1
+##  4 Jerry~ 2017~     5    10     0     0     3     7     3     1     3     0
+##  5 JJ Re~ 2017~     4    10     0     0     4     8     2     1     4     0
+##  6 Joel ~ 2017~     7    15     4     4     0     4    13     0     3     1
+##  7 Marke~ 2017~     5     9     0     2     0     0     3     0     1     1
+##  8 Rober~ 2017~     9    15     4     4     7    11     7     1     1     2
+##  9 T.J. ~ 2017~     1     2     0     0     0     0     0     0     0     0
+## 10 Timot~ 2017~     2     6     0     0     1     3     2     0     0     0
+## # ... with 1 more variable: TO &lt;int&gt;</code></pre>
+<p>So there we have it! Game logs with simple counting statistics generated from play-by-play data. Not too shabby!</p>
+</div>
