@@ -12,7 +12,7 @@ tags: []
 description: ''
 thumbnail: ''
 ---
-*This is an update to my <a href = "/post/distributionality">Analysis Philosphy</a> page, which is still working towards completion*
+*This is an update to my <a href = "/post/analysis-statement">Analysis Philosphy</a> page, which is still working towards completion*
 
 Nonlinearity is a commonly-misunderstood problem when it comes to data analysis, mostly because our profession has once again managed to find a way to use a simple-sounding term in a way that's counterintuitive to lay audiences. (See also  <a href = "/post/artificial-intelligence-is-dumb">Artificial Intelligence is Dumb</a>.) When people think about nonlinear response variables, they think of functions that have non-linear relationships. And we tell them that one of the assumptions required for regression is linear relationships between your predictor and response variables. But of course we can include nonlinear terms in our linear regression models provided there's a linear relationship between the response and the nonlinear function of the predictor and ....
 
