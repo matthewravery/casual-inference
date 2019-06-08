@@ -4,16 +4,16 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Local Polynomial Smoothing</title>
+	<title>Nonlinearity</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta name="generator" content="Hugo 0.51" />
-	<meta property="og:title" content="Local Polynomial Smoothing" />
-<meta property="og:description" content="So this is a blast from the past. NC State (at least while I was there) did something interesting for their prelim. Instead of taking another test like we had to do at the Masters level, they gave all their students a subject unrelated to their research, and had them write a lit review and do a small simulation study.
-My topic was local polynomial smoothing. I don’t think I did a particularly good job, but afterwards, I posted it on my NCSU website as an example of things I’d written." />
+	<meta property="og:title" content="Nonlinearity" />
+<meta property="og:description" content="This is an update to my Analysis Philosphy page, which is still working towards completion
+Nonlinearity is a commonly-misunderstood problem when it comes to data analysis, mostly because our profession has once again managed to find a way to use a simple-sounding term in a way that’s counterintuitive to lay audiences. (See also Artificial Intelligence is Dumb.) When people think about nonlinear response variables, they think of functions that have non-linear relationships." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/local-polynomial-smoothing/" /><meta property="article:published_time" content="2019-02-18T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-02-18T00:00:00&#43;00:00"/>
+<meta property="og:url" content="/post/nonlinearity/" /><meta property="article:published_time" content="2019-06-08T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-06-08T00:00:00&#43;00:00"/>
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -65,43 +65,39 @@ My topic was local polynomial smoothing. I don’t think I did a particularly go
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title">Local Polynomial Smoothing</h1>
+			<h1 class="post__title">Nonlinearity</h1>
 			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-02-18T00:00:00">February 18, 2019</time>
+	<time class="meta__text" datetime="2019-06-08T00:00:00">June 08, 2019</time>
 </div>
 
 <div class="meta__item-categories meta__item">
 	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/statistics" rel="category">statistics</a></span>
+	<span class="meta__text"><a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/common-analysis-errors" rel="category">common analysis errors</a>, <a class="meta__link" href="/categories/failure-to-communicate" rel="category">failure to communicate</a>, <a class="meta__link" href="/categories/life-is-distributional" rel="category">life is distributional</a></span>
 </div>
 </div>
 		</header><div class="content post__content clearfix">
 			
 
 
-<p>So this is a blast from the past. NC State (at least while I was there) did something interesting for their prelim. Instead of taking another test like we had to do at the Masters level, they gave all their students a subject unrelated to their research, and had them write a lit review and do a small simulation study.</p>
-<p>My topic was local polynomial smoothing. I don’t think I did a particularly good job, but afterwards, I posted it on my NCSU website as an example of things I’d written. It turned out that over the next few years, some people actually ended up citing this thing, I guess because it was somehow one of the first Google hits for “local polynomial regression” or something. Once I’d been out of school for a while, NCSU took down the website, and there was no longer any way to find this paper.</p>
-<p><a href = "/post/local-polynomial-smoothing.pdf">So here it is!</a> The abstract’s quoted below. It hasn’t been through any real editing aside from a review by some folks from the faculty who, after a few changes, decided it wasn’t bad enough to kick me out of the program. At this point, it’s about 10 years out of date, so I’m sure there are more up-to-date summaries out there. But this’ll get through 2010 in decent shape!</p>
-<p><a href = "/post/local-polynomial-smoothing.pdf">Literature Review for Local Polynomial Regression</a></p>
-<blockquote>
-<p>This paper discusses key results from the literature in the field of local polynomial regression.<br />
-Local polynomial regression (LPR) is a nonparametric technique for smoothing scatter<br />
-plots and modeling functions. For each point, <span class="math inline">\(x_0\)</span>, a low-order polynomial WLS regression is<br />
-fit using only points in some “neighborhood” of <span class="math inline">\(x_0\)</span>. The result is a smooth function over the<br />
-support of the data. LPR has good performance on the boundary and is superior to all other<br />
-linear smoothers in a minimax sense. The quality of the estimated function is dependent on the<br />
-choice of weighting function, <span class="math inline">\(K\)</span>, the size the neighborhood, <span class="math inline">\(h\)</span>, and the order of polynomial fit,<br />
-<span class="math inline">\(p\)</span>. We discuss each of these choices, paying particular attention to bandwidth selection. When<br />
-choosing <span class="math inline">\(h\)</span>, “plug-in” methods tend to outperform cross-validation methods, but computational<br />
-considerations make the latter a desirable choice. Variable bandwidths are more flexible<br />
-than global ones, but both can have good asymptotic and finite-sample properties. Odd-order<br />
-polynomial fits are superior to even fits asymptotically, and an adaptive order method that is<br />
-robust to bandwidth is discussed. While the Epanechnikov kernel is superior is an asymptotic<br />
-minimax sense, a variety are used in practice. Extensions to various types of data and other<br />
-applications of LPR are also discussed.</p>
-</blockquote>
+<p><em>This is an update to my <a href = "/post/distributionality">Analysis Philosphy</a> page, which is still working towards completion</em></p>
+<p>Nonlinearity is a commonly-misunderstood problem when it comes to data analysis, mostly because our profession has once again managed to find a way to use a simple-sounding term in a way that’s counterintuitive to lay audiences. (See also <a href = "/post/artificial-intelligence-is-dumb">Artificial Intelligence is Dumb</a>.) When people think about nonlinear response variables, they think of functions that have non-linear relationships. And we tell them that one of the assumptions required for regression is linear relationships between your predictor and response variables. But of course we can include nonlinear terms in our linear regression models provided there’s a linear relationship between the response and the nonlinear function of the predictor and ….</p>
+<p>Anyways, the challenge isn’t fitting a regression with a quadratic term but rather recognizing when that quadratic term is necessary.</p>
+<div id="nonlinearity-and-prediction" class="section level3">
+<h3>Nonlinearity and Prediction</h3>
+<p>There are a couple of reasons we build models. If we want to understand an underlying mechanism, we try to choose terms that are interpretable and reflect an underlying mechanism. If we choose a nonlinear term, it’s because we think there’s plausibly a nonlinear relationship. But this isn’t why we build models a lot of the time. These days, especially when you start talking about machine learning and data science, we’re less interested in underlying relationships and more interested in minimizing prediction error.</p>
+<p>In just about ever intro statistics class you take, you’re taught not to predict outside of your data. “Extrapolation”, you’re told, “is dangerous and can lead you astray.” The rationale here is that the relationship between your variable may change outside the range where you’ve collected data. However, if your response surface is sufficiently nonlinear, interpolation can be equally dangerous. This isn’t typically taught in stats classes because (1) most of your models assume nice, smooth relationships and (2) data are often relatively small samples (or at least nothing that could plausibly be called “big data”) and so over-fitting is less likely to occur.</p>
+<p>In complex, real-world problems, you’ll occasionally run into severely nonlinear response surfaces. More accurately, these are discontinuous response surfaces, where specific variable threshold result in “steps”. Suppose a team is considering tinkering with their lineup, substituting a better defensive player for one of their good shooters. Now generally, the team’s net rating will increase linearly with an individual player’s 3pt%. But if that percentage drops below a certain threshold (basically the point at which it becomes beneficial for the defense to allow that player to shoot whenever possible), the team can double off that player with impunity, potentially mucking up the entire team. So the same marginal decrease in 3pt% could take the half-court offense from “pretty good” to “average” or from “average” to “worst in the league” depending on how good the player is. In cases like these, its important to allow for severe nonlinearity in your estimators, or you’ll produce some unexpectedly large prediction errors.</p>
+<p>The other side of that coin is the type of data science which fits highly non-linear predictive models. All flavors of neural networks and deep learning fall into this category. Here, the models are highly nonlinear because the data is, too. Unfortunately, this can make these models highly unstable. This is why you get <a href = "https://openai.com/blog/adversarial-example-research/">adversarial examples</a> and the like: Wherever you are in your model space, there’s always a super-steep curve somewhere nearby. Basically, to make problems like image recognition tractable, you’ve got to massively over-fit your models to a jagged, weird space.</p>
+<p>And over-fitting (“too much nonlinearity”) can be as dangerous as under-fitting (“non enough nonlinearity”). Consider the examples below:</p>
+<p><img src="/post/2019-06-08-nonlinearity_files/figure-html/unnamed-chunk-1-1.png" width="768" /></p>
+<p>These are pretty trivial, but I think they do a good job of illustrating the point. If we were to try to use either of the first two fits beyond the support of our data, we’d make pretty egregious errors. But if we try to use the 3rd fit, we’d also make egregious errors <em>even within the range of the data we’ve collected</em>.</p>
+</div>
+<div id="complexity-is-complex" class="section level3">
+<h3>Complexity is complex</h3>
+<p>There’s no one-sized fits-all approach to dealing with this. The truth of the matter is that errors are inevitable when dealing with complex problems. The only thing to do is choose a strategy to minimize their frequency and magnitude. So I always try to think about whether it’s worse to build a model that’s too complex or too naive for a particular application. That way at least I’ll have a direction in which to iterate.</p>
+</div>
 
 		</div>
 		
@@ -111,10 +107,7 @@ applications of LPR are also discussed.</p>
 
 <nav class="post-nav flex">
 	<div class="post-nav__item post-nav__item--prev">
-		<a class="post-nav__link" href="/post/diy-metrics/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">DIY Metrics</p></a>
-	</div>
-	<div class="post-nav__item post-nav__item--next">
-		<a class="post-nav__link" href="/post/diy-metrics-five-man-unit-plus-minus/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">DIY Metrics:  Five-Man Unit Plus/Minus</p></a>
+		<a class="post-nav__link" href="/post/diy-metrics-game-logs/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">DIY Metrics: Game Logs </p></a>
 	</div>
 </nav>
 
