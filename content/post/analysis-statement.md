@@ -79,7 +79,7 @@ The other side of that coin is the type of data science which fits highly non-li
 
 And over-fitting ("too much nonlinearity") can be as dangerous as under-fitting ("non enough nonlinearity"). Consider the examples below:
 
-![None of these models are very good](/post/analysis-statement_files/overfit-plot.png)
+![None of these models are very good](/post/pictures/overfit-plot.png)
 
 
 These are pretty trivial, but I think they do a good job of illustrating the point. If we were to try to use either of the first two fits beyond the support of our data, we'd make pretty egregious errors. But if we try to use the 3rd fit, we'd also make egregious errors *even within the range of the data we've collected*. 
