@@ -1,0 +1,42 @@
+---
+title: 'Pie Charts:  A Journey'
+author: Matthew Avery
+date: '2019-06-15'
+slug: pie-charts-a-journey
+categories:
+  - common analysis errors
+  - statistics
+  - failure to communicate
+tags: []
+description: ''
+thumbnail: ''
+---
+
+As a newly-minted PhD Statistician, I was hired by a company that didn't have a lot of native statistical expertise because they wanted to change that.  As a result, I felt empowered to give lots of opinions on topics within my domain to anyone who happened to be in the room, including the head of the division.  One of those opinions was that pie charts were the worst. 
+
+I viewed pie charts as the scarlet letter of bad analysis:  Having one in your analysis should get you shamed and shunned. When you're going from a Statistics department to a world where any graphic that isn't made in Excel is ground-breaking, it's easy to take such a view. But I've come around on pie charts. (Well, a bit anyways.) You need to be careful when using them, but I think they can be a valuable DataViz tool when deployed properly. 
+
+### Pictures of data for people who aren't comfortable with data
+
+Part of the reason pie charts have a bad rep is guilt by association. They're popular with folks who are generally uncomfortable with techniques like regression and ANOVA. The reason they're popular with this crowd is that they're extremely accessible. Pie charts offer a visual analogy to things we're familiar with. Specifically, dividing up a pie (or cake or pizza or whatever) into portions of different size. Because everyone's done this, it's easy to develop an intuitive understanding of what the pie chart is trying to show you. They also lend themselves well to the use of multiple colors which is visually appealing, and almost every software tool can make them.  And... that's it. That's the reason. They're intuitive, visually appealing, and readily accessible. So people make them.
+
+### Conventional criticisms of pie charts
+
+The classic criticisms of these charts comes from the cognitive challenges associated with interpreting them. Specifically, the area represented by a wedge in the pie chart grows proportionally to the square of the arc length of the wedge.  That is, if one category represents 20% of the whole and the other represents 40% of the whole, the pie "wedge" for the second category will be 4 times the size of the first wedge rather than double the size. It can also be difficult to identify the larger of two similarly-sized wedges, and position of the wedges within the circle (on top, bottom, side, etc.) can make a difference, particularly when pseudo-3D effects are used. (See <a href = "https://www.quora.com/Why-are-pie-charts-terrible">here</a> for a few good examples of this.)
+
+Perhaps the biggest criticism is that there's usually a better tool for the job. Just use a bar chart!
+
+These are all valid criticism but miss the biggest challenge with using pie charts. Perhaps more than any other data visualization technique, pie charts are subject to misuse and abuse. Because they're accessible to folks with training in statistics and data science ranging from "expert" to "literally none", you get a lot of pie charts made by novices that don't play to the strengths of the tool. Think of it like a sampling problem:  Because data viz experts have a lot of tools available (and pie charts have a pretty narrow use case, as I'll discuss in a bit), they'll only choose pie charts rarely. But for novices, pie charts are a go-to choice because its easy to understand and available. As a result, almost all the pie charts you see are built by folks who probably don't know what they're doing. 
+
+### Acceptable, appropriate, and rare
+
+When I came out of grad school, I believed (and told anyone who'd listen) that any time I saw a pie chart in a report, I immediately increased my skepticism of report's findings. (This often led to a discussion of Bayesian reasoning, which is much more interesting than pie charts!) I've come around a bit on this. These days, I think the proper strategy is to look at whether the pie chart has been used appropriately. Appropriately-used pie charts are a sign that the authors are data-literate and have likely put a good deal of thought into their analysis and the presentation of their results. So when is it appropriate to use a pie chart? 
+
+1.  When you have a clear "whole" that is logically divided between discrete groups
+2.  When your primary purpose isn't to compare the relative magnitudes of these groups
+3.  When you aren't making additional comparisons (e.g., the division of the whole this year vs. last year)
+4.  When you have a relatively small number of groups
+
+So that's a pretty narrow set of circumstances when you'd want to use a pie chart! The first point is the most critical, and missing this one leads to the most egregious examples of pie chart misuse. You can build a pie chart with any set of counts from discrete bins, but unless those bins add up to a coherent "whole", the greatest benefit of a pie chart (the clear analogy with dividing up a "whole" pie) goes to pot. Think of it this way:  Unless you could change your counts to percentages and have everything still make sense, don't use a pie chart. The rest of the conditions are basically about comparisons. If you want to compare groups within your single chart, a bar chart is better. (And if you're comparing percentages, a <a href = "https://datavizcatalogue.com/methods/stacked_bar_graph.html">stacked bar chart</a> is probably the way to go.) If you want to compare over time, stacked bar charts once again do well, but you can also do line charts or something. Avoid that thing where you show a series of pie charts that grow in size as the size of the "whole" changes each year. And of course avoid scenarios with too many categories. This is where your pie chart ends up with tiny slivers that are basically uninterpretable.
+
+Because of all these circumstances, you should use pie charts only rarely. And that means that if you *do* find yourself in a circumstance when it's appropriate to use a pie chart and you recognize this and use it, you're probably a first-rate analyst!

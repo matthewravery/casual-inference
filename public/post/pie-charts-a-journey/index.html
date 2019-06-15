@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Pie Charts:  A Journey</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.51" />
+	<meta property="og:title" content="Pie Charts:  A Journey" />
+<meta property="og:description" content="As a newly-minted PhD Statistician, I was hired by a company that didn’t have a lot of native statistical expertise because they wanted to change that. As a result, I felt empowered to give lots of opinions on topics within my domain to anyone who happened to be in the room, including the head of the division. One of those opinions was that pie charts were the worst.
+I viewed pie charts as the scarlet letter of bad analysis: Having one in your analysis should get you shamed and shunned." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/pie-charts-a-journey/" /><meta property="article:published_time" content="2019-06-15T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-06-15T00:00:00&#43;00:00"/>
+
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Casual Inference" rel="home">
+				<div class="logo__title">Casual Inference</div>
+				<div class="logo__tagline">Robust and relaxed</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/about/">About</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://matthewravery.github.io/markdown-cv">CV</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://github.com/jthaman/ciTools">ciTools</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/analysis-statement/">Analysis Philosophy</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Pie Charts:  A Journey</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-06-15T00:00:00">June 15, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/common-analysis-errors" rel="category">common analysis errors</a>, <a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/failure-to-communicate" rel="category">failure to communicate</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+
+<p>As a newly-minted PhD Statistician, I was hired by a company that didn’t have a lot of native statistical expertise because they wanted to change that. As a result, I felt empowered to give lots of opinions on topics within my domain to anyone who happened to be in the room, including the head of the division. One of those opinions was that pie charts were the worst.</p>
+<p>I viewed pie charts as the scarlet letter of bad analysis: Having one in your analysis should get you shamed and shunned. When you’re going from a Statistics department to a world where any graphic that isn’t made in Excel is ground-breaking, it’s easy to take such a view. But I’ve come around on pie charts. (Well, a bit anyways.) You need to be careful when using them, but I think they can be a valuable DataViz tool when deployed properly.</p>
+<div id="pictures-of-data-for-people-who-arent-comfortable-with-data" class="section level3">
+<h3>Pictures of data for people who aren’t comfortable with data</h3>
+<p>Part of the reason pie charts have a bad rep is guilt by association. They’re popular with folks who are generally uncomfortable with techniques like regression and ANOVA. The reason they’re popular with this crowd is that they’re extremely accessible. Pie charts offer a visual analogy to things we’re familiar with. Specifically, dividing up a pie (or cake or pizza or whatever) into portions of different size. Because everyone’s done this, it’s easy to develop an intuitive understanding of what the pie chart is trying to show you. They also lend themselves well to the use of multiple colors which is visually appealing, and almost every software tool can make them. And… that’s it. That’s the reason. They’re intuitive, visually appealing, and readily accessible. So people make them.</p>
+</div>
+<div id="conventional-criticisms-of-pie-charts" class="section level3">
+<h3>Conventional criticisms of pie charts</h3>
+<p>The classic criticisms of these charts comes from the cognitive challenges associated with interpreting them. Specifically, the area represented by a wedge in the pie chart grows proportionally to the square of the arc length of the wedge. That is, if one category represents 20% of the whole and the other represents 40% of the whole, the pie “wedge” for the second category will be 4 times the size of the first wedge rather than double the size. It can also be difficult to identify the larger of two similarly-sized wedges, and position of the wedges within the circle (on top, bottom, side, etc.) can make a difference, particularly when pseudo-3D effects are used. (See <a href = "https://www.quora.com/Why-are-pie-charts-terrible">here</a> for a few good examples of this.)</p>
+<p>Perhaps the biggest criticism is that there’s usually a better tool for the job. Just use a bar chart!</p>
+<p>These are all valid criticism but miss the biggest challenge with using pie charts. Perhaps more than any other data visualization technique, pie charts are subject to misuse and abuse. Because they’re accessible to folks with training in statistics and data science ranging from “expert” to “literally none”, you get a lot of pie charts made by novices that don’t play to the strengths of the tool. Think of it like a sampling problem: Because data viz experts have a lot of tools available (and pie charts have a pretty narrow use case, as I’ll discuss in a bit), they’ll only choose pie charts rarely. But for novices, pie charts are a go-to choice because its easy to understand and available. As a result, almost all the pie charts you see are built by folks who probably don’t know what they’re doing.</p>
+</div>
+<div id="acceptable-appropriate-and-rare" class="section level3">
+<h3>Acceptable, appropriate, and rare</h3>
+<p>When I came out of grad school, I believed (and told anyone who’d listen) that any time I saw a pie chart in a report, I immediately increased my skepticism of report’s findings. (This often led to a discussion of Bayesian reasoning, which is much more interesting than pie charts!) I’ve come around a bit on this. These days, I think the proper strategy is to look at whether the pie chart has been used appropriately. Appropriately-used pie charts are a sign that the authors are data-literate and have likely put a good deal of thought into their analysis and the presentation of their results. So when is it appropriate to use a pie chart?</p>
+<ol style="list-style-type: decimal">
+<li>When you have a clear “whole” that is logically divided between discrete groups</li>
+<li>When your primary purpose isn’t to compare the relative magnitudes of these groups</li>
+<li>When you aren’t making additional comparisons (e.g., the division of the whole this year vs. last year)</li>
+<li>When you have a relatively small number of groups</li>
+</ol>
+<p>So that’s a pretty narrow set of circumstances when you’d want to use a pie chart! The first point is the most critical, and missing this one leads to the most egregious examples of pie chart misuse. You can build a pie chart with any set of counts from discrete bins, but unless those bins add up to a coherent “whole”, the greatest benefit of a pie chart (the clear analogy with dividing up a “whole” pie) goes to pot. Think of it this way: Unless you could change your counts to percentages and have everything still make sense, don’t use a pie chart. The rest of the conditions are basically about comparisons. If you want to compare groups within your single chart, a bar chart is better. (And if you’re comparing percentages, a <a href = "https://datavizcatalogue.com/methods/stacked_bar_graph.html">stacked bar chart</a> is probably the way to go.) If you want to compare over time, stacked bar charts once again do well, but you can also do line charts or something. Avoid that thing where you show a series of pie charts that grow in size as the size of the “whole” changes each year. And of course avoid scenarios with too many categories. This is where your pie chart ends up with tiny slivers that are basically uninterpretable.</p>
+<p>Because of all these circumstances, you should use pie charts only rarely. And that means that if you <em>do</em> find yourself in a circumstance when it’s appropriate to use a pie chart and you recognize this and use it, you’re probably a first-rate analyst!</p>
+</div>
+
+		</div>
+		
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/nonlinearity/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Nonlinearity</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/pie-charts-a-journey/">Pie Charts:  A Journey</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/nonlinearity/">Nonlinearity</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/diy-metrics-game-logs/">DIY Metrics: Game Logs </a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/how-analytics-ruins-sports/">How Analytics Ruins Sports</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/ml-invent-metadata/">ML Invents Metadata</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/basketball">Basketball</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/common-analysis-errors">Common analysis errors</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/data-generation">Data generation</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/diymetrics">Diymetrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/failure-to-communicate">Failure to communicate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/hot-takes">Hot takes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/life-is-distributional">Life is distributional</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/metrics">Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/misc">Misc</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/ml-invents">Ml invents</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/picking-at-nits">Picking at nits</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r">R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r-diymetrics">R diymetrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/sports">Sports</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/statistics">Statistics</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 Casual Inference.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
