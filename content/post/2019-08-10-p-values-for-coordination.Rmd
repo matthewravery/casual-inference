@@ -1,0 +1,40 @@
+---
+title: The Crusade Against P-values
+author: Matthew Avery
+date: '2019-08-10'
+slug: p-values-for-coordination
+categories:
+  - statistics
+  - common analysis errors
+  - Hot takes
+tags: []
+description: ''
+thumbnail: ''
+---
+
+So we'll call that break a "summer hiatus". 
+
+But now we're back, and coming recently from the <a href = "https://ww2.amstat.org/meetings/jsm/2019/">Joint Statistical Meetings (2019)</a> in Denver, I've got Thoughts. 
+
+This year's JSM was different for me, because I spent most of my time on recruitment, speaking with potential applicants during many of the sessions. As a result, I attended many fewer talks that I normally do. By happenstance, the topic of the p-value came up repeatedly in the talks I was able to attend. It makes sense that there would be lots of statisticians eager to express opinions about p-values. In the recent past, the ASA issued a controversial (well, at least in the stats world) statement, <a href = "https://www.nature.com/articles/d41586-019-00874-8">Nature published an editorial discussing "ditching" the p-value</a>, and <a href = "https://www.tandfonline.com/toc/utas20/73/sup1">The American Statistician</a> published an entire volume dedicated to discussing p-values. 
+
+I won't pretend to have read all of the articles that are out there on the topic. Many of the folks whose work lead to our current recognition of the replication crisis (Gelman, Ionidis, etc.) have weighed in. Instead, I'll respond specifically to two talks at JSM. 
+
+Blakeley McShane spoke about why we should reduce the primacy of the p-value in research and focus on other metrics, like effect sizes and confidence intervals. He was speaking in an session highlighting contributions from <a href = "https://arxiv.org/abs/1709.07588">The American Statistician</a> in 2018. McShane argued the Null Hypothesis Significance Testing (NHST) paradigm should be dropped and p-values removed from their role as a tool for screening research for publication. He took pains to point out that this isn't a call to "ban" p-values but rather to reduce their role from one of preeminence to one of many tools used to evaluate the importance of a study or finding. 
+
+Later at the Meetings, Yoav Benjamini delivered the <a href = "https://www.imstat.org/ims-special-lectures/">Reitz Lecture</a>. While the talk was ostensibly about replicability and controlling family-wise error rates, (which is natural, since Benjamini is best known for his contributions here, e.g., <a href = "http://www.stat.purdue.edu/~doerge/BIOINFORM.D/FALL06/Benjamini%20and%20Y%20FDR.pdf">Controlling the False Discovery Rate</a>) Benjamini managed to fit in a robust defense of NHST, pointing out that critical issues with multiple testing and false positive rates remain when you're doing statistical inference whether you choose to report p-values or not. 
+
+
+So McShane is concerned that journal editors rely too heavily on p-values for determining what gets published. He wants them to look at other metrics and make more complex, nuanced decisions. Benjamini thinks that even if you drop p-values for confidence intervals, standard errors, or effect size estimates, the most vexing statistical issues still remain, and there's no guarantee that researchers (or journal editors) will properly account for all of the research and testing decisions that influence the true false discovery rate. I don't think either are wrong, but neither address the issue of how science is understood beyond scientists. 
+
+In my view, the main utility of the p-value, and specifically the widely-used $\alpha = 0.05$ significance level, is in popular media and for decision makers who aren't particularly scientifically literate. It's a clear threshold that if you can't meet means you don't get in. Its uncompromising and anyone can understand it. (At least at the level of, "Is this value that the authors claim to be an accurate p-value lower than the threshold requirement?") It's arbitrary, but that's besides the point:  It's used by everyone.
+
+Understanding the value of most scientific research these days requires deep, technical knowledge. Editors of journals with high impact factors may know their specific area of research well but are unlikely to have expertise that is both broad and deep enough to usefully judge new work on any topic that comes across their desk. This is more true the broader the journal, such that something like *Nature* is almost entirely reliant on signals beyond the editor's personal understanding of the subject matter. 
+
+The academic publication process is fraught. Editors rely on signals like the reputation of the authors (past publications, their home institution, etc.), friendships they have with people in the field, and the perceived importance of the subject matter addressed by the research when deciding what to publish.  P-values provide a simple, cross-field metric that weeds out a large swath of unimportant research. Needing a p-value smaller than $0.05$ is a minimal hurdle that must be overcome. Once that is removed, it will become that much easier to get work published on the back of reputation rather than the quality of the work. If you think it's easy to get false positives into *Nature* now, imagine how easy it'll be when researchers with sterling reputations are free to choose whatever smattering of metrics they want to show how important their results are. If we eliminate the requirement for statistical significance, aren't we just granting additional "publisher degrees of freedom"? Why do we expect publishers to do a better job of filtering good research from bad when we remove the one consistent (if game-able) restriction they had? 
+
+The popular media is even worse. It's an industry built on grabbing attention and generating interest, so sensational results will naturally be favored. Without some bare minimum threshold to signal scientific utility, editors at the *New York Times* or wherever will have that much more leeway to choose the most bizarre-sounding results they want. For many scientists, the popular impact of their work isn't nearly as important as the impact of their work on science, but the public reputation of science should be a major concern. Removing p-values won't reduce the amount of bad work that gets talked about in popular media and will make it easier for bad work to become big news. 
+
+I'm sympathetic to both McShane and Benjamini's points. P-values aren't all that great, and editors and researchers have focused far too much on them in the past. Alternate metrics like confidence intervals inherit the same multiple testing issues that come with p-values. But this misses the forest for the trees. In the crusade against p-values, p-values are really a stand-in for mindless science. Using p-values as the be-all and end-all of whether a study or a result matters is lazy. Dumping the p-value is a symbolic act calling for scientists, editors, and grant boards to think harder and deeper about their decisions. My worry is that these people will take symbol for substance in this case, dumping a tool of marginal utility, replacing it with personal bias and declaring the problem solved. Eliminating p-values won't fix science, but it might trick folks into thinking it has.
+
+

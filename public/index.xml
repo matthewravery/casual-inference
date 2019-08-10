@@ -6,10 +6,21 @@
     <description>Recent content on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Aug 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The Crusade Against P-values</title>
+      <link>/post/p-values-for-coordination/</link>
+      <pubDate>Sat, 10 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/p-values-for-coordination/</guid>
+      <description>So we’ll call that break a “summer hiatus”.
+But now we’re back, and coming recently from the Joint Statistical Meetings (2019) in Denver, I’ve got Thoughts.
+This year’s JSM was different for me, because I spent most of my time on recruitment, speaking with potential applicants during many of the sessions. As a result, I attended many fewer talks that I normally do. By happenstance, the topic of the p-value came up repeatedly in the talks I was able to attend.</description>
+    </item>
     
     <item>
       <title>Pie Charts:  A Journey</title>
