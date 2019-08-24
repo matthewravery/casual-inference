@@ -1,0 +1,72 @@
+---
+title: A simple model for car ownership
+author: Matthew Avery
+date: '2019-08-24'
+slug: a-simple-model-for-car-ownership
+categories:
+  - Misc
+tags: []
+description: ''
+thumbnail: ''
+---
+
+
+
+<p>I recently had to buy a car, and one of the trickiest things I found was figuring out how to decide between buying new, buying used (how used?) and leasing. Growing up, my parents never bought a new car. To my knoweldge, the only new car they ever bought was my dad right after he graduated college.</p>
+<p>My wife’s parents, OTOH, buy new almost exclusively. They typically own for a few years (3-5), trade it back in to the dealer and get a new vehicle.</p>
+<p>Search around on the internet and you’ll find folks who think you <a href = "https://www.moneyunder30.com/why-you-should-never-lease-a-car">shouldn’t lease</a>, <a href = "https://cashmoneylife.com/why-you-should-buy-a-used-car/">should buy used</a>, or <a href = "https://www.secretentourage.com/lifestyle/autos/why-you-should-always-buy-a-used-car-instead-of-new/">only buy new.</a> Most include caveats about your “personal situation”. There are also <a href = "https://www.dinkytown.net/java/lease-vs-buy-calculator.html">calculators</a> out there to help you know what best after you give them a ton of information like the returon from the stock market.</p>
+<p>All of this I found mostly useless. It’s hard to tell who’s being paid what by who to put this stuff together, most folks just give you a list of “factors to consider” without talking about how they interact with eachother, and the calculators have plenty of embedded assumptions that are opaque. I’m not sure I’m going to fix any of that, but hey, I’ve got charts!</p>
+<div id="a-mental-model-for-car-buying" class="section level2">
+<h2>A mental model for car buying</h2>
+<p>From what I can tell, the best way to think about car ownership (or more properly, the category of being that includes both owning and leasing a vehicle, but we’ll just use “ownership” for simplicity) is as a purchase of some period of the vehicle’s lifetime. The basic question is, “Which years/miles of the car do you want to own?”</p>
+<p>Owning the first few years of car lifetime gets you certain perks:</p>
+<ul>
+<li>Less inconvenience from breakdowns/necessary maintenance actions</li>
+<li>More modern technology and safety features</li>
+<li>Cost assurance/peace of mind from warranty</li>
+</ul>
+<p>These come with higher associated ownership costs, and this is true whether you buy new or lease. The cost-per-car-age curve is pretty intuitive:</p>
+<p><img src="/post/2019-08-24-a-simple-model-for-car-ownership_files/figure-html/unnamed-chunk-2-1.png" width="480" /></p>
+<p>(This plot shows the general trend; don’t try to imagine actual numbers on those axes!)</p>
+<p>The x-axis is car age. Think of this in terms of miles and years but not necessarily at the same time. The more miles you drive, the more aged your engine gets. The longer your car exists, the more out of date its features become. Years of existence and miles tend to be correlated, but in some cases (e.g., buying used), you can often do a decent job of separating these two “ages” out. You can’t really do this when leasing or buying new.</p>
+<p>The y-axis is all costs associated with ownership. This includes whatever payments you make on the vehicle (ammoratized over the vehicle’s lifespan if you have down payments, etc.), maintenance, insurance, etc.</p>
+<p>The first few years are the most desirable, so the market rate for them is high. During these years, your car probably won’t break much (if at all), and all of the features will be as modern as they’ll ever be. After a while, the car starts to break more, there’s more mandatory maintenance to do, and some features become outdated. The interior and exterior experience wear and tear, making them marginally less nice. So your personal valuation of the vehicle also declines with vehicle age but looks different from the cost curve:</p>
+<p><img src="/post/2019-08-24-a-simple-model-for-car-ownership_files/figure-html/unnamed-chunk-3-1.png" width="480" /></p>
+</div>
+<div id="cost-of-ownership" class="section level2">
+<h2>Cost of ownership</h2>
+<p>As a buyer, your main concern should be which chunk of this curve do you want to have for your vehicle? When you buy (or lease) a car, you’re essentially committing to paying for some part of this curve; your total cost is the integral of this curve over the years in which you own it. You may find that there’s a “sweet spot” somewhere on the curve for you. You may find that you want a relatively new vehicle that’s still on or near waranty, but you’re content with features that are a few years out of date. So you’d basically just like to own the car for its 3rd or 4th year after manufacture, from say 40,000 miles to 60,000 miles. Using our curve from above, your cost of ownership looks something like this:</p>
+<p><img src="/post/2019-08-24-a-simple-model-for-car-ownership_files/figure-html/unnamed-chunk-4-1.png" width="480" /></p>
+<p>The problem is, it’s costly to own vehicles for short periods of time.</p>
+</div>
+<div id="transaction-costs" class="section level2">
+<h2>Transaction costs</h2>
+<p>As far as I can tell, transaction costs for cars are high. One way to view the transaction cost is as the delta between how much you can sell a used car to a dealership for and how much they’ll sell it on for. For new cars, <a href = "https://www.carsdirect.com/car-pricing/what-is-the-average-car-dealer-markup-fee">between 2 and 5%</a> might be an average dealer mark-up. Used is tougher, because each used car is different, but estimate range from <a href = "https://itstillruns.com/average-mark-up-used-car-7326490.html">20% to as much as 45%</a>. So that’s quite a bit!</p>
+<p>These costs aren’t trivial becuase there’s a lot of potentially expensive and difficult-to-find problems with used vehicles. It’s hard for a buyer who isn’t an expert to be sure that they’re not getting a lemon, so they’re forced to pay more for assurances, guarantees, and Certified Used whatever. Similarly, if you lease for only a few years, you have to go back and pay more every time you refresh your vehicle. This is on top of whatever extra costs you incur for only buying the “best” years of the vehicle.</p>
+<p>What all of this means is that it’s hard for individuals to always be in that sweet spot of vehicle ownership without incuring a bunch of transaction costs. This encourages folks to hold on to vehicles longer than would otherwise be “optimal” for their preferneces. Instead of only owning the care for one or two years, it’s costs a lot less to just buy it new and own it through year 6. Or buy it 3 years used and sell it around year 8. Or maybe you just hate the whole process and are willing to buy new and own for 10+ years until the car dies.</p>
+</div>
+<div id="translating-your-own-preferences-into-optimal-purchasing-behavior" class="section level2">
+<h2>Translating your own preferences into optimal purchasing behavior</h2>
+<p>I don’t have any thoughts on how to figure out where you want to be on that car’s lifetime curve. It’s an unfortunate combination of a lot of factors, and the option set you have for purchase doesn’t cover the full space because you’ve got a lot of correlation. But I do think there are a few lessons we can take from our cost curve above based on what those preferences are. Here are a few examples of how I’d use this mental model to approach ownership based on different preference sets.</p>
+<div id="highly-cost-sensitive" class="section level3">
+<h3>Highly cost-sensitive</h3>
+<p>If you’re just looking to minimize cost of ownership and don’t care about things like new features, you’ll want to buy used and hold as long as possible. The biggest question is how “used” of a car you should get, but that’s a balancing act between how long the car will last and how quickly its cost depreciated from buying “new”. You would also favor low-milage used vehicles with older model years.</p>
+</div>
+<div id="heavy-preference-for-new-features" class="section level3">
+<h3>Heavy preference for new features</h3>
+<p>This is easy. Lease. It’s expensive, but if you want your tech/features refreshed ever few years, you have to pay for it, and it’s cheaper to lease than buy-new-and-sell at 2- or 3-year invervals.</p>
+</div>
+<div id="slightly-older-features" class="section level3">
+<h3>Slightly older features</h3>
+<p>If you’re okay with 5- or 6-year-old features, you’ve got two options: Buy used and sell after a few years or buy new and hold for 5 or 6 years before selling. The former is more efficient annual cost of ownership basis but you might give it all back in transaction costs. I would go the latter route if you’re okay with slightly higher cost, will enjoy the brand new features you get, and don’t want the bother of finding a new vehicle every few years. You also get the benefit of better/more complete warrantees. If you’re buying used, you’ll favor newer model years with lots of miles. (This sounds to me like fleet/rental vehicles, but I’m no expert.)</p>
+</div>
+<div id="balancedvalue-approach" class="section level3">
+<h3>Balanced/value approach</h3>
+<p>This person wants good value but also doesn’t want to be driving a junker at any point. You’re okay with older features but don’t want a car that’s constantly in the shop. The most logical approach is to buy used and hold for 5+ years. This way, you aren’t spending that top dollar at the left-most side of the cost curve, you reduce transaction costs by holding for a while, but you get out before things turn too far south. It’s not the most cost effective approach, but your features will be from the most recent decade, and you’re prepared to sell once you reach the range where major components might start breaking. YOu’re more concerned with reliabiltiy/maintenance than features per se, so you’ll favor used cars with fewer total miles on them.</p>
+</div>
+<div id="should-you-ever-buy-new-and-hold-for-the-lifetime-of-the-vehicle" class="section level3">
+<h3>Should you ever buy new and hold for the lifetime of the vehicle?</h3>
+<p>This is the question I’ve been wondering. THe approach I’ve outlined implies that we have a preference to own the vehicle for a certain “chunk” of its lifetime. Each “year” of vehicle life has certain attributes that we individually value at specific levels. Why then would anyone want to own <em>all</em> of those instances? Well, if your preferences are pretty flat (that is, the cost of ownership lines up well with how much you value the vehicle for the duration of the vehicle’s lifetime), then it might make sense to just minimize transaction costs, which means buying a car as rarely as possible. You get this by buying the full lifetime.</p>
+<p>This seems like a rare case to me, but perhaps if we remember that preferences aren’t static it makes more sense. We can also note that family ownership isn’t individual ownership; in high school, I inherited the family minivan once it was over the hill, and my mom got a newer replacement. Depending on when you purchase a vehicle, you can avoid transaction costs by gifting it to a family member who may car more about having <em>any</em> vehicle at all more than how new it is or how modern the features are.</p>
+</div>
+</div>
