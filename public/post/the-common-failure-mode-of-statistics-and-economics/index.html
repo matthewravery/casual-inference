@@ -4,20 +4,20 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Statistics</title>
+	<title>The common failure mode of statistics and economics</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
 	<meta name="generator" content="Hugo 0.51" />
-	<meta property="og:title" content="Statistics" />
-<meta property="og:description" content="A personal blog about applied statistics and data science. And other things." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/categories/statistics/" />
-<meta property="og:updated_time" content="2019-01-26T00:00:00&#43;00:00"/>
+	<meta property="og:title" content="The common failure mode of statistics and economics" />
+<meta property="og:description" content="Both Economics and Statistics share a peculiar failure mode: Many critical results in both rely on “large sample”/“long run average” proofs.
+The Central Limit Theorem is fundamental to much of classical statitics, including most (if not all) of the fundamental approaches that people are exposed to in their first few courses. The Efficient Market Hypothesis underpins much of the economic theory on which Western economies are based. Both are powerful tools for explaining common phenomena and often make complex problems simpler to understand and model." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/the-common-failure-mode-of-statistics-and-economics/" /><meta property="article:published_time" content="2019-09-02T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-09-02T00:00:00&#43;00:00"/>
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
-	<link rel="alternate" type="application/rss+xml" href="/categories/statistics/index.xml" title="Casual Inference">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="shortcut icon" href="/favicon.ico">
@@ -62,66 +62,47 @@
 		<div class="wrapper flex">
 			<div class="primary">
 			
-<main class="main list" role="main">
-	<header class="main__header">
-		<h1 class="main__title">Statistics</h1>
-	</header><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/post/calibration-update/" rel="bookmark">
-			Calibration update, now with Brier Scores!
-			</a>
-		</h3>
-		<div class="list__meta meta">
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">The common failure mode of statistics and economics</h1>
+			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-01-26T00:00:00">January 26, 2019</time>
+	<time class="meta__text" datetime="2019-09-02T00:00:00">September 02, 2019</time>
 </div>
 
 <div class="meta__item-categories meta__item">
 	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/statistics" rel="category">statistics</a></span>
+	<span class="meta__text"><a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/common-analysis-errors" rel="category">common analysis errors</a></span>
 </div>
 </div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		After reading my my previous post on calibration, my clever wife (who’s been doing calibration-related activities in the context of modeling and simulation) brought to my attention the concept of Brier Scores. (Alternatively, here.) This approach was originally proposed to evaluate weather forecasts (“Verification of weather forecasts has been a controversial subject for more than half a century,” so at least we’ve moved on controversial climate forecasts in this half-century.
-	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/post/is-scott-well-calibrated/" rel="bookmark">
-			Is Scott well-calibrated?
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-01-23T00:00:00">January 23, 2019</time>
-</div>
+		</header><div class="content post__content clearfix">
+			
 
-<div class="meta__item-categories meta__item">
-	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/statistics" rel="category">statistics</a></span>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Yesterday, Scott Alexander posted his annual predictions review post. I always enjoy this post because it’s externalized introspection. Scott takes the time to formally look at things he thought, consider how right he was about these things, and consider how it should update his thinking moving forward. Most people don’t do this informally let alone formally!
-I want to respond to two things in the post, the latter of which is answering the question Scott only implies of whether he’s well-correlated or not.
-	</div>
-</article>
+
+<p>Both Economics and Statistics share a peculiar failure mode: Many critical results in both rely on “large sample”/“long run average” proofs.</p>
+<p>The Central Limit Theorem is fundamental to much of classical statitics, including most (if not all) of the fundamental approaches that people are exposed to in their first few courses. The Efficient Market Hypothesis underpins much of the economic theory on which Western economies are based. Both are powerful tools for explaining common phenomena and often make complex problems simpler to understand and model. As a result, both are widely taught, widely known, and widely used.</p>
+<p>The downside is that both are often over-used. Becuase their assumptions are standard and often easy to meet, it’s easy to forget the assumptions at all! The assumptions for the CLT are pretty easy. All you need are IID (independent and identically distributed) random variables with finite variance, and then you’ve got normality provided your sample’s big enough. But the larger your variance, the larger a sample you need, and in the real world, our variables are rarely IID. Does the CLT still hold? Generally, yes. Or at least it is still correct enough to be extremely useful. But this leads to complacent thought, and we start to believe that summary statistics like sample means are unimpeachably useful measures.</p>
+<p>You see a similar process when folks apply the efficient market hypothesis. Because prices generally <em>are</em> efficient, and you generally <em>can’t</em> beat the market, it becomes axiomatic that any personal belief that deviats from the extant dogma is necessary wrong. And this is of course absurd. The efficient market hypothesis, like the CLT, has a few fundamental assumptions that both generally hold and are ubiquitous enough that it becomes easy to forget how critical they are. When it comes to money and prices, people (in aggregate) generally act rationally. People, on average, generally have rational expectations. If information is availble to everyone, the market will agree on pricing. And even when you start to relax these conditions, you don’t lose the whole shebang, you just get weaker forms of the efficient market hypothesis, which still give you long-run efficient pricing. The result is that it’s easier to dismiss criticisms of the market without bothering to investigate whether the market is thin or whether there are a few key players that can essentially set the price. It becomes easier to dismiss your own lying eyes and believe the market instead.</p>
+<p>This post is probably echoing NN Taleb. I read <em>Black Swan</em> back in the day, and my (possibly faulty) memory is that he rants about quants making dumb decisions because they don’t properly account for low-probability events, in particular “unknown unkowns”. To me, this is the economists and statisticians falling into the same failure mode: Events that deviate dramatically from the known, long-term trend, that aren’t represented in the historical record, break the most common tools of the profession.</p>
+<p>It may just be that I only think this parallel is novel or interesting because these are the fields I’ve studied. Perhaps if I studied Chemistry and Ecology, I’d be posting about how interseting it is that these two professions always view things as equilibria and that means they have a blind spot for something something. (IDK, I haven’t studied chemistry or ecology!) But I studied econ and then stats, so here we are. When I read dubious journal articles or blog posts that use statistics or economics reasoning, the most common problem I see is taking things like rationality and “IID” for granted. The CLT and efficient market hypothesis are such powerful tools that it’s easy to forget how and why they might not work.</p>
+
+		</div>
+		
+	</article>
 </main>
 
-<div class="pagination">
-	<a class="pagination__item pagination__item--prev btn" href="/categories/statistics/page/2/">«</a>
-	<span class="pagination__item pagination__item--current">3/3</span>
-</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/a-simple-model-for-car-ownership/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">A simple model for car ownership</p></a>
+	</div>
+</nav>
 
 
 			</div>
 			
-
 
 
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>

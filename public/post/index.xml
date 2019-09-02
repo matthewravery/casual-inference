@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>The common failure mode of statistics and economics</title>
+      <link>/post/the-common-failure-mode-of-statistics-and-economics/</link>
+      <pubDate>Mon, 02 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/the-common-failure-mode-of-statistics-and-economics/</guid>
+      <description>Both Economics and Statistics share a peculiar failure mode: Many critical results in both rely on “large sample”/“long run average” proofs.
+The Central Limit Theorem is fundamental to much of classical statitics, including most (if not all) of the fundamental approaches that people are exposed to in their first few courses. The Efficient Market Hypothesis underpins much of the economic theory on which Western economies are based. Both are powerful tools for explaining common phenomena and often make complex problems simpler to understand and model.</description>
+    </item>
+    
+    <item>
       <title>A simple model for car ownership</title>
       <link>/post/a-simple-model-for-car-ownership/</link>
       <pubDate>Sat, 24 Aug 2019 00:00:00 +0000</pubDate>

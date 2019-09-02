@@ -6,10 +6,20 @@
     <description>Recent content in Common Analysis Errors on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 10 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Sep 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/common-analysis-errors/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The common failure mode of statistics and economics</title>
+      <link>/post/the-common-failure-mode-of-statistics-and-economics/</link>
+      <pubDate>Mon, 02 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/the-common-failure-mode-of-statistics-and-economics/</guid>
+      <description>Both Economics and Statistics share a peculiar failure mode: Many critical results in both rely on “large sample”/“long run average” proofs.
+The Central Limit Theorem is fundamental to much of classical statitics, including most (if not all) of the fundamental approaches that people are exposed to in their first few courses. The Efficient Market Hypothesis underpins much of the economic theory on which Western economies are based. Both are powerful tools for explaining common phenomena and often make complex problems simpler to understand and model.</description>
+    </item>
     
     <item>
       <title>The Crusade Against P-values</title>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/post/the-common-failure-mode-of-statistics-and-economics/</loc>
+    <lastmod>2019-09-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/a-simple-model-for-car-ownership/</loc>
     <lastmod>2019-08-24T00:00:00+00:00</lastmod>
   </url>
@@ -155,7 +160,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-08-24T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -167,7 +172,7 @@
   
   <url>
     <loc>/categories/common-analysis-errors/</loc>
-    <lastmod>2019-08-10T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -245,7 +250,7 @@
   
   <url>
     <loc>/categories/statistics/</loc>
-    <lastmod>2019-08-10T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -1,0 +1,21 @@
+---
+title: The common failure mode of statistics and economics
+author: Matthew Avery
+date: '2019-09-02'
+slug: the-common-failure-mode-of-statistics-and-economics
+categories: 
+  - statistics
+  - common analysis errors
+tags: []
+description: ''
+thumbnail: ''
+---
+
+
+
+<p>Both Economics and Statistics share a peculiar failure mode: Many critical results in both rely on “large sample”/“long run average” proofs.</p>
+<p>The Central Limit Theorem is fundamental to much of classical statitics, including most (if not all) of the fundamental approaches that people are exposed to in their first few courses. The Efficient Market Hypothesis underpins much of the economic theory on which Western economies are based. Both are powerful tools for explaining common phenomena and often make complex problems simpler to understand and model. As a result, both are widely taught, widely known, and widely used.</p>
+<p>The downside is that both are often over-used. Becuase their assumptions are standard and often easy to meet, it’s easy to forget the assumptions at all! The assumptions for the CLT are pretty easy. All you need are IID (independent and identically distributed) random variables with finite variance, and then you’ve got normality provided your sample’s big enough. But the larger your variance, the larger a sample you need, and in the real world, our variables are rarely IID. Does the CLT still hold? Generally, yes. Or at least it is still correct enough to be extremely useful. But this leads to complacent thought, and we start to believe that summary statistics like sample means are unimpeachably useful measures.</p>
+<p>You see a similar process when folks apply the efficient market hypothesis. Because prices generally <em>are</em> efficient, and you generally <em>can’t</em> beat the market, it becomes axiomatic that any personal belief that deviats from the extant dogma is necessary wrong. And this is of course absurd. The efficient market hypothesis, like the CLT, has a few fundamental assumptions that both generally hold and are ubiquitous enough that it becomes easy to forget how critical they are. When it comes to money and prices, people (in aggregate) generally act rationally. People, on average, generally have rational expectations. If information is availble to everyone, the market will agree on pricing. And even when you start to relax these conditions, you don’t lose the whole shebang, you just get weaker forms of the efficient market hypothesis, which still give you long-run efficient pricing. The result is that it’s easier to dismiss criticisms of the market without bothering to investigate whether the market is thin or whether there are a few key players that can essentially set the price. It becomes easier to dismiss your own lying eyes and believe the market instead.</p>
+<p>This post is probably echoing NN Taleb. I read <em>Black Swan</em> back in the day, and my (possibly faulty) memory is that he rants about quants making dumb decisions because they don’t properly account for low-probability events, in particular “unknown unkowns”. To me, this is the economists and statisticians falling into the same failure mode: Events that deviate dramatically from the known, long-term trend, that aren’t represented in the historical record, break the most common tools of the profession.</p>
+<p>It may just be that I only think this parallel is novel or interesting because these are the fields I’ve studied. Perhaps if I studied Chemistry and Ecology, I’d be posting about how interseting it is that these two professions always view things as equilibria and that means they have a blind spot for something something. (IDK, I haven’t studied chemistry or ecology!) But I studied econ and then stats, so here we are. When I read dubious journal articles or blog posts that use statistics or economics reasoning, the most common problem I see is taking things like rationality and “IID” for granted. The CLT and efficient market hypothesis are such powerful tools that it’s easy to forget how and why they might not work.</p>
