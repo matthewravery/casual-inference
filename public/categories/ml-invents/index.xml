@@ -6,10 +6,20 @@
     <description>Recent content in Ml Invents on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/ml-invents/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Computer Science Invents Wavelets</title>
+      <link>/post/computer-science-invents-wavelets/</link>
+      <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/computer-science-invents-wavelets/</guid>
+      <description>A friend of mine shared an abstract with me from an upcoming talk by Computer Science professor:
+Data analysis is an emerging research topic that focuses on understanding patterns of data to discover knowledge. For understanding the data, various machine learning (ML) techniques are commonly utilized to build learning models. For maintaining high performance of the models, it is important to extract good features and utilize them to build a reliable learning model.</description>
+    </item>
     
     <item>
       <title>ML Invents Metadata</title>

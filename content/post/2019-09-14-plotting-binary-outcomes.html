@@ -1,0 +1,82 @@
+---
+title: Plotting binary outcomes
+author: Matthew Avery
+date: '2019-09-14'
+slug: plotting-binary-outcomes
+categories:
+  - statistics
+  - data visualization
+tags: []
+description: ''
+thumbnail: ''
+---
+
+
+
+<pre class="r"><code>library(tidyverse)
+library(binom)</code></pre>
+<p>Someone had a relatively straight-forward question: They had sets of binary outcomes for different response variables, and wanted to display them all in a simple way that highlighted both the probability of success and amount of data they had for each observation. There are more than a few ways to do it, and it can be hard to determine which is best without seeing them, so let’s look at a few examples and see which we like!</p>
+<div id="data-generation" class="section level3">
+<h3>Data Generation</h3>
+<p>I don’t have the data, so I’ll generate a dummy data set. We’ll represent each event with a letter of the alphabet, randomly generate success probabilities for each, and then randomly assign the total number of observations:</p>
+<pre class="r"><code>set.seed(20190914)
+tb &lt;- tibble(responses = letters[1:10],
+             results = runif(10, 0, 1),
+             nobs = rpois(10, 10) * 4,
+             nsuccess = round(results * nobs, 0),
+             nfailure = nobs - nsuccess)</code></pre>
+</div>
+<div id="plotting-points" class="section level3">
+<h3>Plotting points</h3>
+<p>One approach here is to plot each point:</p>
+<pre class="r"><code>ggplot(tb, aes(x = responses, y = results)) + geom_point() +
+  coord_cartesian(ylim = c(0, 1)) + theme_bw()</code></pre>
+<p><img src="/post/2019-09-14-plotting-binary-outcomes_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>This seems reasonable enough, but it doesn’t communicate the number of of observations clearly. One way to do this is to add on confidence intervals. To do this, I’ll use the function <code>binom.agresti.coull</code>, which comes from the package <code>binom</code> that you may need to install if you haven’t already. It uses the Wilson Score method, which is my preferred approach. (Use <code>?binom.confint</code> to find information on other methods available <code>binom</code>.):</p>
+<pre class="r"><code># install.packages(&quot;binom&quot;)
+
+library(binom)
+
+ci_wrapper &lt;- function(x, n, whichside, ...){
+  
+  thisside &lt;- ifelse(whichside == &quot;lower&quot;, &quot;lower&quot;, &quot;upper&quot;)
+  
+  binom.agresti.coull(x, n, ...)[[thisside]]
+}
+
+tbwithci &lt;- tb %&gt;% 
+    mutate(lcb = map2_dbl(nsuccess, nobs, ci_wrapper, whichside = &quot;lower&quot;),
+         ucb = map2_dbl(nsuccess, nobs, ci_wrapper, whichside = &quot;upper&quot;))
+
+ggplot(tbwithci, aes(x = responses, y = results)) + geom_point() +
+  coord_cartesian(ylim = c(0, 1)) + theme_bw() +
+  geom_errorbar(aes(ymin = lcb, ymax = ucb))</code></pre>
+<p><img src="/post/2019-09-14-plotting-binary-outcomes_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>If error bars aren’t to your taste, you could also modify the size and/or color of the points based on the number of observations. Below, I do both:</p>
+<pre class="r"><code>ggplot(tb, aes(x = responses, y = results, color = nobs, size = nobs)) + geom_point() +
+  coord_cartesian(ylim = c(0, 1)) + theme_bw() </code></pre>
+<p><img src="/post/2019-09-14-plotting-binary-outcomes_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>These approaches work just fine if your goal is simply to convey the sample sizes for each outcome variable and you’re not interested in actually modeling success probabilities or something like that.</p>
+</div>
+<div id="bar-charts" class="section level3">
+<h3>Bar charts</h3>
+<p>The other reasonable possibility here is bar charts, specifically stacked bars. For these, we need the data in a different format:</p>
+<pre class="r"><code>tblong &lt;- tb %&gt;% 
+  gather(nsuccess, nfailure, key = &quot;outcome&quot;, value = &quot;count&quot;) %&gt;% 
+  mutate(outcome = recode(outcome, nsuccess = &quot;Successes&quot;, nfailure = &quot;Failures&quot;))</code></pre>
+<p>This allows us to tell <code>ggplot</code> to build our bars:</p>
+<pre class="r"><code>ggplot(tblong, aes(x = responses, y = count, fill = outcome)) + 
+  geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;, color = &quot;black&quot;) +
+   theme_bw() </code></pre>
+<p><img src="/post/2019-09-14-plotting-binary-outcomes_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>If we want to, we can also add text labels to tell us how many observations fall into each section of each bar:</p>
+<pre class="r"><code>ggplot(tblong, aes(x = responses, y = count, fill = outcome)) + 
+  geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;, color = &quot;black&quot;) +
+  geom_text(stat = &quot;identity&quot;, aes(label = count), position = position_stack(vjust = 0.5)) +
+  theme_bw() </code></pre>
+<p><img src="/post/2019-09-14-plotting-binary-outcomes_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>And there you have it! Multiple ways to plot some very simple data. Depending on your goals, audience, and data, some of the above will probably work well while others won’t. I haven’t done much to enhance the look of these plots, using default ggplot settings everywhere except for setting <code>theme_bw()</code>, so there’s doubtless plenty to be accomplished improving the visual appearance.</p>
+</div>

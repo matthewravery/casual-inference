@@ -12,6 +12,25 @@
     
     
     <item>
+      <title>Computer Science Invents Wavelets</title>
+      <link>/post/computer-science-invents-wavelets/</link>
+      <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/computer-science-invents-wavelets/</guid>
+      <description>A friend of mine shared an abstract with me from an upcoming talk by Computer Science professor:
+Data analysis is an emerging research topic that focuses on understanding patterns of data to discover knowledge. For understanding the data, various machine learning (ML) techniques are commonly utilized to build learning models. For maintaining high performance of the models, it is important to extract good features and utilize them to build a reliable learning model.</description>
+    </item>
+    
+    <item>
+      <title>Plotting binary outcomes</title>
+      <link>/post/plotting-binary-outcomes/</link>
+      <pubDate>Sat, 14 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/plotting-binary-outcomes/</guid>
+      <description>library(tidyverse)library(binom)Someone had a relatively straight-forward question: They had sets of binary outcomes for different response variables, and wanted to display them all in a simple way that highlighted both the probability of success and amount of data they had for each observation. There are more than a few ways to do it, and it can be hard to determine which is best without seeing them, so let’s look at a few examples and see which we like!</description>
+    </item>
+    
+    <item>
       <title>The common failure mode of statistics and economics</title>
       <link>/post/the-common-failure-mode-of-statistics-and-economics/</link>
       <pubDate>Mon, 02 Sep 2019 00:00:00 +0000</pubDate>

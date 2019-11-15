@@ -1,8 +1,8 @@
 ---
-title: Computer Science Intvents Wavelets
+title: Computer Science Invents Wavelets
 author: Matthew Avery
 date: '2019-11-15'
-slug: computer-science-intvents-wavelets
+slug: computer-science-invents-wavelets
 categories:
   - ML Invents
 tags: []
@@ -16,4 +16,4 @@ A friend of mine shared an abstract with me from an upcoming talk by Computer Sc
 
 Modern statistics <a href = "https://en.wikipedia.org/wiki/History_of_statistics#Development_of_modern_statistics">has been around longer than computers</a>, so I don't think "emerging field" is quite right. And "feature extraction" (the term the Machine Learning community invented to mean "model selection") was emphasized in just about every class I took in grad school. 
 
-I am glad that the ML folks have discovered that wavelets are a useful tool for this. Only about <a href = "https://web.stanford.edu/~hastie/Papers/ESLII.pdf">two decades late</a>! :-D (See Chapter 5!)
+I am glad that the ML folks have discovered that wavelets are a useful tool for this. Only about <a href = "https://web.stanford.edu/~hastie/Papers/ESLII.pdf">two decades late</a>! :-D (See Chapter 5)

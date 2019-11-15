@@ -11,8 +11,9 @@ description: ''
 thumbnail: ''
 ---
 
-```{r, inclde = F, message = F}
+```{r, inclde = F, message = F, warning = F}
 library(tidyverse)
+library(binom)
 ```
 
 
