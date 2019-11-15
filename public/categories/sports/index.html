@@ -12,7 +12,7 @@
 <meta property="og:description" content="A personal blog about applied statistics and data science. And other things." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/categories/sports/" />
-<meta property="og:updated_time" content="2019-06-01T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-11-15T00:00:00&#43;00:00"/>
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -66,6 +66,30 @@
 	<header class="main__header">
 		<h1 class="main__title">Sports</h1>
 	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/post/bad-data-science-in-the-wild/" rel="bookmark">
+			Bad Data Science in the Wild
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-11-15T00:00:00">November 15, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/common-analysis-errors" rel="category">common analysis errors</a>, <a class="meta__link" href="/categories/failure-to-communicate" rel="category">failure to communicate</a>, <a class="meta__link" href="/categories/sports" rel="category">sports</a>, <a class="meta__link" href="/categories/data-generation" rel="category">data generation</a></span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Today’s example comes from a Reddit post on USMNT subreddit that shows the proportion of minutes played by US Men’s National Team (USMNT) players who participated in the January mini-camp the USMNT does every year. OP made the following plot:
+IDK what this actually means, but I sure know what people will think when they see it!
+BackgroundThe context here is that fans are generally dissatisfied with the USMNT right now, and one of the reasons is that Gregg Berhalter (the USMNT coach) doesn’t call up the right players.
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/post/diy-metrics-game-logs/" rel="bookmark">
@@ -271,31 +295,13 @@ But before we do that, we need to look at the new data set and see what, if anyt
 		Last week, I described how to build a plus/minus score for individual players based on data from NBAstuffer. I enjoyed walking through that process, so lets continue the series and expand our focus.
 Five-man units vs. Individual PlayersOne of the first things I talked about on this site was comparing different metrics and choosing the right one for the task at hand. Plus/minus for individual players is a weird metric, because it’s taking a team outcome (net change in score) and applying it at an individual level.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/post/prospective-vs-retrospective-metrics/" rel="bookmark">
-			Choosing the right metric for sports
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-01-13T00:00:00">January 13, 2019</time>
-</div>
-
-<div class="meta__item-categories meta__item">
-	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/sports" rel="category">sports</a>, <a class="meta__link" href="/categories/metrics" rel="category">metrics</a>, <a class="meta__link" href="/categories/misc" rel="category">Misc</a></span>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		I think its great that sports statistics are a big thing in popular media. It makes fans and media better informed about their team and players, and it provides an entry point for people to get interestd in statistics.
-That said, there seems to be a perpetual innumeracy in the way folks talk about a lot of these metrics. One thing I see come up repeatedly is the distinction between metrics that look at a player’s past performance and say, “How important was that player to the team’s success?
-	</div>
 </article>
 </main>
+
+<div class="pagination">
+	<span class="pagination__item pagination__item--current">1/2</span>
+	<a class="pagination__item pagination__item--next btn" href="/categories/sports/page/2/">»</a>
+</div>
 
 
 			</div>
@@ -335,11 +341,11 @@ That said, there seems to be a perpetual innumeracy in the way folks talk about 
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/bad-data-science-in-the-wild/">Bad Data Science in the Wild</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/computer-science-invents-wavelets/">Computer Science Invents Wavelets</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/plotting-binary-outcomes/">Plotting binary outcomes</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/the-common-failure-mode-of-statistics-and-economics/">The common failure mode of statistics and economics</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/a-simple-model-for-car-ownership/">A simple model for car ownership</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/p-values-for-coordination/">The Crusade Against P-values</a></li>
 		</ul>
 	</div>
 </div>

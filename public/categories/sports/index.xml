@@ -6,10 +6,21 @@
     <description>Recent content in Sports on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/sports/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Bad Data Science in the Wild</title>
+      <link>/post/bad-data-science-in-the-wild/</link>
+      <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/bad-data-science-in-the-wild/</guid>
+      <description>Today’s example comes from a Reddit post on USMNT subreddit that shows the proportion of minutes played by US Men’s National Team (USMNT) players who participated in the January mini-camp the USMNT does every year. OP made the following plot:
+IDK what this actually means, but I sure know what people will think when they see it!
+BackgroundThe context here is that fans are generally dissatisfied with the USMNT right now, and one of the reasons is that Gregg Berhalter (the USMNT coach) doesn’t call up the right players.</description>
+    </item>
     
     <item>
       <title>DIY Metrics: Game Logs </title>

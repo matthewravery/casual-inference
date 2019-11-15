@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Bad Data Science in the Wild</title>
+      <link>/post/bad-data-science-in-the-wild/</link>
+      <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/bad-data-science-in-the-wild/</guid>
+      <description>Today’s example comes from a Reddit post on USMNT subreddit that shows the proportion of minutes played by US Men’s National Team (USMNT) players who participated in the January mini-camp the USMNT does every year. OP made the following plot:
+IDK what this actually means, but I sure know what people will think when they see it!
+BackgroundThe context here is that fans are generally dissatisfied with the USMNT right now, and one of the reasons is that Gregg Berhalter (the USMNT coach) doesn’t call up the right players.</description>
+    </item>
+    
+    <item>
       <title>Computer Science Invents Wavelets</title>
       <link>/post/computer-science-invents-wavelets/</link>
       <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
