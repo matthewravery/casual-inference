@@ -5,3 +5,7 @@
 3. Look at foul types by ref and do clustering/PCA (https://old.reddit.com/r/nba/comments/co2ppz/oc_i_analyzed_every_foul_call_from_the_201819/)
 4. Sky-knit and HAT3000
 https://aiweirdness.com/post/187489831262/first-there-was-skyknit-now-theres-hat3000?utm_source=Nature+Briefing&utm_campaign=065321b2c7-briefing-dy-20190910&utm_medium=email&utm_term=0_c9dfd39373-065321b2c7-43694213&fbclid=IwAR0ZLrosbtl4pAZK68Bd21Lihfa1aO7bSUqmCZksoAIf1-ZAcCP9byMznSc
+
+5. Example of bad data science logic/reasoning:
+https://old.reddit.com/r/nba/comments/e1h524/oc_introducing_davis_a_holistic_and_transparent/
+6. Post on "random error" vice "residuals" in statistical modeling
