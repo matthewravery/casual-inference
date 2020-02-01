@@ -6,10 +6,20 @@
     <description>Recent content in Statistics on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/statistics/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Quick nones on binomial confidence intervals in R</title>
+      <link>/post/binom-confint/</link>
+      <pubDate>Sat, 01 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/binom-confint/</guid>
+      <description>I’m teaching a graduate-level intro stats course right now, and one thing that struck me as we move from calculating things “by hand” to doing things in R is that there’s no real reason to emphasize the normal approximation binomail confidence interval once you’re using software. Or at least far less reason.
+The normal approximationThis is the basic interval they’ve taught in introductory statistics courses since time immamorial. Or at least the past few decades, I’d have to know the history of Stats Ed to give the real timeframe.</description>
+    </item>
     
     <item>
       <title>Plotting binary outcomes</title>
