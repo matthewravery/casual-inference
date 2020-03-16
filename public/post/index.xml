@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Corona Virus information</title>
+      <link>/post/corona-virus-information/</link>
+      <pubDate>Mon, 16 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/corona-virus-information/</guid>
+      <description>Very informative slide deck discussing SARS-CoV-2 from Dr. Michael Lin.</description>
+    </item>
+    
+    <item>
       <title>Quick nones on binomial confidence intervals in R</title>
       <link>/post/binom-confint/</link>
       <pubDate>Sat, 01 Feb 2020 00:00:00 +0000</pubDate>
