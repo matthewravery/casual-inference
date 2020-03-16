@@ -1,0 +1,13 @@
+---
+title: Corona Virus information
+author: Matthew Avery
+date: '2020-03-16'
+slug: corona-virus-information
+categories:
+  - Misc
+tags: []
+description: ''
+thumbnail: ''
+---
+
+<a href = "https://github.com/matthewravery/casual-inference/blob/master/content/post/data/Lin%20COVID-19%20SARS-CoV-2%20slidedeck%2020200315.pdf">Very informative slide deck discussing SARS-CoV-2</a> from <a href = "http://med.stanford.edu/linlab.html">Dr. Michael Lin</a>.
