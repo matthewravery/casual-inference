@@ -3,7 +3,9 @@ title: Reference levels matter
 author: Matthew Avery
 date: '2020-08-08'
 slug: reference-levels-matter
-categories: []
+categories:
+  - R
+  - statistics
 tags: []
 description: ''
 thumbnail: ''
