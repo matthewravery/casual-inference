@@ -281,28 +281,28 @@ summary(fit2)</code></pre>
 ## F-statistic: 14.78 on 4 and 15 DF,  p-value: 4.362e-05</code></pre>
 <p>Now all of the parameters are significant! If we go this route, our final model will keep all of the groups separate. These models are not equivalent. They have different parameters, and they produce different predictions:</p>
 <pre><code>## # A tibble: 20 x 4
-##    `Aircraft Type` `Reduced A/C Typ~ `Simplified Model P~ `Alternate Factor Cod~
-##    &lt;fct&gt;           &lt;chr&gt;                            &lt;dbl&gt;                  &lt;dbl&gt;
-##  1 Helicopter      Helicopter                       1037.                  1023.
-##  2 Helicopter      Helicopter                       1339.                  1362.
-##  3 Helicopter      Helicopter                       1076.                  1067.
-##  4 Bomber          Other                            1588.                  1621.
-##  5 Bomber          Other                            1312.                  1311.
-##  6 Bomber          Other                            1167.                  1149.
-##  7 Bomber          Other                            1220.                  1208.
-##  8 Fighter         Other                            1127.                  1069.
-##  9 Fighter         Other                            1496.                  1481.
-## 10 Fighter         Other                            1246.                  1201.
-## 11 Fighter         Other                            1246.                  1201.
-## 12 Fighter         Other                            1259.                  1216.
-## 13 Fighter         Other                            1522.                  1511.
-## 14 Fighter         Other                            1127.                  1069.
-## 15 Fighter         Other                            1522.                  1511.
-## 16 Fighter         Other                            1562.                  1555.
-## 17 Fighter         Other                            1338.                  1305.
-## 18 Spy Plane       Other                            1259.                  1376.
-## 19 Spy Plane       Other                            1075.                  1170.
-## 20 Spy Plane       Other                            1220.                  1332.</code></pre>
+##    `Aircraft Type` `Reduced Type` `Fit 1 Predictions` `Fit 2 Predictions`
+##    &lt;fct&gt;           &lt;chr&gt;                        &lt;dbl&gt;               &lt;dbl&gt;
+##  1 Helicopter      Helicopter                   1037.               1023.
+##  2 Helicopter      Helicopter                   1339.               1362.
+##  3 Helicopter      Helicopter                   1076.               1067.
+##  4 Bomber          Other                        1588.               1621.
+##  5 Bomber          Other                        1312.               1311.
+##  6 Bomber          Other                        1167.               1149.
+##  7 Bomber          Other                        1220.               1208.
+##  8 Fighter         Other                        1127.               1069.
+##  9 Fighter         Other                        1496.               1481.
+## 10 Fighter         Other                        1246.               1201.
+## 11 Fighter         Other                        1246.               1201.
+## 12 Fighter         Other                        1259.               1216.
+## 13 Fighter         Other                        1522.               1511.
+## 14 Fighter         Other                        1127.               1069.
+## 15 Fighter         Other                        1522.               1511.
+## 16 Fighter         Other                        1562.               1555.
+## 17 Fighter         Other                        1338.               1305.
+## 18 Spy Plane       Other                        1259.               1376.
+## 19 Spy Plane       Other                        1075.               1170.
+## 20 Spy Plane       Other                        1220.               1332.</code></pre>
 </div>
 <div id="but-do-reference-levels-really-matter" class="section level3">
 <h3>But do reference levels <em>really</em> matter?</h3>

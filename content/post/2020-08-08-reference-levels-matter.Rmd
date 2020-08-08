@@ -148,11 +148,11 @@ Now all of the parameters are significant! If we go this route, our final model 
 ```{r, echo = F, message = F}
 
 results <- tb_simplified %>% 
-  mutate(`Reduced A/C Type` = `Aircraft Type`) %>% 
-  add_predictions(fit_simplified, var = "Simplified Model Predictions") %>% 
+  mutate(`Reduced Type` = `Aircraft Type`) %>% 
+  add_predictions(fit_simplified, var = "Fit 1 Predictions") %>% 
   select(-`Aircraft Type`) %>% 
   left_join(tb2) %>% 
-  add_predictions(fit2, var = "Alternate Factor Coding Predictions")
+  add_predictions(fit2, var = "Fit 2 Predictions")
 
 results <- results[, c(5, 3, 4, 6)]  %>% 
   arrange(`Aircraft Type`)
