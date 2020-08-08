@@ -1,0 +1,168 @@
+---
+title: Reference levels matter
+author: Matthew Avery
+date: '2020-08-08'
+slug: reference-levels-matter
+categories: []
+tags: []
+description: ''
+thumbnail: ''
+---
+
+```{r, echo = F, message = F, warning = F}
+set.seed(20200808)
+library(tidyverse)
+library(modelr)
+
+opcost <- function(a, b){
+  
+  if(a == "Helicopter") return(500 + b * 20 +round(rnorm(1, 0, 100), 0))
+  return(1000 + b * 10 + round(rnorm(1, 0, 100), 0))
+  
+}
+tb <- tibble(
+  `Aircraft Type` = sample(c("Fighter", "Bomber", "Helicopter", "Spy Plane"), 20, replace = T),
+  `Fuel Burn` = round(runif(20, 10, 50), 0)
+) %>% 
+  mutate(`Operating Cost` = map2_dbl( `Aircraft Type`, `Fuel Burn`, opcost))
+
+```
+
+When doing a regression analysis with categorical variables, which level is used as the reference level can be important. This is underappreciated, since most non-major classes on regression (or more precisely, regression classes that don't show you the underlying matrix algebra) don't talk about it. Software mostly hides this as well unless users want to dive deep into the options. Failing to consider your choice of reference level and how that choice can effect your analysis can lead you to erroneous (or at least dubious) conclusions. 
+
+### What are reference levels?
+
+Before we get into why reference levels matter, let's take a step back and talk about what reference levels are. In regression analyses involving categorical variables, these variables are represented numerically by unique combinations of 1's and 0's. For a two-level categorical variable, 1's are arbitrarily assigned to represent one level of the variable and 0's another in a single column:
+
+```{r, echo = F}
+
+tibble(`Categorical Variable` = sample(c("A", "B"), 10, replace = T)) %>% 
+  mutate(`Coding of Categorical Variable` = ifelse(`Categorical Variable` == "B", 1, 0))
+
+```
+
+
+Categorical variables with more than two levels are represented by adding an extra column for level beyond two. Thus, a categorical variable with $p$ levels is represented by $p-1$ columns. Each column will take the value $1$ if the categorical variable is a specific number and $0$ otherwise:
+
+
+```{r, echo = F}
+
+mydata <- tibble(`Categorical Variable` = sample(c("A", "B", "C", "D"), 10, replace = T))%>% 
+  arrange(`Categorical Variable`) 
+
+mydata %>% 
+  mutate(`Variable is A` = ifelse(`Categorical Variable` == "B", 1, 0),
+         `Variable is B` = ifelse(`Categorical Variable` == "C", 1, 0),
+         `Variable is C` = ifelse(`Categorical Variable` == "D", 1, 0)) 
+
+```
+
+In this case, "D" is the reference level, since if all of the columns take the value 0, we know the level of our categorical variable is "D". 
+
+(The type of factor coding I described above is known as "dummy coding" or "effect coding". (Or if you're in Machine Learning, "one-hot encoding", which is a very silly name.) You can read about alternative approaches to variable coding <a href = "https://stats.idre.ucla.edu/spss/faq/coding-systems-for-categorical-variables-in-regression-analysis/">here</a>. Depending on what you actually want to do, it can often be beneficial to encode your categorical factors in a different way.) 
+
+### Reference Levels in Regression
+
+Now suppose I want to fit a regression model using these factors. I don't have to manually generate the columns of 1's and 0's; that happens automatically in software. For example, I can use `lm()` to fit a simple model in R:
+
+```{r, eval = F}
+fit <- lm(`Response Variable` ~ `Categorical Variable`, data = mydata)
+
+```
+
+When running this code, R will call `model.matrix()` to generate a matrix that looks a lot like what we saw above:
+
+```{r}
+model.matrix(~`Categorical Variable`, data = mydata)
+```
+
+Note the presence of the Intercept column, which has a value of `1` for every row in our matrix. 
+
+These automatically-generated columns correspond to the parameters in the regression output:
+
+```{r, include= F}
+dat2 <- mydata %>% 
+  mutate(`Response Variable` = rnorm(10))
+
+fit <- lm(`Response Variable` ~ `Categorical Variable`, data = dat2)
+
+```
+
+```{r}
+summary(fit)
+```
+
+Interpreting this output is straight-forward now that we understand what those parameters are referring to: `'Categorical Variable'B` is the *difference between the average response for Level A and the average response for Level B*. These parameters are *differences*. 
+
+### <strike>Why</strike>One reason reference levels matter
+
+One concern folks have when fitting models is selecting the best set of predictors. There are lots of ways to do this, but one of the simplest is to fit the full model, see which parameter estimates are significant, and then re-fit the model retaining on the statistically significant results. (Note that this is generally a *bad* way to do model selection, but I'm not focusing on that today. <a href = "http://r-statistics.co/Model-Selection-in-R.html">Here</a> <a href = "https://en.wikipedia.org/wiki/Model_selection">are</a> <a href = "http://www.stat.columbia.edu/~madigan/W2025/notes/linear.pdf">some</a> <a href = "http://statweb.stanford.edu/~jtaylo/courses/stats203/notes/selection.pdf">things</a> to <a href = "https://statisticsbyjim.com/regression/model-specification-variable-selection/">read</a> about model selection for linear regression.) If you take this approach, your choice of reference level can actually effect the model you choose! 
+
+Suppose we want to fit a regression model to these data to estimate operating costs of aircraft based on their type and the rate at which they consume fuel:
+
+
+```{r, echo = F}
+
+print(tb, n = 20)
+
+```
+
+
+We fit a simple regression and check the results:
+
+```{r}
+
+fit <- lm(`Operating Cost` ~ `Aircraft Type` + `Fuel Burn`, tb)
+
+summary(fit)
+```
+
+The only dummy that's significant is the Helicopter one, so we discard the other two. (Yay, model sparsity!) 
+
+```{r}
+
+tb_simplified <- tb %>% 
+  mutate(`Aircraft Type` = ifelse(`Aircraft Type` == "Helicopter", "Helicopter", "Other"))
+
+fit_simplified <- lm(`Operating Cost` ~ `Aircraft Type` + `Fuel Burn`, tb_simplified)
+summary(fit_simplified)
+```
+
+(One way to interpret this model is that there is no difference between Fighters, Bombers, and Spy Planes in terms of their operating costs. This is potentially an interesting result, but note that determining this wasn't our goal. Instead, it just sorta happened accidentally. It's also not necessarily correct, since we never actually compared Spy Planes with Fighters!)
+
+But wait. We just let R arbitrarily choose a reference level. (In case you were wondering, unless the categorical variable is specifically coded as a <a href = "https://www.stat.berkeley.edu/~s133/factors.html">factor</a>, R assigns the first level alphabetically to be the reference level.) What if instead, we decided to use `Helicopter` as the reference level?
+
+```{r}
+tb2 <- tb %>% 
+  mutate(`Aircraft Type` = relevel(factor(`Aircraft Type`), ref = "Helicopter"))
+
+fit2 <- lm(`Operating Cost` ~ `Aircraft Type` + `Fuel Burn`, tb2)
+
+summary(fit2)
+```
+
+Now all of the parameters are significant! If we go this route, our final model will keep all of the groups separate. These models are not equivalent. They have different parameters, and they produce different predictions:
+
+```{r, echo = F, message = F}
+
+results <- tb_simplified %>% 
+  mutate(`Reduced A/C Type` = `Aircraft Type`) %>% 
+  add_predictions(fit_simplified, var = "Simplified Model Predictions") %>% 
+  select(-`Aircraft Type`) %>% 
+  left_join(tb2) %>% 
+  add_predictions(fit2, var = "Alternate Factor Coding Predictions")
+
+results <- results[, c(5, 3, 4, 6)]  %>% 
+  arrange(`Aircraft Type`)
+
+print(results, n = 20)
+
+```
+
+### But do reference levels *really* matter?
+
+Sure, they seem to in the example above, but that's because of our flawed model selection approach. A better method wouldn't have had these issues and would return the same model regardless of our reference level.
+
+The reason reference levels matter is because if you don't think about them and don't understand what's going on under the hood, *you may not realize* when you're taking a flawed model selection approach. Knowing what choices you software is making for you and how those choices show up in your output can help you recognize potential problems before they show up in your analysis. 
+
+Making *good* choices of reference levels can make your work more efficient. Suppose you actually wanted to compare Helicopter operating costs to those of different types of fixed-wing aircraft. If you used R's default encoding, you'd have to figure out some weird contrast or something to make these comparisons or default to t-tests. But if you understand the importance of reference levels, you'll be able to get these tests as a consequence of the regression you were already running. 
