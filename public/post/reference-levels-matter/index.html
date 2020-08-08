@@ -1,16 +1,83 @@
----
-title: Reference levels matter
-author: Matthew Avery
-date: '2020-08-08'
-slug: reference-levels-matter
-categories:
-  - R
-  - statistics
-tags: []
-description: ''
-thumbnail: ''
----
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Reference levels matter</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.51" />
+	<meta property="og:title" content="Reference levels matter" />
+<meta property="og:description" content="When doing a regression analysis with categorical variables, which level is used as the reference level can be important. This is underappreciated, since most non-major classes on regression (or more precisely, regression classes that don’t show you the underlying matrix algebra) don’t talk about it. Software mostly hides this as well unless users want to dive deep into the options. Failing to consider your choice of reference level and how that choice can effect your analysis can lead you to erroneous (or at least dubious) conclusions." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/reference-levels-matter/" /><meta property="article:published_time" content="2020-08-08T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2020-08-08T00:00:00&#43;00:00"/>
 
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Casual Inference" rel="home">
+				<div class="logo__title">Casual Inference</div>
+				<div class="logo__tagline">Robust and relaxed</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/about/">About</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://matthewravery.github.io/markdown-cv">CV</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://github.com/jthaman/ciTools">ciTools</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/analysis-statement/">Analysis Philosophy</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Reference levels matter</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-08-08T00:00:00">August 08, 2020</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/r" rel="category">R</a>, <a class="meta__link" href="/categories/statistics" rel="category">statistics</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
 
 
 <p>When doing a regression analysis with categorical variables, which level is used as the reference level can be important. This is underappreciated, since most non-major classes on regression (or more precisely, regression classes that don’t show you the underlying matrix algebra) don’t talk about it. Software mostly hides this as well unless users want to dive deep into the options. Failing to consider your choice of reference level and how that choice can effect your analysis can lead you to erroneous (or at least dubious) conclusions.</p>
@@ -243,3 +310,98 @@ summary(fit2)</code></pre>
 <p>The reason reference levels matter is because if you don’t think about them and don’t understand what’s going on under the hood, <em>you may not realize</em> when you’re taking a flawed model selection approach. Knowing what choices you software is making for you and how those choices show up in your output can help you recognize potential problems before they show up in your analysis.</p>
 <p>Making <em>good</em> choices of reference levels can make your work more efficient. Suppose you actually wanted to compare Helicopter operating costs to those of different types of fixed-wing aircraft. If you used R’s default encoding, you’d have to figure out some weird contrast or something to make these comparisons or default to t-tests. But if you understand the importance of reference levels, you’ll be able to get these tests as a consequence of the regression you were already running.</p>
 </div>
+
+		</div>
+		
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/corona-virus-information/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Corona Virus information</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/reference-levels-matter/">Reference levels matter</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/corona-virus-information/">Corona Virus information</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/binom-confint/">Quick notes on binomial confidence intervals in R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/bad-data-science-in-the-wild/">Bad Data Science in the Wild</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/computer-science-invents-wavelets/">Computer Science Invents Wavelets</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/basketball">Basketball</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/common-analysis-errors">Common analysis errors</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/data-generation">Data generation</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/data-visualization">Data visualization</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/diymetrics">Diymetrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/failure-to-communicate">Failure to communicate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/hot-takes">Hot takes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/life-is-distributional">Life is distributional</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/metrics">Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/misc">Misc</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/ml-invents">Ml invents</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/picking-at-nits">Picking at nits</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r">R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r-diymetrics">R diymetrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/sports">Sports</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/statistics">Statistics</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Casual Inference.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>

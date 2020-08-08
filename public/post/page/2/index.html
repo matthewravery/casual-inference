@@ -12,7 +12,7 @@
 <meta property="og:description" content="A personal blog about applied statistics and data science. And other things." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/post/" />
-<meta property="og:updated_time" content="2019-06-01T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-06-08T00:00:00&#43;00:00"/>
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -70,6 +70,29 @@
 		<p>This is a website for me to collect stray thoughts and put ideas into words. I&rsquo;ll use it to talk about public-facing projects I&rsquo;m involved in and to record my approach to data analysis. I apologize that most of the posts will likely be too long, but I&rsquo;m not going to have an editor.</p>
 
 	</div><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/post/nonlinearity/" rel="bookmark">
+			Nonlinearity
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-06-08T00:00:00">June 08, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/common-analysis-errors" rel="category">common analysis errors</a>, <a class="meta__link" href="/categories/failure-to-communicate" rel="category">failure to communicate</a>, <a class="meta__link" href="/categories/life-is-distributional" rel="category">life is distributional</a></span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		This is an update to my Analysis Philosphy page, which is still working towards completion
+Nonlinearity is a commonly-misunderstood problem when it comes to data analysis, mostly because our profession has once again managed to find a way to use a simple-sounding term in a way that’s counterintuitive to lay audiences. (See also Artificial Intelligence is Dumb.) When people think about nonlinear response variables, they think of functions that have non-linear relationships.
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/post/diy-metrics-game-logs/" rel="bookmark">
@@ -277,28 +300,6 @@ But before we do that, we need to look at the new data set and see what, if anyt
 I only get 1,750 hits on Google when I search for “Distributionality”, so maybe I should clarify what I mean, though I don’t think it’s anything profound.
 That data follow distributions is a tautology. When this doesn’t appear the case, it means we’ve failed to properly model hte data generation function. The most typical failure mode is to assume that the distribution is simpler than it is.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/post/diy-metrics-net-ratings-ish/" rel="bookmark">
-			DIY Metrics:  Net Ratings (ish)
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-03-09T00:00:00">March 09, 2019</time>
-</div>
-
-<div class="meta__item-categories meta__item">
-	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/basketball" rel="category">basketball</a>, <a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/metrics" rel="category">metrics</a>, <a class="meta__link" href="/categories/sports" rel="category">sports</a>, <a class="meta__link" href="/categories/r" rel="category">R</a>, <a class="meta__link" href="/categories/diymetrics" rel="category">diymetrics</a></span>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		Last time on DIY Metrics, we calculated five-man-unit plus/minus ratings from scratch. If we want to use measures like this to compare performance for these groups of players, its important to consider how much game time we have for each unit. There’s a relevant discussion to be had about whether “number of posessions” or “elapsed time” is the best way to compare these groups, (IMO, it depends on what specific question you’re trying to answer with your metric) but today we’ll avoid that discussion and normalize over time because it’s easier.
-	</div>
 </article>
 </main>
 
@@ -346,11 +347,11 @@ That data follow distributions is a tautology. When this doesn’t appear the ca
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/reference-levels-matter/">Reference levels matter</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/corona-virus-information/">Corona Virus information</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/binom-confint/">Quick nones on binomial confidence intervals in R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/binom-confint/">Quick notes on binomial confidence intervals in R</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/bad-data-science-in-the-wild/">Bad Data Science in the Wild</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/computer-science-invents-wavelets/">Computer Science Invents Wavelets</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/plotting-binary-outcomes/">Plotting binary outcomes</a></li>
 		</ul>
 	</div>
 </div>

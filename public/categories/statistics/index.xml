@@ -6,13 +6,22 @@
     <description>Recent content in Statistics on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/statistics/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Quick nones on binomial confidence intervals in R</title>
+      <title>Reference levels matter</title>
+      <link>/post/reference-levels-matter/</link>
+      <pubDate>Sat, 08 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/reference-levels-matter/</guid>
+      <description>When doing a regression analysis with categorical variables, which level is used as the reference level can be important. This is underappreciated, since most non-major classes on regression (or more precisely, regression classes that don’t show you the underlying matrix algebra) don’t talk about it. Software mostly hides this as well unless users want to dive deep into the options. Failing to consider your choice of reference level and how that choice can effect your analysis can lead you to erroneous (or at least dubious) conclusions.</description>
+    </item>
+    
+    <item>
+      <title>Quick notes on binomial confidence intervals in R</title>
       <link>/post/binom-confint/</link>
       <pubDate>Sat, 01 Feb 2020 00:00:00 +0000</pubDate>
       

@@ -12,7 +12,7 @@
 <meta property="og:description" content="A personal blog about applied statistics and data science. And other things." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2020-03-16T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2020-08-08T00:00:00&#43;00:00"/>
 
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -65,6 +65,28 @@
 <main class="main list" role="main"><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
+			<a href="/post/reference-levels-matter/" rel="bookmark">
+			Reference levels matter
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-08-08T00:00:00">August 08, 2020</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/r" rel="category">R</a>, <a class="meta__link" href="/categories/statistics" rel="category">statistics</a></span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		When doing a regression analysis with categorical variables, which level is used as the reference level can be important. This is underappreciated, since most non-major classes on regression (or more precisely, regression classes that don’t show you the underlying matrix algebra) don’t talk about it. Software mostly hides this as well unless users want to dive deep into the options. Failing to consider your choice of reference level and how that choice can effect your analysis can lead you to erroneous (or at least dubious) conclusions.
+	</div>
+</article><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
 			<a href="/post/corona-virus-information/" rel="bookmark">
 			Corona Virus information
 			</a>
@@ -88,7 +110,7 @@
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="/post/binom-confint/" rel="bookmark">
-			Quick nones on binomial confidence intervals in R
+			Quick notes on binomial confidence intervals in R
 			</a>
 		</h3>
 		<div class="list__meta meta">
@@ -269,29 +291,6 @@ This year’s JSM was different for me, because I spent most of my time on recru
 		As a newly-minted PhD Statistician, I was hired by a company that didn’t have a lot of native statistical expertise because they wanted to change that. As a result, I felt empowered to give lots of opinions on topics within my domain to anyone who happened to be in the room, including the head of the division. One of those opinions was that pie charts were the worst.
 I viewed pie charts as the scarlet letter of bad analysis: Having one in your analysis should get you shamed and shunned.
 	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/post/nonlinearity/" rel="bookmark">
-			Nonlinearity
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2019-06-08T00:00:00">June 08, 2019</time>
-</div>
-
-<div class="meta__item-categories meta__item">
-	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/common-analysis-errors" rel="category">common analysis errors</a>, <a class="meta__link" href="/categories/failure-to-communicate" rel="category">failure to communicate</a>, <a class="meta__link" href="/categories/life-is-distributional" rel="category">life is distributional</a></span>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		This is an update to my Analysis Philosphy page, which is still working towards completion
-Nonlinearity is a commonly-misunderstood problem when it comes to data analysis, mostly because our profession has once again managed to find a way to use a simple-sounding term in a way that’s counterintuitive to lay audiences. (See also Artificial Intelligence is Dumb.) When people think about nonlinear response variables, they think of functions that have non-linear relationships.
-	</div>
 </article>
 </main>
 
@@ -337,11 +336,11 @@ Nonlinearity is a commonly-misunderstood problem when it comes to data analysis,
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/reference-levels-matter/">Reference levels matter</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/corona-virus-information/">Corona Virus information</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/binom-confint/">Quick nones on binomial confidence intervals in R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/binom-confint/">Quick notes on binomial confidence intervals in R</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/bad-data-science-in-the-wild/">Bad Data Science in the Wild</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/computer-science-invents-wavelets/">Computer Science Invents Wavelets</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/plotting-binary-outcomes/">Plotting binary outcomes</a></li>
 		</ul>
 	</div>
 </div>
