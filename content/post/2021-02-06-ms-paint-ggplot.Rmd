@@ -1,0 +1,66 @@
+---
+title: MS Paint > ggplot?
+author: Matthew Avery
+date: '2021-02-06'
+slug: ms-paint-ggplot
+categories:
+  - statistics
+  - data visualization
+tags: []
+description: ''
+thumbnail: ''
+---
+
+Not really, but sometimes!
+
+A few recent posts from <a href = astralcodexten.substack.com">Astral Codex Ten</a> (ACX) make use of some stylized plots. Here's an example:
+
+[!Example ACX plot](/post/2021-02-06-ms-paint-ggplot/acx-ms-paint-example.png)
+
+This looks like ... well, it looks like it was drawn using MS Paint. And I think that in this case, it's the perfect tool for the task!
+
+## Tools matter
+
+There are lots of good, general rules for graphical design.  I've discussed  <a href = "https://casual-inference.com/post/plotting-binary-outcomes/">a couple</a> </a> <a href = "https://casual-inference.com/post/pie-charts-a-journey/">ideas</a> on here, and there are tons of resources out there.  But one thing that I haven't seen widely discussed is how the visual characteristics of a plot, including the tool used to make it, affect how people interpret the presented information. 
+
+Take the ACX plot above. Instead of using MS Paint, the author could've made the same picture using, for example, `ggplot`:
+
+
+```{r, echo = F, fig.height = 2, fig.width=5}
+library(ggplot2)
+
+x <- c(0, 1,
+       (2 + cos(seq(pi, 2 * pi, length.out = 100))),
+       4, 
+       (5 + cos(seq(pi, 2 * pi, length.out = 100))),
+       7)
+y = c(0, 0,
+      (sin(seq(pi, 2 * pi, length.out = 100))),
+       0, 
+       (sin(seq(pi, 2 * pi, length.out = 100))),
+       0)
+
+
+ggplot(tibble::tibble(x = x, y = y), aes(x = x, y = y)) +
+  geom_line() +
+  geom_point(color = "red", size = 5, x = 2, y = -.8) +
+  theme_bw() +
+  theme_void() +
+  coord_fixed(ratio = 1) 
+  
+```
+
+Two things to note:  
+1. That took me far longer to make than a simple MS Paint sketch would've
+2. It looks a lot worse than the original
+
+I care less about (1), but (2) is crucial!  My sketch fails for a couple of reasons.*  One is a technical issue, namely that the phenomena ACX is trying to describe with the graph should not have sharp corners between the curved portions and the flat portions of the picture.  I could fix that by making more segments to the line I drew, but now I'm throwing *even more* time at this thing. The more important reason is that my plot gives the illusion of precision. 
+
+What ACX sketeched was a general phenomenon.  He wasn't using precise numbers or empirical data to draw his plot, and by making a precise picture with exact lines and points, my picture risks conveying a higher level of precision than the picture warrants.  You could argue that my picture looks "nicer" or "more professional", but I think that gives it a veneer of precision that isn't appropriate.  
+
+By using a hastily-drawn sketch made with a non-professional drawing tool instead of an exactly plotted (down to the coordinate!) picture from tool used by data scientists, ACX conveys the message that "this is just a sketch" without having to *say* "This is just a sketch."  People won't try to nitpick inflection points or understand what the relative distance between the nadir of the two dips means.  They won't assume that both dips always have to be the same size (or, had I drawn them differently, that they *could not* be the same size), because the MS Paint sketch makes it impossible to tell whether they should be anything other than "kinda similar looking".  By using a tool that necessarily limits the precision of the information conveyed, ACX effectively communicates to his audience what information on the plot is important. 
+
+
+## Other considerations 
+
+Does this mean I'm going to start using MS Paint for my plots at work?  Hell no!  Or at least not when I'm doing analysis or writing a report. In those cases, the requirement to appear professional trumps any type of advantage one might gain in clarity from using a sketch.  But I might think more about how a plot or graph I build conveys precision and certainty and whether that is warranted by the data and analysis it is showing.  Just another way that graphical choices encode information, whether its done consciously or not!

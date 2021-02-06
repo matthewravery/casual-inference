@@ -6,10 +6,23 @@
     <description>Recent content on Casual Inference</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Feb 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MS Paint &gt; ggplot?</title>
+      <link>/post/ms-paint-ggplot/</link>
+      <pubDate>Sat, 06 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/ms-paint-ggplot/</guid>
+      <description>Not really, but sometimes!
+A few recent posts from Astral Codex Ten (ACX) make use of some stylized plots. Here’s an example:
+!Example ACX plot
+This looks like … well, it looks like it was drawn using MS Paint. And I think that in this case, it’s the perfect tool for the task!
+Tools matterThere are lots of good, general rules for graphical design. I’ve discussed a couple  ideas on here, and there are tons of resources out there.</description>
+    </item>
     
     <item>
       <title>Reference levels matter</title>

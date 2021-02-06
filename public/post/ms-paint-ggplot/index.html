@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>MS Paint &gt; ggplot?</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.51" />
+	<meta property="og:title" content="MS Paint &gt; ggplot?" />
+<meta property="og:description" content="Not really, but sometimes!
+A few recent posts from Astral Codex Ten (ACX) make use of some stylized plots. Here’s an example:
+!Example ACX plot
+This looks like … well, it looks like it was drawn using MS Paint. And I think that in this case, it’s the perfect tool for the task!
+Tools matterThere are lots of good, general rules for graphical design. I’ve discussed a couple  ideas on here, and there are tons of resources out there." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/ms-paint-ggplot/" /><meta property="article:published_time" content="2021-02-06T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2021-02-06T00:00:00&#43;00:00"/>
+
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Casual Inference" rel="home">
+				<div class="logo__title">Casual Inference</div>
+				<div class="logo__tagline">Robust and relaxed</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/">Home</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/about/">About</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://matthewravery.github.io/markdown-cv">CV</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://github.com/jthaman/ciTools">ciTools</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/post/analysis-statement/">Analysis Philosophy</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">MS Paint &gt; ggplot?</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2021-02-06T00:00:00">February 06, 2021</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/statistics" rel="category">statistics</a>, <a class="meta__link" href="/categories/data-visualization" rel="category">data visualization</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+
+<p>Not really, but sometimes!</p>
+<p>A few recent posts from <a href = astralcodexten.substack.com">Astral Codex Ten</a> (ACX) make use of some stylized plots. Here’s an example:</p>
+<p><a href="/post/2021-02-06-ms-paint-ggplot/acx-ms-paint-example.png">!Example ACX plot</a></p>
+<p>This looks like … well, it looks like it was drawn using MS Paint. And I think that in this case, it’s the perfect tool for the task!</p>
+<div id="tools-matter" class="section level2">
+<h2>Tools matter</h2>
+<p>There are lots of good, general rules for graphical design. I’ve discussed <a href = "https://casual-inference.com/post/plotting-binary-outcomes/">a couple</a> </a> <a href = "https://casual-inference.com/post/pie-charts-a-journey/">ideas</a> on here, and there are tons of resources out there. But one thing that I haven’t seen widely discussed is how the visual characteristics of a plot, including the tool used to make it, affect how people interpret the presented information.</p>
+<p>Take the ACX plot above. Instead of using MS Paint, the author could’ve made the same picture using, for example, <code>ggplot</code>:</p>
+<p><img src="/post/2021-02-06-ms-paint-ggplot_files/figure-html/unnamed-chunk-1-1.png" width="480" /></p>
+<p>Two things to note:<br />
+1. That took me far longer to make than a simple MS Paint sketch would’ve
+2. It looks a lot worse than the original</p>
+<p>I care less about (1), but (2) is crucial! My sketch fails for a couple of reasons.* One is a technical issue, namely that the phenomena ACX is trying to describe with the graph should not have sharp corners between the curved portions and the flat portions of the picture. I could fix that by making more segments to the line I drew, but now I’m throwing <em>even more</em> time at this thing. The more important reason is that my plot gives the illusion of precision.</p>
+<p>What ACX sketeched was a general phenomenon. He wasn’t using precise numbers or empirical data to draw his plot, and by making a precise picture with exact lines and points, my picture risks conveying a higher level of precision than the picture warrants. You could argue that my picture looks “nicer” or “more professional”, but I think that gives it a veneer of precision that isn’t appropriate.</p>
+<p>By using a hastily-drawn sketch made with a non-professional drawing tool instead of an exactly plotted (down to the coordinate!) picture from tool used by data scientists, ACX conveys the message that “this is just a sketch” without having to <em>say</em> “This is just a sketch.” People won’t try to nitpick inflection points or understand what the relative distance between the nadir of the two dips means. They won’t assume that both dips always have to be the same size (or, had I drawn them differently, that they <em>could not</em> be the same size), because the MS Paint sketch makes it impossible to tell whether they should be anything other than “kinda similar looking”. By using a tool that necessarily limits the precision of the information conveyed, ACX effectively communicates to his audience what information on the plot is important.</p>
+</div>
+<div id="other-considerations" class="section level2">
+<h2>Other considerations</h2>
+<p>Does this mean I’m going to start using MS Paint for my plots at work? Hell no! Or at least not when I’m doing analysis or writing a report. In those cases, the requirement to appear professional trumps any type of advantage one might gain in clarity from using a sketch. But I might think more about how a plot or graph I build conveys precision and certainty and whether that is warranted by the data and analysis it is showing. Just another way that graphical choices encode information, whether its done consciously or not!</p>
+</div>
+
+		</div>
+		
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/reference-levels-matter/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Reference levels matter</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/ms-paint-ggplot/">MS Paint &gt; ggplot?</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/reference-levels-matter/">Reference levels matter</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/corona-virus-information/">Corona Virus information</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/binom-confint/">Quick notes on binomial confidence intervals in R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/bad-data-science-in-the-wild/">Bad Data Science in the Wild</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/basketball">Basketball</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/common-analysis-errors">Common analysis errors</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/data-generation">Data generation</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/data-visualization">Data visualization</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/diymetrics">Diymetrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/failure-to-communicate">Failure to communicate</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/hot-takes">Hot takes</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/life-is-distributional">Life is distributional</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/metrics">Metrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/misc">Misc</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/ml-invents">Ml invents</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/picking-at-nits">Picking at nits</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r">R</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/r-diymetrics">R diymetrics</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/sports">Sports</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/statistics">Statistics</a></li>
+		</ul>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 Casual Inference.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+</html>
