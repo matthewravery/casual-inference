@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl =  "https://casual-inference.com/"
 title = "Casual Inference"
 languageCode = "en-us"
 paginate = "10" # Number of posts per page
