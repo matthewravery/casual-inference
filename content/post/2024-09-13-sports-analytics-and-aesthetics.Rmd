@@ -1,0 +1,44 @@
+---
+title: Brief Thoughts on Sports Analytics and Aesthetics
+author: Matthew Avery
+date: '2024-09-13'
+slug: sports-analytics-and-aesthetics
+categories:
+  - Metrics
+  - Sports
+  - Sports Analytics
+tags: []
+description: ''
+thumbnail: ''
+---
+
+I was recently asked to share some views on sports anlytics and aesthetics based my post on <a href = "https://casual-inference.com/post/how-analytics-ruins-sports/">How Analytics Ruins Sports</a>. I'm not sure if anything will come of it, but I happened upon some interesting thoughts that I think are worth writing down here at a minimum. In this post, I'm going to give some short descriptions of general ideas that I hope to flesh out in future posts. 
+
+### Sports are dynamic systems moving towards equilibria
+
+Strategic sports like baseball and basketball (where you interact directly with your opponent, as opposed to, say, pole vaulting) are in constant states of evolution strategicly. In team sports, the strategies employed tend towards increasing complexity and require increasing coordination between teammates. Analytics tend to accelerate these strategic shifts, though they're effected by factors, too. 
+
+As player populations change over time (typically becoming more fit and better suited to the specific atheltic tasks required of the sport), the dynamic may change. Strategies that were effective against opponents with one set of capabilities may no longer work.  One way to see this is to look at strategies employed at different levels of a sport. Strategies that work for NCAA basketball don't work in the NBA; the best offense in the NBA might not be the best offense to run in the WNBA. 
+
+### Rule changes are fundamental to maintaining entertaining on-field products
+
+Analytics in sports identify strategies and tactics that improve the likelihood of winning under a given set of rules. If these strategies lead to undesirable aesthetics, it’s the rules of the game that should be tweaked to align the aesthetic play with the efficient play. The league owns the rules, not the analytics managers, so it’s up to the league to ensure aesthetic play. You can see this in action with recent rule changes in MLB and the NFL, but perhaps the most stark recent example was the NBA tweaking how certain plays were called mid-season to reduce the rewards for flopping and foul-drawing.
+
+Rule changes can also shift the sports equilibria. This is most easy to see in eSports, such as League of Legends, where regular balance changes shift which strategies and characters are viable from season to season and week to week. 
+
+### Prediction is toughest when nonlinear interactions dominate
+
+This is generally true, but sports offer a stark example. Baseball is relatively easy to understand from an analytics perspective not (just) of the volume of discrete data generated during a game and a season, but also becuase there isn't a ton of complex non-additive interaction between players. If you're a short stop, you might cheat over an extra step in one direction or the other depending on the fielding range of your 2B and 3B, but it won't effect how you play very much.  On a basketball court, OTOH, a point guard will have completely different reads and passes if he's playing alongside a rim-running center as opposed to a player inclined to pick-and-pop. The specific abilities and limitations of your team mates effect how the opposing defense is set up against you and often your role within an offense. Sports like hockey and soccer are similar. Football is (IMO) in between with some positions and players being highly interactive (QBs and WRs for one) while are are somehwat less (e.g., CBs).
+
+The more depending a player's individual performance and statistics depend on the specific combination of teammates and opponents, the harder it becomes to predict how novel combinations of players will perform.
+
+### Prospect theory gives us useful intution about what types efficiencies analytics can uncover
+
+Why did no one go for it often enough on 4th down before some nerds proved the useful of this to football coaches? Probably because of cognitive biases like loss aversion, as explained by Khaneman and Tversky's seminal work!
+
+### Game Theory Optimal sports?
+
+<a href="https://www.vox.com/culture/359966/poker-world-series-wsop-gto-solver">No-limit Texas Hold'em is now a "solved" game</a>, at least for computers. Unsurprisingly, it's a Nash equilibrium.  But no human will every be able to truly be play perfectly GTO, so there will always be room for players to try to get an edge. Similarly, players in sports are never identical, and each develop a unique combination of skills that evolve over time. So even if someone could "solve" a sport like baseball or football by coming up with some game theory optimal strategy, that strategy would have to be tweaked and adjusted to suite the individual players trying to execute it. 
+### And more?
+
+That seems like enough teasers for tonight. Maybe I'll flesh these thoughts out in the future, maybe I'll come up with some thing else to talk about, or maybe I'll let this go domant again. These are fun things to think about, though, and I'm excited to see where discussion of them moves in the future. 
