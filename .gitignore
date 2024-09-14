@@ -4,3 +4,7 @@
 .Ruserdata
 *.rds
 *.csv
+.DS_Store
+Thumbs.db
+/public/
+/resources/
